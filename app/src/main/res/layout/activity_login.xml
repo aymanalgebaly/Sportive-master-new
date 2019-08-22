@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activity.LoginActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <View
+            android:layout_width="5dp"
+            android:layout_height="match_parent"
+            android:background="@color/blue"
+            android:layout_alignParentEnd="true">
+
+        </View>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_marginTop="120dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="LOG IN"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginEnd="100dp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="40dp"
+                        android:textColor="@color/black"
+                        android:textSize="30sp" />
+
+
+                    <RelativeLayout
+                        android:id="@+id/RV_LOGIN"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginEnd="100dp"
+                        android:background="@drawable/sign_up_design">
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="45dp"
+                            android:id="@+id/mail_login"
+                            android:layout_marginTop="14dp"
+                            android:drawableLeft="@drawable/ic_email_black_24dp"
+                            android:hint="enter_your_email"
+                            android:drawablePadding="15dp"
+                            android:textSize="12sp"
+                            android:layout_marginLeft="3dp"
+                            android:background="@drawable/edit_text"
+                            android:drawableStart="@drawable/ic_email_black_24dp"
+                            android:layout_marginStart="3dp"
+                            tools:ignore="RtlHardcoded" />
+
+                        <View
+                            android:id="@+id/view5"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/gray"
+                            android:layout_below="@id/mail_login">
+
+                        </View>
+
+                        <EditText
+                            android:id="@+id/editText"
+                            android:layout_width="match_parent"
+                            android:layout_height="45dp"
+                            android:layout_marginBottom="15dp"
+                            android:layout_below="@id/view5"
+                            android:ems="10"
+                            android:textSize="12sp"
+                            android:background="@drawable/edit_text"
+                            android:drawableLeft="@drawable/ic_lock_open_black_24dp"
+                            android:hint="............"
+                            android:drawablePadding="15dp"
+                            android:inputType="textPassword"
+                            android:drawableStart="@drawable/ic_lock_open_black_24dp"
+                            tools:ignore="RtlHardcoded" />
+
+                        <View
+                            android:id="@+id/view6"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/gray"
+                            android:layout_below="@id/editText">
+
+                        </View>
+
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="80dp">
+
+                        <TextView
+                            android:id="@+id/text_forgot_pass"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="forgot_password ?"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginStart="50dp"
+                            android:textStyle="bold" />
+
+                        <Button
+                            android:id="@+id/BTN_signIn_login"
+                            android:layout_width="100dp"
+                            android:layout_height="50dp"
+                            android:background="@drawable/button_design_curv"
+                            android:text="@string/login"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/white"
+                            android:layout_marginBottom="50dp"
+                            android:layout_alignParentEnd="true"/>
+
+                        <Button
+                            android:layout_below="@id/BTN_signIn_login"
+                            android:id="@+id/BTN_signup_log"
+                            android:layout_width="100dp"
+                            android:layout_height="50dp"
+                            android:background="@drawable/button_design_curv"
+                            android:text="@string/sign_up"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:textSize="12sp"
+                            android:layout_marginBottom="50dp"
+                            android:layout_alignParentEnd="true"/>
+
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+            </RelativeLayout>
+
+        </ScrollView>
+
+    </RelativeLayout>
+
+</RelativeLayout>
