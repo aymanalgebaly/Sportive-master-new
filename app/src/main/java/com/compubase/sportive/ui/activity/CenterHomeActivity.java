@@ -1,5 +1,6 @@
 package com.compubase.sportive.ui.activity;
 
+import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -19,12 +20,13 @@ import android.view.Menu;
 import android.widget.LinearLayout;
 
 import com.compubase.sportive.R;
+import com.compubase.sportive.adapter.VP_HomeCenter;
 import com.compubase.sportive.adapter.VP_HomeUser;
 
 public class CenterHomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private VP_HomeUser vp_scheduleAdapter;
+    private VP_HomeCenter vp_scheduleAdapter;
     private ViewPager viewPager;
     private TabLayout tabLayout;
 
@@ -33,10 +35,10 @@ public class CenterHomeActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_center_home);
 
-        viewPager = findViewById(R.id.viewPager_user);
+        viewPager = findViewById(R.id.viewPager_center);
         tabLayout = findViewById(R.id.tabss_center);
         tabLayout.setupWithViewPager(viewPager);
-        vp_scheduleAdapter = new VP_HomeUser(getSupportFragmentManager());
+        vp_scheduleAdapter = new VP_HomeCenter(getSupportFragmentManager());
         viewPager.setAdapter(vp_scheduleAdapter);
 
         View root = tabLayout.getChildAt(0);
@@ -44,7 +46,7 @@ public class CenterHomeActivity extends AppCompatActivity
             ((LinearLayout) root).setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);
             GradientDrawable drawable = new GradientDrawable();
             drawable.setColor(getResources().getColor(R.color.white));
-//            drawable.setSize(4, 1);
+            drawable.setSize(2, 1);
             ((LinearLayout) root).setDividerPadding(10);
             ((LinearLayout) root).setDividerDrawable(drawable);
         }
@@ -74,28 +76,6 @@ public class CenterHomeActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.center_home, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -103,6 +83,8 @@ public class CenterHomeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.center_profile) {
+
+            startActivity(new Intent(CenterHomeActivity.this,CenterProfileActivity.class));
             // Handle the camera action
         } else if (id == R.id.center_logout) {
 

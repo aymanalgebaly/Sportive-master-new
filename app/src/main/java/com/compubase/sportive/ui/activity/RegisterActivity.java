@@ -188,7 +188,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                             if (string.equals("True")) {
 
-                                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                                startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
                             }
                         } catch (IOException e) {
                             e.printStackTrace();

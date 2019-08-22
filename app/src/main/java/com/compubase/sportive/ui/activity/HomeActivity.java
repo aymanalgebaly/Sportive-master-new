@@ -48,7 +48,7 @@ public class HomeActivity extends AppCompatActivity
             ((LinearLayout) root).setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);
             GradientDrawable drawable = new GradientDrawable();
             drawable.setColor(getResources().getColor(R.color.white));
-//            drawable.setSize(4, 1);
+            drawable.setSize(2, 1);
             ((LinearLayout) root).setDividerPadding(10);
             ((LinearLayout) root).setDividerDrawable(drawable);
         }

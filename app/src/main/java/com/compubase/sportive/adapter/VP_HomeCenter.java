@@ -1,5 +1,6 @@
 package com.compubase.sportive.adapter;
 
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -24,11 +25,30 @@ public class VP_HomeCenter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int i) {
-        return null;
+        return fragments[i];
     }
 
     @Override
     public int getCount() {
-        return 0;
+        return fragments.length;
+    }
+
+    @Nullable
+    @Override
+    public CharSequence getPageTitle(int position) {
+
+        switch (position){
+            case 0:
+                title = "Profile";
+                break;
+            case 1:
+                title =  "Users";
+                break;
+            case 2:
+                title = "Activities";
+                break;
+
+        }
+        return title;
     }
 }

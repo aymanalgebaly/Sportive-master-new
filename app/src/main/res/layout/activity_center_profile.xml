@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activity.CenterProfileActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rel_img">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="100dp"
+                android:id="@+id/img_user_profile"
+                android:layout_height="100dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="100dp"
+                android:background="@drawable/ic_person_black_24dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/change"
+                android:id="@+id/change_img"
+                android:layout_below="@id/img_user_profile"
+                android:layout_centerHorizontal="true"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/black"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/RV_OR"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="50dp"
+            android:layout_below="@id/rel_img"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/sign_up_design"
+            tools:ignore="RtlHardcoded">
+
+            <EditText
+                android:id="@+id/full_name_user_profile"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginStart="3dp"
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/edit_text"
+                android:drawableStart="@drawable/ic_person_black_24dp"
+                android:drawableLeft="@drawable/ic_person_black_24dp"
+                android:drawablePadding="15dp"
+                android:hint="@string/full_name"
+                android:inputType="textPersonName"
+                android:textSize="12sp"
+                tools:ignore="RtlHardcoded" />
+
+            <View
+                android:id="@+id/view1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray"
+                android:layout_below="@id/full_name_user_profile">
+
+            </View>
+
+            <EditText
+                android:id="@+id/email_user_profile"
+                android:layout_below="@id/view1"
+                android:drawableLeft="@drawable/ic_email_black_24dp"
+                android:hint="@string/enter_your_email"
+                android:drawablePadding="15dp"
+                android:textSize="12sp"
+                android:layout_marginLeft="3dp"
+                android:background="@drawable/edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:ems="10"
+                android:inputType="textEmailAddress"
+                android:drawableStart="@drawable/ic_email_black_24dp"
+                android:layout_marginStart="3dp"
+                tools:ignore="RtlHardcoded" />
+
+            <View
+                android:id="@+id/view2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray"
+                android:layout_below="@id/email_user_profile">
+
+            </View>
+
+            <EditText
+                android:id="@+id/password_user_profile"
+                android:background="@drawable/edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:ems="10"
+                android:layout_marginLeft="3dp"
+                android:layout_below="@id/view2"
+                android:drawableLeft="@drawable/ic_lock_open_black_24dp"
+                android:hint="............"
+                android:drawablePadding="15dp"
+                android:textSize="12sp"
+                android:inputType="textPassword"
+                android:drawableStart="@drawable/ic_lock_open_black_24dp"
+                android:layout_marginStart="3dp"
+                tools:ignore="RtlHardcoded" />
+
+            <View
+                android:id="@+id/view3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray"
+                android:layout_below="@id/password_user_profile">
+
+            </View>
+
+            <EditText
+                android:id="@+id/phone_num_user_profile"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_below="@id/view3"
+                android:background="@drawable/edit_text"
+                android:drawableLeft="@drawable/ic_phone_black_24dp"
+                android:hint="@string/mobile_number"
+                android:textSize="12sp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="3dp"
+                android:drawablePadding="15dp"
+                android:ems="10"
+                android:inputType="phone"
+                android:drawableStart="@drawable/ic_phone_black_24dp"
+                android:layout_marginStart="3dp"
+                tools:ignore="RtlHardcoded" />
+
+            <View
+                android:id="@+id/view4"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray"
+                android:layout_below="@id/phone_num_user_profile">
+
+            </View>
+
+            <EditText
+                android:id="@+id/location"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_below="@id/view4"
+                android:background="@drawable/edit_text"
+                android:drawableLeft="@drawable/ic_place_black_24dp"
+                android:hint="@string/your_location"
+                android:textSize="12sp"
+                android:layout_marginLeft="3dp"
+                android:drawablePadding="15dp"
+                android:ems="10"
+                android:inputType="phone"
+                android:layout_marginBottom="10dp"
+                android:drawableStart="@drawable/ic_place_black_24dp"
+                android:layout_marginStart="3dp"
+                tools:ignore="RtlHardcoded" />
+
+            <View
+                android:id="@+id/view5"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray"
+                android:layout_below="@id/phone_num_user_profile">
+
+            </View>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_marginEnd="70dp"
+                android:layout_marginStart="70dp"
+                android:text="@string/edit"
+                android:textSize="18sp"
+                android:id="@+id/btn_edit"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_height="30dp"
+                android:layout_below="@id/location"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/button_design_curv_yellow"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</ScrollView>
