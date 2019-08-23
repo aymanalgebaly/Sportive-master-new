@@ -69,7 +69,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
     private ArrayList<Center> centerArrayList = new ArrayList<>();
     private Center center;
-    private SupportMapFragment mapFragment;
+    SupportMapFragment mapFragment;
 
 
     public HomeFragment() {
@@ -167,12 +167,15 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                             center.setName(centerList.get(j).getName());
                             center.setImages(centerList.get(j).getImages());
 
-//                            String lang = centerList.get(j).getLang();
-//                            double lo = Double.parseDouble(lang);
-//                            String lat = centerList.get(j).getLat();
-//                            double la = Double.parseDouble(lat);
-//                            MarkerOptions marker = new MarkerOptions().position(new LatLng(lo,la)).title(centerList.get(j).getName());
-//                            mMap.addMarker(marker);
+                            String lang = centerList.get(j).getLang();
+                            String lat = centerList.get(j).getLat();
+                            if(!lang.equals("") || !lat.equals(""))
+                            {
+                                double lo = Double.parseDouble(lang);
+                                double la = Double.parseDouble(lat);
+                                MarkerOptions marker = new MarkerOptions().position(new LatLng(lo,la)).title(centerList.get(j).getName());
+                                mMap.addMarker(marker);
+                            }
 
                             centerArrayList.add(center);
                         }

@@ -138,11 +138,15 @@ public class RegisterActivity extends AppCompatActivity {
                             assert response.body() != null;
                             String string = response.body().string();
 
-                            Toast.makeText(RegisterActivity.this, string, Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(RegisterActivity.this, string, Toast.LENGTH_SHORT).show();
 
                             if (string.equals("True")) {
-                                startActivity(new Intent(RegisterActivity.this, CenterHomeActivity.class));
-                            }
+                                onBackPressed();
+                                //startActivity(new Intent(RegisterActivity.this, CenterHomeActivity.class));
+                            }else
+                                {
+                                    Toast.makeText(RegisterActivity.this, string, Toast.LENGTH_SHORT).show();
+                                }
                         } catch (IOException e) {
                             e.printStackTrace();
                         }

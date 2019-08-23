@@ -31,9 +31,11 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:usesCleartextTraffic="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning">
+        tools:ignore="GoogleAppIndexingWarning"
+        tools:targetApi="m">
         <activity android:name=".ui.activity.AddGameActivity"></activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -90,6 +92,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+
+        <activity android:name=".ui.activity.CenterDetailsActivity"/>
     </application>
 
 </manifest>

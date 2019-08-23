@@ -127,15 +127,5 @@
         </android.support.v7.widget.RecyclerView>
     </FrameLayout>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_margin="10dp"
-        android:id="@+id/add_btn"
-        android:text="@string/add"
-        android:background="@drawable/button_design_curv_orange"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:textColor="@color/white"
-        android:layout_below="@id/frame_rcv"/>
+
 </RelativeLayout>

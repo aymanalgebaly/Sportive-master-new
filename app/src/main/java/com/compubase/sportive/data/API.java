@@ -32,6 +32,14 @@ public interface API {
             @Field("pass") String pass
     );
 
+    @FormUrlEncoded
+    @POST("insert_join")
+    Call<ResponseBody>Join(
+            @Field("id_center") String idcenter,
+            @Field("id_user") String iduser,
+            @Field("game_name") String gamename
+    );
+
 
     @GET("select_all_center")
     Call<ResponseBody>ListOfCenters();
