@@ -2,14 +2,15 @@ package com.compubase.sportive.model;
 
 public class GameModel {
 
-    private String name,game;
+    private String name,game,id;
 
     public GameModel() {
     }
 
-    public GameModel(String name, String game) {
+    public GameModel(String name, String game ,String id) {
         this.name = name;
         this.game = game;
+        this.id = id;
     }
 
     public String getName() {
@@ -18,6 +19,14 @@ public class GameModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getGame() {

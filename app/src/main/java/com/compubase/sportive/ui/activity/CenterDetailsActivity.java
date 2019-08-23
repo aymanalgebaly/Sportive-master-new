@@ -144,7 +144,7 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
 
         assert lang != null;
         assert lat != null;
-        if(!lang.equals("") || !lat.equals(""))
+        if(lang != null || lat != null)
         {
             double lo = Double.parseDouble(lang);
             double la = Double.parseDouble(lat);
@@ -239,6 +239,7 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
 
             game.setName(games.get(i).getName());
             game.setGame(games.get(i).getGame());
+            game.setId(games.get(i).getId());
 
             gamesList.add(game);
         }
@@ -248,42 +249,6 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
         rcvCenterHome.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     private void join() {
 
@@ -326,22 +291,22 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
 
     }
 
-    private void data() {
-
-
-        List<GameModel> gameModels = new ArrayList<>();
-
-        game = new String[]{"Football","Football","Football","Football","Football"};
-        name_game = new String[]{"ahmed", "ahmed", "ahmed", "ahmed", "ahmed"};
-
-        for ( i = 0; i <game.length ; i++) {
-            gameModels.add(new GameModel(game[i],name_game[i]));
-
-        }
-
-        //adapter.setData(gameModels);
-        adapter.notifyDataSetChanged();
-    }
+//    private void data() {
+//
+//
+//        List<GameModel> gameModels = new ArrayList<>();
+//
+//        game = new String[]{"Football","Football","Football","Football","Football"};
+//        name_game = new String[]{"ahmed", "ahmed", "ahmed", "ahmed", "ahmed"};
+//
+//        for ( i = 0; i <game.length ; i++) {
+//            gameModels.add(new GameModel(game[i],name_game[i]));
+//
+//        }
+//
+//        //adapter.setData(gameModels);
+//        adapter.notifyDataSetChanged();
+//    }
 
     private void showMessage(String s) {
         Toast.makeText(this, s, Toast.LENGTH_LONG).show();

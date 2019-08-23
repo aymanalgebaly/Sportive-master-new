@@ -10,16 +10,28 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.compubase.sportive.R;
 import com.compubase.sportive.data.API;
 import com.compubase.sportive.helper.RetrofitClient;
+import com.compubase.sportive.model.GameModel;
 import com.compubase.sportive.model.LoginActivityResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,6 +52,7 @@ public class AddGameActivity extends AppCompatActivity {
     private String game,trainer;
     private SharedPreferences preferences;
     private String id;
+    private RequestQueue requestQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,45 +64,85 @@ public class AddGameActivity extends AppCompatActivity {
         id = preferences.getString("id", "");
 
         Log.i( "id",id);
-
-
-        game = editGame.getText().toString();
-         trainer = editTrainer.getText().toString();
     }
 
     @OnClick(R.id.dialog_btn)
     public void onViewClicked() {
-        add();
+        JSON_DATA_WEB_CALL();
     }
 
-    private void add() {
-        Call<ResponseBody> call2 = RetrofitClient.getInstant().create(API.class).InsertGame(id,game,trainer);
+    private void JSON_DATA_WEB_CALL(){
 
-        call2.enqueue(new Callback<ResponseBody>() {
+        final String url;
+
+        game = editGame.getText().toString();
+        trainer = editTrainer.getText().toString();
+
+        url = "http://sportive.technowow.net/sportive.asmx/insert_game?id_center="+id+"&name_game="+game+"&coach="+trainer;
+
+        Toast.makeText(this, id+game+trainer, Toast.LENGTH_SHORT).show();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new com.android.volley.Response.Listener<String>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(String response) {
 
-                if (response.isSuccessful()){
-                    try {
-                        String string = response.body().string();
-
-                        Log.i( "string",string);
-                        if (string.equals("True")){
-                            onBackPressed();
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                Toast.makeText(AddGameActivity.this, response, Toast.LENGTH_SHORT).show();
+                if (response.equals("True")){
+                    onBackPressed();
                 }
-            }
+                // showMessage(response);
 
+//                JSON_PARSE_DATA_AFTER_WEBCALL2(response);
+
+            }
+        }, new com.android.volley.Response.ErrorListener() {
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Toast.makeText(AddGameActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+            public void onErrorResponse(VolleyError error) {
+
+                showMessage(error.getMessage());
             }
         });
 
+
+        requestQueue = Volley.newRequestQueue(Objects.requireNonNull(this));
+
+        requestQueue.add(stringRequest);
     }
+    private void showMessage(String s) {
+        Toast.makeText(AddGameActivity.this, s, Toast.LENGTH_LONG).show();
+    }
+
+//    private void add() {
+//        Call<ResponseBody> call2 = RetrofitClient.getInstant().create(API.class).InsertGame();
+//
+//        call2.enqueue(new Callback<ResponseBody>() {
+//            @Override
+//            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+//
+//                if (response.isSuccessful()){
+//                    try {
+//                        String string = response.body().string();
+//
+//                        Toast.makeText(AddGameActivity.this, string, Toast.LENGTH_SHORT).show();
+//
+//                        Log.i( "string",string);
+//                        if (string.equals("True")){
+//
+//                            onBackPressed();
+//                        }
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ResponseBody> call, Throwable t) {
+//                Toast.makeText(AddGameActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//
+//    }
 
 }
 

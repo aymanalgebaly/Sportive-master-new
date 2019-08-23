@@ -125,6 +125,7 @@ public class HomeCenterFragment extends Fragment implements OnMapReadyCallback {
         rcvCenterHome.setHasFixedSize(true);
 
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
+        llm.setReverseLayout(true);
         rcvCenterHome.setLayoutManager(llm);
 
         JSON_DATA_WEB_CALL();
@@ -134,22 +135,6 @@ public class HomeCenterFragment extends Fragment implements OnMapReadyCallback {
 
 
         return view;
-    }
-
-
-    private void setupMarker()
-    {
-        String lang =  preferences.getString("long", "0.000000");
-        String lat =  preferences.getString("lat", "0.00000000");
-        assert lang != null;
-        assert lat != null;
-        if(!lang.equals("") || !lat.equals(""))
-        {
-            double lo = Double.parseDouble(lang);
-            double la = Double.parseDouble(lat);
-            MarkerOptions marker = new MarkerOptions().position(new LatLng(la,lo)).title(center_name);
-            mgoogleMap.addMarker(marker);
-        }
     }
 
     private void JSON_DATA_WEB_CALL(){
@@ -222,18 +207,6 @@ public class HomeCenterFragment extends Fragment implements OnMapReadyCallback {
         Toast.makeText(getContext(), s, Toast.LENGTH_LONG).show();
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
     private void setup() {
         LinearLayoutManager gridLayoutManager = new LinearLayoutManager(getActivity());
         rcvCenterHome.setLayoutManager(gridLayoutManager);
@@ -242,20 +215,20 @@ public class HomeCenterFragment extends Fragment implements OnMapReadyCallback {
         adapter.notifyDataSetChanged();
     }
 
-    private void data() {
-        List<GameModel> gameModels = new ArrayList<>();
-
-        game = new String[]{"Football","Football","Football","Football","Football"};
-        name = new String[]{"ahmed", "ahmed", "ahmed", "ahmed", "ahmed"};
-
-        for ( i = 0; i <game.length ; i++) {
-            gameModels.add(new GameModel(game[i],name[i]));
-
-        }
-
-       // adapter.setData(gameModels);
-        adapter.notifyDataSetChanged();
-    }
+//    private void data() {
+//        List<GameModel> gameModels = new ArrayList<>();
+//
+//        game = new String[]{"Football","Football","Football","Football","Football"};
+//        name = new String[]{"ahmed", "ahmed", "ahmed", "ahmed", "ahmed"};
+//
+//        for ( i = 0; i <game.length ; i++) {
+//            gameModels.add(new GameModel(game[i],name[i]));
+//
+//        }
+//
+//       // adapter.setData(gameModels);
+//        adapter.notifyDataSetChanged();
+//    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {

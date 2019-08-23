@@ -140,10 +140,14 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     private void setupRecycler() {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        linearLayoutManager.setReverseLayout(true);
         rcvHome.setLayoutManager(linearLayoutManager);
 
     }
     private void fetchData (){
+
+        centerArrayList.clear();
+
         Call<ResponseBody> call2 = RetrofitClient.getInstant().create(API.class).ListOfCenters();
 
         call2.enqueue(new Callback<ResponseBody>() {

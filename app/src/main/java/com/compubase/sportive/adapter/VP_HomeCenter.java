@@ -14,7 +14,7 @@ import com.compubase.sportive.ui.fragment.UsersFragment;
 
 public class VP_HomeCenter extends FragmentPagerAdapter {
 
-    Fragment[] fragments ={new HomeCenterFragment(),new UsersFragment(),new ActivitiesFragment()};
+    Fragment[] fragments ={new HomeCenterFragment(),new UsersFragment(),new ActivitiesCenterFragment()};
 
     String title;
 

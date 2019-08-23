@@ -49,12 +49,13 @@
     <string name="add">Add</string>
     <string name="enter_the_name_of_game">Enter the name of game</string>
     <string name="enter_the_name_of_trainer">Enter the name of Trainer</string>
-    
+    <string name="enter_your_message">Enter your Message</string>
+
     <string-array name="type">
-        <item name="Update"></item>
-    <item name="Message"></item>
-    <item name="Rating"></item>
-    <item name="Coment"></item>
+        <item name="Update" />
+        <item name="Message" />
+        <item name="Rating" />
+        <item name="Comment" />
     </string-array>
 
 </resources>

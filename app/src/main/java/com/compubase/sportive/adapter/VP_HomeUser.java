@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.compubase.sportive.ui.fragment.ActivitiesCenterFragment;
 import com.compubase.sportive.ui.fragment.ActivitiesFragment;
 import com.compubase.sportive.ui.fragment.FamousFragment;
 import com.compubase.sportive.ui.fragment.HomeFragment;

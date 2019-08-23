@@ -7,11 +7,8 @@ public class UsersModel {
     public UsersModel() {
     }
 
-    private int img;
-
-    public UsersModel(String name, int img) {
+    public UsersModel(String name) {
         this.name = name;
-        this.img = img;
     }
 
     public String getName() {
@@ -22,11 +19,4 @@ public class UsersModel {
         this.name = name;
     }
 
-    public int getImg() {
-        return img;
-    }
-
-    public void setImg(int img) {
-        this.img = img;
-    }
 }

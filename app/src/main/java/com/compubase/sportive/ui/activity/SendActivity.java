@@ -82,6 +82,7 @@ public class SendActivity extends AppCompatActivity {
             public void onResponse(String response) {
 
                  showMessage(response);
+                onBackPressed();
 
 
             }

@@ -101,6 +101,7 @@ public class UsersFragment extends Fragment {
         rcvUsers.setHasFixedSize(true);
 
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
+        llm.setReverseLayout(true);
         rcvUsers.setLayoutManager(llm);
 
     }
@@ -203,13 +204,13 @@ public class UsersFragment extends Fragment {
 
         List<UsersModel> usersModels = new ArrayList<>();
 
-        img = new int[]{R.drawable.bg_sportive, R.drawable.bg_sportive, R.drawable.bg_sportive,
-                R.drawable.bg_sportive, R.drawable.bg_sportive, R.drawable.bg_sportive,
-                R.drawable.bg_sportive, R.drawable.bg_sportive, R.drawable.bg_sportive};
+//        img = new int[]{R.drawable.bg_sportive, R.drawable.bg_sportive, R.drawable.bg_sportive,
+//                R.drawable.bg_sportive, R.drawable.bg_sportive, R.drawable.bg_sportive,
+//                R.drawable.bg_sportive, R.drawable.bg_sportive, R.drawable.bg_sportive};
         name = new String[]{"ahmed","ayman","amir","ali","hassan","hussien","hanan","hany","sameh"};
 
-        for ( i = 0; i <img.length ; i++) {
-            usersModels.add(new UsersModel(name[i], img[i]));
+        for ( i = 0; i <name.length ; i++) {
+            usersModels.add(new UsersModel(name[i]));
 
 //            ratingBar.setRating(num[i]);
         }

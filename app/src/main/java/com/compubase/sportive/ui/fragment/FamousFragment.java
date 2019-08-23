@@ -75,6 +75,7 @@ public class FamousFragment extends Fragment {
     private void setupRecycler() {
 
         GridLayoutManager linearLayoutManager = new GridLayoutManager(getActivity(),2);
+        linearLayoutManager.setReverseLayout(true);
         rcvFamous.setLayoutManager(linearLayoutManager);
 
     }
@@ -105,6 +106,7 @@ public class FamousFragment extends Fragment {
 
                             famous.setName(famousList.get(j).getName());
                             famous.setImages(famousList.get(j).getType());
+                            famous.setId(famousList.get(j).getId());
 
 
                             centerArrayList.add(famous);

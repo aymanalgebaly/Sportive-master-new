@@ -1,6 +1,7 @@
 package com.compubase.sportive.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.compubase.sportive.R;
 import com.compubase.sportive.model.FamousActivityResponse;
+import com.compubase.sportive.ui.activity.CenterDetailsActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -31,6 +33,9 @@ public class FamousAdapter extends RecyclerView.Adapter<FamousAdapter.ViewHolder
     @NonNull
     @Override
     public ViewHolderFamous onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+
+        context = viewGroup.getContext();
+
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.famous_design, viewGroup, false);
         return new ViewHolderFamous(view);
     }
@@ -38,10 +43,26 @@ public class FamousAdapter extends RecyclerView.Adapter<FamousAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolderFamous viewHolderFamous, int i) {
 
-        FamousActivityResponse famousActivityResponse = famousModelList.get(i);
+        final FamousActivityResponse famousActivityResponse = famousModelList.get(i);
 
         viewHolderFamous.type.setText(famousActivityResponse.getType());
         viewHolderFamous.name.setText(famousActivityResponse.getName());
+
+        viewHolderFamous.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(context, CenterDetailsActivity.class);
+                intent.putExtra("name",famousActivityResponse.getName());
+                intent.putExtra("email",famousActivityResponse.getEmail());
+                intent.putExtra("id_center",famousActivityResponse.getId());
+                intent.putExtra("image",famousActivityResponse.getImages());
+                intent.putExtra("lat",famousActivityResponse.getLat());
+                intent.putExtra("long",famousActivityResponse.getLang());
+                intent.putExtra("phone",famousActivityResponse.getPhone());
+                context.startActivity(intent);
+            }
+        });
 
 //        Picasso.get().load(famousActivityResponse.getImages()).into(viewHolderFamous.imageView);
     }
