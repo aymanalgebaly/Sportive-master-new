@@ -10,20 +10,18 @@
     <TextView
         android:layout_width="0dp"
         android:layout_marginTop="5dp"
-        android:text=""
         android:id="@+id/nameOfGame"
         android:gravity="center"
-        android:background="@color/gray"
         android:textStyle="bold"
+        android:text="jgvfgjcgcgc"
         android:textColor="@color/black"
         android:layout_height="match_parent"
         android:layout_weight="1"/>
 
     <TextView
         android:layout_width="0dp"
-        android:text=""
-        android:background="@color/gray"
         android:gravity="center"
+        android:text="gvhgchgchgc"
         android:id="@+id/nameOfTrainer"
         android:layout_marginTop="5dp"
         android:textColor="@color/black"

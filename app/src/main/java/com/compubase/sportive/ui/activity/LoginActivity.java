@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.compubase.sportive.R;
 import com.compubase.sportive.data.API;
@@ -86,12 +85,12 @@ public class LoginActivity extends AppCompatActivity {
 
                         try {
                             assert response.body() != null;
-                            List<LoginActivityResponse> loginActivityResponses = Arrays.asList(gson.fromJson(response.body().string(), LoginActivityResponse[].class));
+                            List<LoginActivityResponse> loginActivityResponses =
+                                    Arrays.asList(gson.fromJson(response.body().string(), LoginActivityResponse[].class));
                             if (response.isSuccessful()){
 
                                 id = loginActivityResponses.get(0).getId();
 
-                                //Toast.makeText(LoginActivity.this, String.valueOf(id), Toast.LENGTH_SHORT).show();
 //                                sharedLogin();
 
                                 startActivity(new Intent(LoginActivity.this,HomeActivity.class));

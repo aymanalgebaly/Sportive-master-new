@@ -1,9 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.activity.AddGameActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/edit_text"
+            android:hint="@string/enter_the_name_of_game"
+            android:paddingStart="5dp"
+            android:id="@+id/edit_game"
+            android:layout_margin="5dp"
+            android:paddingEnd="5dp"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:id="@+id/edit_trainer"
+            android:layout_margin="5dp"
+            android:background="@drawable/edit_text"
+            android:hint="@string/enter_the_name_of_trainer"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:id="@+id/dialog_btn"
+            android:background="@drawable/button_design_curv_orange"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
+            android:text="@string/add"
+            android:textStyle="bold"
+            android:layout_marginBottom="20dp"
+            android:textColor="@color/white"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

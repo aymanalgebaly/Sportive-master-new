@@ -64,4 +64,18 @@ public interface API {
             @Field("des") String des,
             @Field("id") String id
     );
+
+    @FormUrlEncoded
+    @POST("insert_game")
+    Call<ResponseBody>InsertGame(
+            @Field("id_center") String id_center,
+            @Field("name_game") String name_game,
+            @Field("coach") String coach
+    );
+
+    @FormUrlEncoded
+    @POST("select_game")
+    Call<ResponseBody>ListOfGames(
+            @Field("id_center") String id_center
+    );
 }

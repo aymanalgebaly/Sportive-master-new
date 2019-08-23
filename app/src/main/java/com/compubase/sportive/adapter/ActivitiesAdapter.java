@@ -42,8 +42,8 @@ public class ActivitiesAdapter extends RecyclerView.Adapter<ActivitiesAdapter.Vi
 
         UserActivityActivityResponse userActivityActivityResponse = userActivityList.get(i);
 
-        viewHolderActities.txt.setText(userActivityActivityResponse.getMessage());
-        viewHolderActities.title.setText(userActivityActivityResponse.getType());
+        viewHolderActities.name.setText(userActivityActivityResponse.getName());
+        viewHolderActities.title.setText(userActivityActivityResponse.getType1());
         viewHolderActities.txt.setText(userActivityActivityResponse.getMessage());
 
 //        Picasso.get()
