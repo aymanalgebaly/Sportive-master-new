@@ -8,17 +8,20 @@
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/spinner"
         android:layout_margin="10dp"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="150dp"
+        android:id="@+id/msg"
         android:layout_margin="10dp"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
+        android:id="@+id/send_btn"
         android:text="Send"/>
 
 </LinearLayout>

@@ -81,4 +81,19 @@ public interface API {
 
     @GET("select_all_center_famous")
     Call<ResponseBody>ListOfFamous();
+
+    @FormUrlEncoded
+    @POST("insert_activites")
+    Call<ResponseBody>InsertActiv(
+            @Field("id_send") String id_send,
+            @Field("id_recived") String id_recived,
+            @Field("message") String message,
+            @Field("type") String type
+    );
+
+    @FormUrlEncoded
+    @POST("select_join_center")
+    Call<ResponseBody>UsersJoin(
+            @Field("id_center") String id_center
+    );
 }

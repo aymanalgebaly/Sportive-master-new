@@ -92,7 +92,7 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
         lat = getIntent().getExtras().getString("lat");
         name = getIntent().getExtras().getString("name");
         String phone = getIntent().getExtras().getString("phone");
-        id = getIntent().getExtras().getString("id");
+        id = getIntent().getExtras().getString("id_center","");
 
        // Toast.makeText(CenterDetailsActivity.this, lang, Toast.LENGTH_SHORT).show();
 
@@ -100,7 +100,7 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
         phoneCenter.setText(phone);
 
         SharedPreferences shared = getSharedPreferences("user", MODE_PRIVATE);
-        myid = (shared.getString("id", "5"));
+        myid = (shared.getString("id", ""));
 
 
         setup();
@@ -132,7 +132,7 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
 
     private void join() {
 
-        Call<ResponseBody> call2 = RetrofitClient.getInstant().create(API.class).Join("5","10","game");
+        Call<ResponseBody> call2 = RetrofitClient.getInstant().create(API.class).Join(id,myid,"game");
 
         call2.enqueue(new Callback<ResponseBody>() {
             @Override

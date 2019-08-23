@@ -64,7 +64,7 @@ public class CentersAdapter extends RecyclerView.Adapter<CentersAdapter.ViewHold
                 Intent intent = new Intent(context,CenterDetailsActivity.class);
                 intent.putExtra("name",center.getName());
                 intent.putExtra("email",center.getEmail());
-                intent.putExtra("id",center.getId());
+                intent.putExtra("id_center",center.getId());
                 intent.putExtra("image",center.getImages());
                 intent.putExtra("lat",center.getLat());
                 intent.putExtra("long",center.getLang());

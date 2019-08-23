@@ -2,6 +2,7 @@ package com.compubase.sportive.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,18 +11,21 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.compubase.sportive.R;
+import com.compubase.sportive.model.Center;
+import com.compubase.sportive.model.UsersJoinsResponse;
 import com.compubase.sportive.model.UsersModel;
 import com.compubase.sportive.ui.activity.CenterDetailsActivity;
 import com.compubase.sportive.ui.activity.SendActivity;
+import com.compubase.sportive.ui.fragment.UsersFragment;
 
 import java.util.List;
 
 public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHlder> {
     private Context context;
-    private List<UsersModel>usersModelsList;
+    private List<UsersJoinsResponse>usersJoinsResponses;
 
-    public UsersAdapter(List<UsersModel> usersModelsList) {
-        this.usersModelsList = usersModelsList;
+    public UsersAdapter(List<UsersJoinsResponse> usersModelsList) {
+        this.usersJoinsResponses = usersModelsList;
     }
 
     public UsersAdapter(Context context) {
@@ -40,28 +44,32 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHlder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHlder viewHlder, int i) {
-        UsersModel usersModel = usersModelsList.get(i);
+        UsersJoinsResponse usersJoinsResponse = usersJoinsResponses.get(i);
 
-        viewHlder.name.setText(usersModel.getName());
+        viewHlder.name.setText(usersJoinsResponse.getName());
 
         viewHlder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(context,SendActivity.class);
-                //intent.putExtra("id",user.getName());
-                context.startActivity(intent);
+//                UsersJoinsResponse center = new Center();
+//                Intent intent = new Intent(context,SendActivity.class);
+//                intent.putExtra("name",center.getName());
+//                intent.putExtra("email",center.getEmail());
+//                intent.putExtra("id_user",center.getId());
+//                intent.putExtra("image",center.getImages());
+//                context.startActivity(intent);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return usersModelsList != null ? usersModelsList.size():0;
+        return usersJoinsResponses != null ? usersJoinsResponses.size():0;
     }
 
-    public void setData(List<UsersModel> usersModels) {
-        this.usersModelsList = usersModels;
+    public void setData(List<UsersJoinsResponse> usersModels) {
+        this.usersJoinsResponses = usersModels;
     }
 
     public class ViewHlder extends RecyclerView.ViewHolder {
