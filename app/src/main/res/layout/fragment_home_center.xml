@@ -24,7 +24,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@mipmap/ic_launcher"
+            android:background="@drawable/bg_sportive"
             android:id="@+id/center_img"/>
 
         <LinearLayout
@@ -38,7 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="Power Gym"
+                android:text=""
                 android:id="@+id/name_center"
                 android:textSize="24sp"
                 android:layout_marginTop="10dp"
@@ -49,7 +49,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="0123456789"
+                android:text=""
                 android:id="@+id/phone_center"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/black"

@@ -10,8 +10,7 @@
         android:layout_width="0dp"
         android:layout_height="100dp"
         android:layout_weight="1.5"
-        android:id="@+id/user_img"
-        android:background="@mipmap/ic_launcher"/>
+        android:id="@+id/user_img" />
 
     <LinearLayout
         android:layout_width="0dp"

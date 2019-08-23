@@ -90,7 +90,7 @@ public class HomeCenterFragment extends Fragment implements OnMapReadyCallback {
     private GameActivityResponse gameActivityResponse;
 
     private SharedPreferences preferences;
-    private String id;
+    private String id,center_name,center_phone;
     private String[] game,name;
     private int i ;
 
@@ -105,11 +105,14 @@ public class HomeCenterFragment extends Fragment implements OnMapReadyCallback {
         View view = inflater.inflate(R.layout.fragment_home_center, container, false);
         unbinder = ButterKnife.bind(this, view);
 
-        phoneCenter.setText("0123456789");
-        nameCenter.setText("Power Gym");
 
         preferences = Objects.requireNonNull(getActivity()).getSharedPreferences("user", Context.MODE_PRIVATE);
         id = preferences.getString("id", "");
+        center_name = preferences.getString("name", "");
+        center_phone = preferences.getString("phone", "");
+
+        nameCenter.setText(center_name);
+        phoneCenter.setText(center_phone);
 
         mapFragment = (SupportMapFragment) getChildFragmentManager()
                 .findFragmentById(R.id.map_center);

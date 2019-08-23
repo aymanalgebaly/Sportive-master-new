@@ -1,20 +1,16 @@
 package com.compubase.sportive.ui.fragment;
 
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.compubase.sportive.R;
-import com.compubase.sportive.adapter.CentersAdapter;
 import com.compubase.sportive.adapter.GameAdapter;
 import com.compubase.sportive.adapter.UsersAdapter;
 import com.compubase.sportive.data.API;
@@ -53,8 +49,7 @@ public class UsersFragment extends Fragment {
     private String[] name;
     private int i;
     private String id,name_user;
-    private ArrayList<UsersJoinsResponse> usersJoinsResponseArrayList;
-    private String id_center;
+    private int[] img;
 
     public UsersFragment() {
         // Required empty public constructor
@@ -70,9 +65,6 @@ public class UsersFragment extends Fragment {
 
 //        id = getArguments().getString("id", "");
 //        name_user = getArguments().getString("name", "");
-
-        SharedPreferences preferences = getActivity().getSharedPreferences("user", Context.MODE_PRIVATE);
-        id_center = preferences.getString("id", "");
         setup();
         data();
 
@@ -83,55 +75,28 @@ public class UsersFragment extends Fragment {
     private void setup() {
         LinearLayoutManager gridLayoutManager = new LinearLayoutManager(getActivity());
         rcvUsers.setLayoutManager(gridLayoutManager);
+        adapter = new UsersAdapter(getActivity());
+        rcvUsers.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
     private void data() {
 
-            Call<ResponseBody> call2 = RetrofitClient.getInstant().create(API.class).UsersJoin(id_center);
+        List<UsersModel> usersModels = new ArrayList<>();
 
-            call2.enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+        img = new int[]{R.drawable.bg_sportive, R.drawable.bg_sportive, R.drawable.bg_sportive,
+                R.drawable.bg_sportive, R.drawable.bg_sportive, R.drawable.bg_sportive,
+                R.drawable.bg_sportive, R.drawable.bg_sportive, R.drawable.bg_sportive};
+        name = new String[]{"ahmed","ayman","amir","ali","hassan","hussien","hanan","hany","sameh"};
 
-                    GsonBuilder builder = new GsonBuilder();
-                    Gson gson = builder.create();
+        for ( i = 0; i <img.length ; i++) {
+            usersModels.add(new UsersModel(name[i], img[i]));
 
-                    try {
-                        assert response.body() != null;
-                        List<UsersJoinsResponse> usersJoinsResponses =
-                                Arrays.asList(gson.fromJson(response.body().string(), UsersJoinsResponse[].class));
+//            ratingBar.setRating(num[i]);
+        }
 
-                        if (response.isSuccessful()){
-
-                            for (int j = 0; j <usersJoinsResponses.size() ; j++) {
-
-                                Toast.makeText(getActivity(), usersJoinsResponses.get(j).getName(), Toast.LENGTH_SHORT).show();
-
-                                Log.i( "onResponse: ",usersJoinsResponses.get(j).getName());
-
-                                UsersJoinsResponse usersJoins = new UsersJoinsResponse();
-
-                                usersJoins.setName(usersJoinsResponses.get(j).getName());
-
-                                usersJoinsResponseArrayList = new ArrayList<>();
-
-                                usersJoinsResponseArrayList.add(usersJoins);
-                            }
-                            adapter = new UsersAdapter(usersJoinsResponseArrayList);
-                            rcvUsers.setAdapter(adapter);
-                            adapter.notifyDataSetChanged();
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
+        adapter.setData(usersModels);
+        adapter.notifyDataSetChanged();
     }
 
     @Override

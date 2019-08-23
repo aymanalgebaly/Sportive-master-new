@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.compubase.sportive.R;
@@ -17,15 +18,16 @@ import com.compubase.sportive.model.UsersModel;
 import com.compubase.sportive.ui.activity.CenterDetailsActivity;
 import com.compubase.sportive.ui.activity.SendActivity;
 import com.compubase.sportive.ui.fragment.UsersFragment;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHlder> {
     private Context context;
-    private List<UsersJoinsResponse>usersJoinsResponses;
+    private List<UsersModel>usersModelsist;
 
-    public UsersAdapter(List<UsersJoinsResponse> usersModelsList) {
-        this.usersJoinsResponses = usersModelsList;
+    public UsersAdapter(List<UsersModel> usersModels) {
+        this.usersModelsist = usersModels;
     }
 
     public UsersAdapter(Context context) {
@@ -44,13 +46,17 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHlder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHlder viewHlder, int i) {
-        UsersJoinsResponse usersJoinsResponse = usersJoinsResponses.get(i);
+        UsersModel usersModel = usersModelsist.get(i);
 
-        viewHlder.name.setText(usersJoinsResponse.getName());
+        viewHlder.name.setText(usersModel.getName());
+
+        Picasso.get().load(usersModel.getImg()).into(viewHlder.img);
 
         viewHlder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                context.startActivity(new Intent(context,SendActivity.class));
 
 //                UsersJoinsResponse center = new Center();
 //                Intent intent = new Intent(context,SendActivity.class);
@@ -65,20 +71,24 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHlder> {
 
     @Override
     public int getItemCount() {
-        return usersJoinsResponses != null ? usersJoinsResponses.size():0;
+        return usersModelsist != null ? usersModelsist.size():0;
     }
 
-    public void setData(List<UsersJoinsResponse> usersModels) {
-        this.usersJoinsResponses = usersModels;
+
+    public void setData(List<UsersModel> usersModels) {
+        this.usersModelsist = usersModels;
     }
 
     public class ViewHlder extends RecyclerView.ViewHolder {
 
         TextView name;
+        ImageView img;
         public ViewHlder(@NonNull View itemView) {
             super(itemView);
 
             name = itemView.findViewById(R.id.user_name);
+            img = itemView.findViewById(R.id.user_img);
+
         }
     }
 }
