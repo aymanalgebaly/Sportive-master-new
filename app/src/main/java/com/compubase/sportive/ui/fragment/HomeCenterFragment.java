@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -78,16 +79,15 @@ public class HomeCenterFragment extends Fragment implements OnMapReadyCallback {
     Button addBtn;
     Unbinder unbinder;
 
-    private GoogleMap mgoogleMap;
-    private SupportMapFragment mapFragment;
+    GoogleMap mgoogleMap;
+    SupportMapFragment mapFragment;
 
     private GameAdapter adapter;
     List<GameActivityResponse> gameActivityResponseList = new ArrayList<>();
 
     private ArrayList<GameActivityResponse> gameActivityResponseArrayList = new ArrayList<>();
-    private GameActivityResponse gameActivityResponse;
 
-    private SharedPreferences preferences;
+    SharedPreferences preferences;
     private String id;
 
 
@@ -137,22 +137,23 @@ public class HomeCenterFragment extends Fragment implements OnMapReadyCallback {
         }
     }
 
-    private void setupRecycler() {
+    private void setupRecycler(){
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         rcvCenterHome.setLayoutManager(linearLayoutManager);
 
     }
-    private void fetchData (){
+
+    private void fetchData(){
+
         Call<ResponseBody> call2 = RetrofitClient.getInstant().create(API.class).ListOfGames(id);
 
         call2.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
 
                 GsonBuilder builder = new GsonBuilder();
                 Gson gson = builder.create();
-
 
                 try {
                     assert response.body() != null;
@@ -160,10 +161,9 @@ public class HomeCenterFragment extends Fragment implements OnMapReadyCallback {
 
                     if (response.isSuccessful()){
 
-                        for (int j = 0; j <gameActivityResponseList.size() ; j++) {
+                        for (int j = 0; j <gameActivityResponseList.size(); j++) {
 
-                            Toast.makeText(getActivity(), gameActivityResponseList.get(j).getNameGame(), Toast.LENGTH_SHORT).show();
-                            gameActivityResponse = new GameActivityResponse();
+                            GameActivityResponse gameActivityResponse = new GameActivityResponse();
 
                             gameActivityResponse.setNameGame(gameActivityResponseList.get(j).getNameGame());
                             gameActivityResponse.setCoach(gameActivityResponseList.get(j).getCoach());
@@ -182,7 +182,7 @@ public class HomeCenterFragment extends Fragment implements OnMapReadyCallback {
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });

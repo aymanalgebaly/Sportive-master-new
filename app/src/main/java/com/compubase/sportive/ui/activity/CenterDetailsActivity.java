@@ -1,5 +1,6 @@
 package com.compubase.sportive.ui.activity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
@@ -18,6 +19,8 @@ import com.compubase.sportive.helper.RetrofitClient;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
 
@@ -52,16 +55,41 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
     GoogleMap mgoogleMap;
     SupportMapFragment mapFragment;
 
+    String id;
+
+    String myid;
+
+    String lang;
+
+    String lat;
+
+    String name;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_center_details);
         ButterKnife.bind(this);
 
-        mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+        mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_center);
         assert mapFragment != null;
         mapFragment.getMapAsync(this);
+
+
+        lang = getIntent().getExtras().getString("long");
+        lat = getIntent().getExtras().getString("lat");
+        name = getIntent().getExtras().getString("name");
+        String phone = getIntent().getExtras().getString("phone");
+        id = getIntent().getExtras().getString("id");
+
+       // Toast.makeText(CenterDetailsActivity.this, lang, Toast.LENGTH_SHORT).show();
+
+        nameCenter.setText(name);
+        phoneCenter.setText(phone);
+
+        SharedPreferences shared = getSharedPreferences("user", MODE_PRIVATE);
+        myid = (shared.getString("id", "5"));
+
 
 
         btnJoin.setOnClickListener(new View.OnClickListener() {
@@ -73,9 +101,24 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
         });
     }
 
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+
+        assert lang != null;
+        assert lat != null;
+        if(!lang.equals("") || !lat.equals(""))
+        {
+            double lo = Double.parseDouble(lang);
+            double la = Double.parseDouble(lat);
+            MarkerOptions marker = new MarkerOptions().position(new LatLng(lo,la)).title(name);
+            googleMap.addMarker(marker);
+        }
+    }
+
+
     private void join() {
 
-        Call<ResponseBody> call2 = RetrofitClient.getInstant().create(API.class).Join("1","1","game");
+        Call<ResponseBody> call2 = RetrofitClient.getInstant().create(API.class).Join(id,myid,"game");
 
         call2.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -96,10 +139,5 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
             }
         });
 
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        this.mgoogleMap = googleMap;
     }
 }

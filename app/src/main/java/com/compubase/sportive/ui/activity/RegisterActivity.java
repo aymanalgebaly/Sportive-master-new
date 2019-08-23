@@ -141,8 +141,8 @@ public class RegisterActivity extends AppCompatActivity {
                             //Toast.makeText(RegisterActivity.this, string, Toast.LENGTH_SHORT).show();
 
                             if (string.equals("True")) {
-                                onBackPressed();
-                                //startActivity(new Intent(RegisterActivity.this, CenterHomeActivity.class));
+                                //onBackPressed();
+                                startActivity(new Intent(RegisterActivity.this, CenterHomeActivity.class));
                             }else
                                 {
                                     Toast.makeText(RegisterActivity.this, string, Toast.LENGTH_SHORT).show();
