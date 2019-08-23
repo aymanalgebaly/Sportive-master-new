@@ -78,4 +78,7 @@ public interface API {
     Call<ResponseBody>ListOfGames(
             @Field("id_center") String id_center
     );
+
+    @GET("select_all_center_famous")
+    Call<ResponseBody>ListOfFamous();
 }

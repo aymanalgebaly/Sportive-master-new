@@ -10,21 +10,24 @@ import android.widget.TextView;
 
 import com.compubase.sportive.R;
 import com.compubase.sportive.model.GameActivityResponse;
+import com.compubase.sportive.model.GameModel;
 
 import java.util.List;
 
 public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolderGame> {
 
-    private List<GameActivityResponse>gameActivityResponseList;
+    private List<GameModel>gameModelsList;
+
+    public GameAdapter(List<GameModel> gameModelsList) {
+        this.gameModelsList = gameModelsList;
+    }
+
     private Context context;
 
     public GameAdapter(Context context) {
         this.context = context;
     }
 
-    public GameAdapter(List<GameActivityResponse> gameActivityResponseList) {
-        this.gameActivityResponseList = gameActivityResponseList;
-    }
 
     @NonNull
     @Override
@@ -36,15 +39,19 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolderGame
     @Override
     public void onBindViewHolder(@NonNull ViewHolderGame viewHolderGame, int i) {
 
-        GameActivityResponse gameActivityResponse = gameActivityResponseList.get(i);
+        GameModel gameModel = gameModelsList.get(i);
 
-        viewHolderGame.game.setText(gameActivityResponse.getNameGame());
-        viewHolderGame.name.setText(gameActivityResponse.getCoach());
+        viewHolderGame.game.setText(gameModel.getGame());
+        viewHolderGame.name.setText(gameModel.getName());
     }
 
     @Override
     public int getItemCount() {
-        return gameActivityResponseList != null ? gameActivityResponseList.size():0;
+        return gameModelsList != null ? gameModelsList.size():0;
+    }
+
+    public void setData(List<GameModel> gameModels) {
+        this.gameModelsList = gameModels;
     }
 
     public class ViewHolderGame extends RecyclerView.ViewHolder {

@@ -52,6 +52,7 @@ public class CentersAdapter extends RecyclerView.Adapter<CentersAdapter.ViewHold
         final Center center = centerList.get(i);
 
         viewHolderCenters.name.setText(center.getName());
+        
 //        viewHolderCenters.km.setText(center.);
 
 //        Picasso.get().load(centersModel.getImg()).into(viewHolderCenters.imageView);

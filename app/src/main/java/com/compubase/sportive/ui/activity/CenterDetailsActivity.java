@@ -1,9 +1,11 @@
 package com.compubase.sportive.ui.activity;
 
 import android.content.SharedPreferences;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
@@ -14,15 +16,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.compubase.sportive.R;
+import com.compubase.sportive.adapter.GameAdapter;
 import com.compubase.sportive.data.API;
 import com.compubase.sportive.helper.RetrofitClient;
+import com.compubase.sportive.model.GameModel;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -64,6 +73,9 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
     String lat;
 
     String name;
+    private GameAdapter adapter;
+    private String[] game,name_game;
+    private int i;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -91,6 +103,8 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
         myid = (shared.getString("id", "5"));
 
 
+        setup();
+        data();
 
         btnJoin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,15 +132,21 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
 
     private void join() {
 
-        Call<ResponseBody> call2 = RetrofitClient.getInstant().create(API.class).Join(id,myid,"game");
+        Call<ResponseBody> call2 = RetrofitClient.getInstant().create(API.class).Join("5","10","game");
 
         call2.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
+                GsonBuilder builder = new GsonBuilder();
+                Gson gson = builder.create();
+
                 try {
                     assert response.body() != null;
-                    Toast.makeText(CenterDetailsActivity.this, response.body().string(), Toast.LENGTH_SHORT).show();
+                    String string = response.body().string();
+                    if (string.equals("True")){
+                        Toast.makeText(CenterDetailsActivity.this, "Joined", Toast.LENGTH_SHORT).show();
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -139,5 +159,28 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
             }
         });
 
+    }
+
+    private void setup() {
+        LinearLayoutManager gridLayoutManager = new LinearLayoutManager(this);
+        rcvCenterHome.setLayoutManager(gridLayoutManager);
+        adapter = new GameAdapter(this);
+        rcvCenterHome.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
+
+    private void data() {
+        List<GameModel> gameModels = new ArrayList<>();
+
+        game = new String[]{"Football","Football","Football","Football","Football"};
+        name_game = new String[]{"ahmed", "ahmed", "ahmed", "ahmed", "ahmed"};
+
+        for ( i = 0; i <game.length ; i++) {
+            gameModels.add(new GameModel(game[i],name_game[i]));
+
+        }
+
+        adapter.setData(gameModels);
+        adapter.notifyDataSetChanged();
     }
 }

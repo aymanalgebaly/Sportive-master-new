@@ -6,8 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -28,6 +28,7 @@ import com.compubase.sportive.data.API;
 import com.compubase.sportive.helper.RetrofitClient;
 import com.compubase.sportive.model.Center;
 import com.compubase.sportive.model.GameActivityResponse;
+import com.compubase.sportive.model.GameModel;
 import com.compubase.sportive.ui.activity.AddGameActivity;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -79,16 +80,19 @@ public class HomeCenterFragment extends Fragment implements OnMapReadyCallback {
     Button addBtn;
     Unbinder unbinder;
 
-    GoogleMap mgoogleMap;
-    SupportMapFragment mapFragment;
+    private GoogleMap mgoogleMap;
+    private SupportMapFragment mapFragment;
 
     private GameAdapter adapter;
     List<GameActivityResponse> gameActivityResponseList = new ArrayList<>();
 
     private ArrayList<GameActivityResponse> gameActivityResponseArrayList = new ArrayList<>();
+    private GameActivityResponse gameActivityResponse;
 
-    SharedPreferences preferences;
+    private SharedPreferences preferences;
     private String id;
+    private String[] game,name;
+    private int i ;
 
 
     public HomeCenterFragment() {
@@ -101,6 +105,9 @@ public class HomeCenterFragment extends Fragment implements OnMapReadyCallback {
         View view = inflater.inflate(R.layout.fragment_home_center, container, false);
         unbinder = ButterKnife.bind(this, view);
 
+        phoneCenter.setText("0123456789");
+        nameCenter.setText("Power Gym");
+
         preferences = Objects.requireNonNull(getActivity()).getSharedPreferences("user", Context.MODE_PRIVATE);
         id = preferences.getString("id", "");
 
@@ -109,10 +116,36 @@ public class HomeCenterFragment extends Fragment implements OnMapReadyCallback {
         assert mapFragment != null;
         mapFragment.getMapAsync(this);
 
-        setupRecycler();
-        fetchData();
+//        setupRecycler();
+//        fetchData();
+
+        setup();
+        data();
 
         return view;
+    }
+
+    private void setup() {
+        LinearLayoutManager gridLayoutManager = new LinearLayoutManager(getActivity());
+        rcvCenterHome.setLayoutManager(gridLayoutManager);
+        adapter = new GameAdapter(getActivity());
+        rcvCenterHome.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
+
+    private void data() {
+        List<GameModel> gameModels = new ArrayList<>();
+
+        game = new String[]{"Football","Football","Football","Football","Football"};
+        name = new String[]{"ahmed", "ahmed", "ahmed", "ahmed", "ahmed"};
+
+        for ( i = 0; i <game.length ; i++) {
+            gameModels.add(new GameModel(game[i],name[i]));
+
+        }
+
+        adapter.setData(gameModels);
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -137,55 +170,55 @@ public class HomeCenterFragment extends Fragment implements OnMapReadyCallback {
         }
     }
 
-    private void setupRecycler(){
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        rcvCenterHome.setLayoutManager(linearLayoutManager);
-
-    }
-
-    private void fetchData(){
-
-        Call<ResponseBody> call2 = RetrofitClient.getInstant().create(API.class).ListOfGames(id);
-
-        call2.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
-
-                GsonBuilder builder = new GsonBuilder();
-                Gson gson = builder.create();
-
-                try {
-                    assert response.body() != null;
-                    gameActivityResponseList = Arrays.asList(gson.fromJson(response.body().string(), GameActivityResponse[].class));
-
-                    if (response.isSuccessful()){
-
-                        for (int j = 0; j <gameActivityResponseList.size(); j++) {
-
-                            GameActivityResponse gameActivityResponse = new GameActivityResponse();
-
-                            gameActivityResponse.setNameGame(gameActivityResponseList.get(j).getNameGame());
-                            gameActivityResponse.setCoach(gameActivityResponseList.get(j).getCoach());
-
-                            gameActivityResponseArrayList.add(gameActivityResponse);
-                        }
-                        adapter = new GameAdapter(gameActivityResponseArrayList);
-                        rcvCenterHome.setAdapter(adapter);
-                        adapter.notifyDataSetChanged();
-
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
-
-    }
+//    private void setupRecycler() {
+//
+//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+//        rcvCenterHome.setLayoutManager(linearLayoutManager);
+//
+//    }
+//    private void fetchData (){
+//        Call<ResponseBody> call2 = RetrofitClient.getInstant().create(API.class).ListOfGames(id);
+//
+//        call2.enqueue(new Callback<ResponseBody>() {
+//            @Override
+//            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+//
+//                GsonBuilder builder = new GsonBuilder();
+//                Gson gson = builder.create();
+//
+//
+//                try {
+//                    assert response.body() != null;
+//                    gameActivityResponseList = Arrays.asList(gson.fromJson(response.body().string(), GameActivityResponse[].class));
+//
+//                    if (response.isSuccessful()){
+//
+//                        for (int j = 0; j <gameActivityResponseList.size() ; j++) {
+//
+//                            Toast.makeText(getActivity(), gameActivityResponseList.get(j).getNameGame(), Toast.LENGTH_SHORT).show();
+//                            gameActivityResponse = new GameActivityResponse();
+//
+//                            gameActivityResponse.setNameGame(gameActivityResponseList.get(j).getNameGame());
+//                            gameActivityResponse.setCoach(gameActivityResponseList.get(j).getCoach());
+//
+//                            gameActivityResponseArrayList.add(gameActivityResponse);
+//                        }
+//                        adapter = new GameAdapter(gameActivityResponseArrayList);
+//                        rcvCenterHome.setAdapter(adapter);
+//                        adapter.notifyDataSetChanged();
+//
+//                    }
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ResponseBody> call, Throwable t) {
+//                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_LONG).show();
+//            }
+//        });
+//
+//    }
 }

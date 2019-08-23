@@ -12,12 +12,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.compubase.sportive.R;
 import com.compubase.sportive.data.API;
 import com.compubase.sportive.helper.RetrofitClient;
-import com.compubase.sportive.model.Center;
 import com.compubase.sportive.model.LoginActivityResponse;
 import com.compubase.sportive.model.UserActivityActivityResponse;
 import com.google.gson.Gson;
@@ -57,8 +55,7 @@ public class LoginActivity extends AppCompatActivity {
     private String email,password;
     private SharedPreferences preferences;
     private String string;
-    int id;
-    String name,type;
+    private int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,25 +85,15 @@ public class LoginActivity extends AppCompatActivity {
 
                         try {
                             assert response.body() != null;
-                            List<Center> loginActivityResponses = Arrays.asList(gson.fromJson(response.body().string(), Center[].class));
+                            List<LoginActivityResponse> loginActivityResponses =
+                                    Arrays.asList(gson.fromJson(response.body().string(), LoginActivityResponse[].class));
                             if (response.isSuccessful()){
 
                                 id = loginActivityResponses.get(0).getId();
-                                name = loginActivityResponses.get(0).getName();
 
-                                type = loginActivityResponses.get(0).getType();
+//                                sharedLogin();
 
-                                if(type.equals("center"))
-                                {
-                                    startActivity(new Intent(LoginActivity.this,CenterHomeActivity.class));
-                                }else
-                                    {
-                                        startActivity(new Intent(LoginActivity.this,HomeActivity.class));
-                                    }
-
-                                //Toast.makeText(LoginActivity.this, String.valueOf(id), Toast.LENGTH_SHORT).show();
-
-                                sharedLogin();
+                                startActivity(new Intent(LoginActivity.this,HomeActivity.class));
                             }
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -122,24 +109,24 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public void sharedLogin() {
-
-        SharedPreferences.Editor editor = getSharedPreferences("user", MODE_PRIVATE).edit();
-
-        preferences = getSharedPreferences("user", MODE_PRIVATE);
-
-        editor.putBoolean("login", true);
-
-        editor.putString("id", String.valueOf(id));
-        editor.putString("name", name);
-        //editor.putString("email", email);
-        //editor.putString("pass", password);
-        //editor.putString("phone", userphone);
-        //editor.putString("type", radio);
-        //editor.putString("address",address);
-
-        editor.apply();
-    }
+//    public void sharedLogin() {
+//
+//        SharedPreferences.Editor editor = getSharedPreferences("user", MODE_PRIVATE).edit();
+//
+//        preferences = getSharedPreferences("user", MODE_PRIVATE);
+//
+//        editor.putBoolean("login", true);
+//
+//        editor.putString("id", String.valueOf(id));
+//        editor.putString("name", userName);
+//        editor.putString("email", userMail);
+//        editor.putString("pass", userpass);
+//        editor.putString("phone", userphone);
+//        editor.putString("type", radio);
+//        editor.putString("address",address);
+//
+//        editor.apply();
+//    }
 
 
     @OnClick({R.id.text_forgot_pass, R.id.BTN_signIn_login, R.id.BTN_signup_log})
