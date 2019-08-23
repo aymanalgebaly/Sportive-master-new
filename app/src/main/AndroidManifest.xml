@@ -94,6 +94,8 @@
         </activity>
 
         <activity android:name=".ui.activity.CenterDetailsActivity"/>
+
+        <activity android:name=".ui.activity.SendActivity"/>
     </application>
 
 </manifest>

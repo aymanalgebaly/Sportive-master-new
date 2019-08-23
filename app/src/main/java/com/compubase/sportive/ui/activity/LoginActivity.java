@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.compubase.sportive.R;
 import com.compubase.sportive.data.API;
 import com.compubase.sportive.helper.RetrofitClient;
+import com.compubase.sportive.model.Center;
 import com.compubase.sportive.model.LoginActivityResponse;
 import com.compubase.sportive.model.UserActivityActivityResponse;
 import com.google.gson.Gson;
@@ -57,6 +58,8 @@ public class LoginActivity extends AppCompatActivity {
     private String string;
     private int id;
 
+    String name,lat,lang,phone;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,15 +88,28 @@ public class LoginActivity extends AppCompatActivity {
 
                         try {
                             assert response.body() != null;
-                            List<LoginActivityResponse> loginActivityResponses =
-                                    Arrays.asList(gson.fromJson(response.body().string(), LoginActivityResponse[].class));
+                            List<Center> loginActivityResponses =
+                                    Arrays.asList(gson.fromJson(response.body().string(), Center[].class));
                             if (response.isSuccessful()){
 
                                 id = loginActivityResponses.get(0).getId();
 
-//                                sharedLogin();
+                                name = loginActivityResponses.get(0).getName();
+                                lang = loginActivityResponses.get(0).getLang();
+                                lat = loginActivityResponses.get(0).getLat();
+                                phone = loginActivityResponses.get(0).getPhone();
+                                email = loginActivityResponses.get(0).getEmail();
 
-                                startActivity(new Intent(LoginActivity.this,HomeActivity.class));
+                                if(loginActivityResponses.get(0).getType().equals("center"))
+                                {
+                                    startActivity(new Intent(LoginActivity.this,CenterHomeActivity.class));
+                                }else
+                                    {
+                                        startActivity(new Intent(LoginActivity.this,HomeActivity.class));
+                                    }
+
+                                sharedLogin();
+
                             }
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -109,24 +125,23 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-//    public void sharedLogin() {
-//
-//        SharedPreferences.Editor editor = getSharedPreferences("user", MODE_PRIVATE).edit();
-//
-//        preferences = getSharedPreferences("user", MODE_PRIVATE);
-//
-//        editor.putBoolean("login", true);
-//
-//        editor.putString("id", String.valueOf(id));
-//        editor.putString("name", userName);
-//        editor.putString("email", userMail);
-//        editor.putString("pass", userpass);
-//        editor.putString("phone", userphone);
-//        editor.putString("type", radio);
-//        editor.putString("address",address);
-//
-//        editor.apply();
-//    }
+    public void sharedLogin() {
+
+        SharedPreferences.Editor editor = getSharedPreferences("user", MODE_PRIVATE).edit();
+
+        preferences = getSharedPreferences("user", MODE_PRIVATE);
+
+        editor.putBoolean("login", true);
+
+        editor.putString("id", String.valueOf(id));
+        editor.putString("name", name);
+        editor.putString("email", email);
+        editor.putString("lat", lat);
+        editor.putString("long", lang);
+        editor.putString("phone", phone);
+
+        editor.apply();
+    }
 
 
     @OnClick({R.id.text_forgot_pass, R.id.BTN_signIn_login, R.id.BTN_signup_log})
