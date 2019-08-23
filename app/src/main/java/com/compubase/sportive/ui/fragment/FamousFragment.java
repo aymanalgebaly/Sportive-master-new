@@ -79,6 +79,10 @@ public class FamousFragment extends Fragment {
 
     }
     private void fetchData (){
+
+        //to clear the array first
+        centerArrayList.clear();
+
         Call<ResponseBody> call2 = RetrofitClient.getInstant().create(API.class).ListOfCenters();
 
         call2.enqueue(new Callback<ResponseBody>() {

@@ -18,20 +18,18 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolderGame
 
     private List<GameModel>gameModelsList;
 
+    Context context;
+
     public GameAdapter(List<GameModel> gameModelsList) {
         this.gameModelsList = gameModelsList;
     }
 
-    private Context context;
-
-    public GameAdapter(Context context) {
-        this.context = context;
-    }
-
-
     @NonNull
     @Override
     public ViewHolderGame onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+
+        context = viewGroup.getContext();
+
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.rcv_design_center_home, viewGroup, false);
         return new ViewHolderGame(view);
     }
@@ -47,17 +45,15 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolderGame
 
     @Override
     public int getItemCount() {
-        return gameModelsList != null ? gameModelsList.size():0;
+        return gameModelsList.size();
     }
 
-    public void setData(List<GameModel> gameModels) {
-        this.gameModelsList = gameModels;
-    }
 
-    public class ViewHolderGame extends RecyclerView.ViewHolder {
+    class ViewHolderGame extends RecyclerView.ViewHolder {
 
         TextView name,game;
-        public ViewHolderGame(@NonNull View itemView) {
+
+        ViewHolderGame(@NonNull View itemView) {
             super(itemView);
 
             game = itemView.findViewById(R.id.nameOfGame);

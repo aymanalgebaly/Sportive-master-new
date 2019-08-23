@@ -62,13 +62,13 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     RecyclerView rcvHome;
     Unbinder unbinder;
 
-    private GoogleMap mMap;
-
     private CentersAdapter adapter;
     List<Center> centerList = new ArrayList<>();
 
     private ArrayList<Center> centerArrayList = new ArrayList<>();
     private Center center;
+
+    private GoogleMap mMap;
     SupportMapFragment mapFragment;
 
 

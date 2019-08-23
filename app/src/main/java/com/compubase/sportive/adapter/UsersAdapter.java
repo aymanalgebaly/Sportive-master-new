@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.compubase.sportive.R;
 import com.compubase.sportive.model.Center;
 import com.compubase.sportive.model.UsersJoinsResponse;
@@ -23,24 +24,13 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHlder> {
+
     private Context context;
-    private List<UsersModel>usersModelsist;
-    onItemClickListner onItemClickedListner;
+    private List<Center> usersModelsist;
 
 
-    public UsersAdapter(List<UsersModel> usersModels) {
-        this.usersModelsist = usersModels;
-    }
-    public interface onItemClickListner {
-        void onClick(UsersModel usersModel);//pass your object types.
-    }
-
-    public void onItemClickedListner(UsersAdapter.onItemClickListner onItemClickListner) {
-        this.onItemClickedListner = onItemClickListner;
-    }
-
-    public UsersAdapter(Context context) {
-        this.context = context;
+    public UsersAdapter(List<Center> usersModelsist) {
+        this.usersModelsist = usersModelsist;
     }
 
     @NonNull
@@ -55,27 +45,22 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHlder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHlder viewHlder, int i) {
-        UsersModel usersModel = usersModelsist.get(i);
 
-        viewHlder.name.setText(usersModel.getName());
+        final Center user = usersModelsist.get(i);
 
-        Picasso.get().load(usersModel.getImg()).into(viewHlder.img);
+        viewHlder.name.setText(user.getName());
 
-//        viewHlder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                Intent intent = new Intent(context,SendActivity.class);
-//
-////                UsersJoinsResponse center = new Center();
-////                Intent intent = new Intent(context,SendActivity.class);
-////                intent.putExtra("name",center.getName());
-////                intent.putExtra("email",center.getEmail());
-////                intent.putExtra("id_user",center.getId());
-////                intent.putExtra("image",center.getImages());
-//                  context.startActivity(intent);
-//            }
-//        });
+        Glide.with(context).load(user.getImages()).placeholder(R.drawable.bg_sportive).into(viewHlder.img);
+
+        viewHlder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(context,SendActivity.class);
+                intent.putExtra("id_user",user.getId());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -84,15 +69,12 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHlder> {
     }
 
 
-    public void setData(List<UsersModel> usersModels) {
-        this.usersModelsist = usersModels;
-    }
-
-    public class ViewHlder extends RecyclerView.ViewHolder {
+    class ViewHlder extends RecyclerView.ViewHolder {
 
         TextView name;
         ImageView img;
-        public ViewHlder(@NonNull View itemView) {
+
+        ViewHlder(@NonNull View itemView) {
             super(itemView);
 
             name = itemView.findViewById(R.id.user_name);

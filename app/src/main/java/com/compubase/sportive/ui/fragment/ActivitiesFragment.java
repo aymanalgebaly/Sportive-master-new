@@ -81,10 +81,15 @@ public class ActivitiesFragment extends Fragment {
     private void setupRecycler() {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        linearLayoutManager.setReverseLayout(true);
         rcvActivities.setLayoutManager(linearLayoutManager);
 
     }
     private void fetchData (){
+
+        //to clear the array first
+        userActivityActivityResponseArrayList.clear();
+
         Call<ResponseBody> call2 = RetrofitClient.getInstant().create(API.class).ListOfActivities(id_user);
 
         call2.enqueue(new Callback<ResponseBody>() {

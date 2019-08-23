@@ -15,10 +15,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.compubase.sportive.R;
 import com.compubase.sportive.adapter.GameAdapter;
 import com.compubase.sportive.data.API;
 import com.compubase.sportive.helper.RetrofitClient;
+import com.compubase.sportive.helper.TinyDB;
 import com.compubase.sportive.model.GameModel;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -27,6 +33,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -61,6 +71,11 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
     @BindView(R.id.frame_rcv)
     FrameLayout frameRcv;
 
+
+    RequestQueue requestQueue;
+
+    TinyDB tinyDB;
+
     GoogleMap mgoogleMap;
     SupportMapFragment mapFragment;
 
@@ -77,6 +92,8 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
     private String[] game,name_game;
     private int i;
 
+    List<GameModel> gamesList = new ArrayList<>();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,9 +109,9 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
         lat = getIntent().getExtras().getString("lat");
         name = getIntent().getExtras().getString("name");
         String phone = getIntent().getExtras().getString("phone");
-        id = getIntent().getExtras().getString("id_center","");
+        id = String.valueOf(getIntent().getExtras().getInt("id_center"));
 
-       // Toast.makeText(CenterDetailsActivity.this, lang, Toast.LENGTH_SHORT).show();
+       // Toast.makeText(CenterDetailsActivity.this, id, Toast.LENGTH_SHORT).show();
 
         nameCenter.setText(name);
         phoneCenter.setText(phone);
@@ -103,8 +120,15 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
         myid = (shared.getString("id", ""));
 
 
-        setup();
-        data();
+        rcvCenterHome.setHasFixedSize(true);
+
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        rcvCenterHome.setLayoutManager(llm);
+
+        //setup();
+        //data();
+
+        JSON_DATA_WEB_CALL();
 
         btnJoin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,6 +152,137 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
             googleMap.addMarker(marker);
         }
     }
+
+
+
+
+
+
+
+
+    private void JSON_DATA_WEB_CALL(){
+
+        String url;
+
+        url = "http://sportive.technowow.net/sportive.asmx/select_game?id_center="+id;
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new com.android.volley.Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+               // showMessage(response);
+
+                JSON_PARSE_DATA_AFTER_WEBCALL2(response);
+
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                showMessage(error.getMessage());
+            }
+        });
+
+
+        requestQueue = Volley.newRequestQueue(this);
+
+        requestQueue.add(stringRequest);
+    }
+
+
+    public void JSON_PARSE_DATA_AFTER_WEBCALL2(String Jobj) {
+
+
+        try {
+
+            JSONArray js = new JSONArray(Jobj);
+
+            for (int i = 0; i < js.length(); i++) {
+
+                JSONObject childJSONObject = js.getJSONObject(i);
+
+                GameModel game = new GameModel();
+
+                game.setGame(childJSONObject.getString("name_game"));
+
+                game.setName(childJSONObject.getString("coach"));
+
+                gamesList.add(game);
+
+            }
+
+            adapter = new GameAdapter(gamesList);
+            rcvCenterHome.setAdapter(adapter);
+
+            adapter.notifyDataSetChanged();
+
+
+        }catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void JSON_PARSE_DATA_AFTER_WEBCALL(String Jobj) {
+
+
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+
+        List<GameModel> games = Arrays.asList(gson.fromJson(Jobj, GameModel[].class));
+
+        showMessage(games.get(0).getGame());
+
+        for (int i = 0; i < games.size(); i++) {
+
+            GameModel game = new GameModel();
+
+            game.setName(games.get(i).getName());
+            game.setGame(games.get(i).getGame());
+
+            gamesList.add(game);
+        }
+
+
+        adapter = new GameAdapter(gamesList);
+        rcvCenterHome.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     private void join() {
@@ -162,14 +317,18 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
     }
 
     private void setup() {
+
         LinearLayoutManager gridLayoutManager = new LinearLayoutManager(this);
         rcvCenterHome.setLayoutManager(gridLayoutManager);
-        adapter = new GameAdapter(this);
+        //adapter = new GameAdapter(this);
         rcvCenterHome.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+
     }
 
     private void data() {
+
+
         List<GameModel> gameModels = new ArrayList<>();
 
         game = new String[]{"Football","Football","Football","Football","Football"};
@@ -180,7 +339,11 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
 
         }
 
-        adapter.setData(gameModels);
+        //adapter.setData(gameModels);
         adapter.notifyDataSetChanged();
+    }
+
+    private void showMessage(String s) {
+        Toast.makeText(this, s, Toast.LENGTH_LONG).show();
     }
 }

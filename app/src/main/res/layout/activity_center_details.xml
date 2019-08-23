@@ -94,7 +94,7 @@
             android:textColor="@color/blue"
             android:textStyle="bold"
             android:textSize="20sp"
-            android:text="@string/trainer"
+            android:text="@string/game"
             android:layout_height="wrap_content" />
 
         <TextView
@@ -103,13 +103,13 @@
             android:textColor="@color/blue"
             android:textStyle="bold"
             android:textSize="20sp"
-            android:text="@string/game"
+            android:text="@string/trainer"
             android:layout_height="wrap_content"/>
     </LinearLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@id/lin_txt"
         android:id="@+id/frame_rcv"
         android:background="@color/gray">
