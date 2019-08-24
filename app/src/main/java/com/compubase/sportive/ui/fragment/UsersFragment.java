@@ -101,7 +101,6 @@ public class UsersFragment extends Fragment {
         rcvUsers.setHasFixedSize(true);
 
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
-        llm.setReverseLayout(true);
         rcvUsers.setLayoutManager(llm);
 
     }

@@ -140,7 +140,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     private void setupRecycler() {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        linearLayoutManager.setReverseLayout(true);
         rcvHome.setLayoutManager(linearLayoutManager);
 
     }
