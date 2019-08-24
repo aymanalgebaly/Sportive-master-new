@@ -41,7 +41,7 @@
                 android:layout_weight="1"
                 android:text=""
                 android:id="@+id/name_center"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/black"
                 android:textStyle="bold"/>
@@ -51,6 +51,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:text=""
+                android:textSize="12sp"
                 android:id="@+id/phone_center"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/black"

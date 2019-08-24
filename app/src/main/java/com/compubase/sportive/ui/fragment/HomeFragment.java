@@ -1,7 +1,14 @@
 package com.compubase.sportive.ui.fragment;
 
 
+import android.Manifest;
+import android.app.Dialog;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationProvider;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,12 +30,18 @@ import com.compubase.sportive.adapter.CentersAdapter;
 import com.compubase.sportive.data.API;
 import com.compubase.sportive.helper.RetrofitClient;
 import com.compubase.sportive.model.Center;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -71,6 +84,10 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     private GoogleMap mMap;
     SupportMapFragment mapFragment;
 
+    private static final int ERROR_DIALOG_REQUEST = 9001;
+
+    private FusedLocationProviderClient client;
+    private double latitude,longitude;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -182,6 +199,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                                 double la = Double.parseDouble(lat);
                                 MarkerOptions marker = new MarkerOptions().position(new LatLng(lo,la)).title(centerList.get(j).getName());
                                 mMap.addMarker(marker);
+
+
                             }
 
                             centerArrayList.add(center);
@@ -205,6 +224,24 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
             }
         });
 
+    }
+
+    public boolean isServicesOK(){
+
+        int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(getActivity());
+
+        if(available == ConnectionResult.SUCCESS){
+            //everything is fine and the user can make map requests
+            return true;
+        }
+        else if(GoogleApiAvailability.getInstance().isUserResolvableError(available)){
+            //an error occured but we can resolve it
+            Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(getActivity(), available, ERROR_DIALOG_REQUEST);
+            dialog.show();
+        }else{
+            Toast.makeText(getActivity(), "You can't make map requests", Toast.LENGTH_SHORT).show();
+        }
+        return false;
     }
 
     @Override

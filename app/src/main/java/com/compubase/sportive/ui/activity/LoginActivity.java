@@ -12,10 +12,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.compubase.sportive.R;
 import com.compubase.sportive.data.API;
+import com.compubase.sportive.helper.GPSTracker;
 import com.compubase.sportive.helper.RetrofitClient;
+import com.compubase.sportive.helper.TinyDB;
 import com.compubase.sportive.model.Center;
 import com.compubase.sportive.model.LoginActivityResponse;
 import com.compubase.sportive.model.UserActivityActivityResponse;
@@ -58,7 +61,10 @@ public class LoginActivity extends AppCompatActivity {
     private String string;
     private int id;
 
+    TinyDB tinyDB;
+
     String name,lat,lang,phone;
+    private double latitude,longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +74,19 @@ public class LoginActivity extends AppCompatActivity {
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
+
+        tinyDB = new TinyDB(this);
+
+        GPSTracker tracker = new GPSTracker(this,LoginActivity.this);
+        if (!tracker.canGetLocation()) {
+            tracker.showSettingsAlert();
+        } else {
+            latitude = tracker.getLatitude();
+            longitude = tracker.getLongitude();
+
+            tinyDB.putDouble("latitude",latitude);
+            tinyDB.putDouble("longitude",longitude);
+        }
 
     }
 
@@ -118,7 +137,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                    Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
 

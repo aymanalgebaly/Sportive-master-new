@@ -1,5 +1,6 @@
 package com.compubase.sportive.ui.activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -89,10 +90,14 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
 
     String name;
     private GameAdapter adapter;
-    private String[] game,name_game;
     private int i;
 
     List<GameModel> gamesList = new ArrayList<>();
+    private SharedPreferences preferences;
+    private String name_shared,email_shared;
+
+    private ImageView imageView;
+    private TextView center_name,center_mail;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -104,6 +109,16 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
         assert mapFragment != null;
         mapFragment.getMapAsync(this);
 
+//        preferences = getSharedPreferences("user",MODE_PRIVATE);
+//        name_shared = preferences.getString("name", "");
+//        email_shared = preferences.getString("email", "");
+//
+//        imageView = findViewById(R.id.imageView_center);
+//        center_name = findViewById(R.id.center_name_system);
+//        center_mail = findViewById(R.id.center_mail_system);
+//
+//        center_name.setText(name_shared);
+//        center_mail.setText(email_shared);
 
         lang = getIntent().getExtras().getString("long");
         lat = getIntent().getExtras().getString("lat");
@@ -134,7 +149,7 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
             @Override
             public void onClick(View v) {
 
-                join();
+                startActivity(new Intent(CenterDetailsActivity.this,UserJoinActivity.class));
             }
         });
     }
@@ -248,37 +263,6 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
         adapter = new GameAdapter(gamesList);
         rcvCenterHome.setAdapter(adapter);
         adapter.notifyDataSetChanged();
-    }
-
-    private void join() {
-
-        Call<ResponseBody> call2 = RetrofitClient.getInstant().create(API.class).Join(id,myid,"game");
-
-        call2.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-
-                GsonBuilder builder = new GsonBuilder();
-                Gson gson = builder.create();
-
-                try {
-                    assert response.body() != null;
-                    String string = response.body().string();
-                    if (string.equals("True")){
-                        Toast.makeText(CenterDetailsActivity.this, "Joined", Toast.LENGTH_SHORT).show();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Toast.makeText(CenterDetailsActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-
     }
 
     private void setup() {

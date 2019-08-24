@@ -1,6 +1,8 @@
 package com.compubase.sportive.ui.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -18,10 +20,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.compubase.sportive.R;
 import com.compubase.sportive.adapter.VP_HomeUser;
+import com.compubase.sportive.helper.TinyDB;
+import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
 
@@ -31,11 +38,29 @@ public class HomeActivity extends AppCompatActivity
     private VP_HomeUser vp_scheduleAdapter;
     private ViewPager viewPager;
     private TabLayout tabLayout;
+    private SharedPreferences preferences;
+    private String name,email;
+    private ImageView imageView;
+    private TextView user_name,user_mail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        preferences = getSharedPreferences("user",MODE_PRIVATE);
+        name = preferences.getString("name", "");
+        email = preferences.getString("email", "");
+
+//        imageView = findViewById(R.id.imageView);
+//        user_name = findViewById(R.id.name_profile_system_user);
+//        user_mail = findViewById(R.id.mail_profile_system_user);
+//
+//        Toast.makeText(this, email, Toast.LENGTH_SHORT).show();
+//
+//        user_name.setText(name);
+//        user_mail.setText(email);
+
 
         viewPager = findViewById(R.id.viewPager_user);
         tabLayout = findViewById(R.id.tabss);

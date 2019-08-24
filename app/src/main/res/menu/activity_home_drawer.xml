@@ -8,6 +8,12 @@
             android:id="@+id/profile"
             android:icon="@drawable/ic_person_black_24dp"
             android:title="@string/edit_profile" />
+
+        <item
+            android:id="@+id/myCenters"
+            android:icon="@drawable/ic_exit_to_app_black_24dp"
+            android:title="@string/log_out" />
+
         <item
             android:id="@+id/logout"
             android:icon="@drawable/ic_exit_to_app_black_24dp"

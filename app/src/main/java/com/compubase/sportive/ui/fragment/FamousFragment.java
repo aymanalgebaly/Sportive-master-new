@@ -104,7 +104,7 @@ public class FamousFragment extends Fragment {
                             famous = new FamousActivityResponse();
 
                             famous.setName(famousList.get(j).getName());
-                            famous.setImages(famousList.get(j).getType());
+                            famous.setType(famousList.get(j).getType());
                             famous.setId(famousList.get(j).getId());
                             famous.setPhone(famousList.get(j).getPhone());
                             famous.setLang(famousList.get(j).getLang());

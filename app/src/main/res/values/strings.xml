@@ -50,6 +50,8 @@
     <string name="enter_the_name_of_game">Enter the name of game</string>
     <string name="enter_the_name_of_trainer">Enter the name of Trainer</string>
     <string name="enter_your_message">Enter your Message</string>
+    <string name="pay_cash">Pay cash</string>
+    <string name="pay_online">Pay online</string>
 
     <string-array name="type">
         <item name="Update" />
