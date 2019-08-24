@@ -96,4 +96,10 @@ public interface API {
     Call<ResponseBody>UsersJoin(
             @Field("id_center") String id_center
     );
+
+    @FormUrlEncoded
+    @POST("select_join_iduser")
+    Call<ResponseBody>CentersJoin(
+            @Field("id_user") String id_user
+    );
 }

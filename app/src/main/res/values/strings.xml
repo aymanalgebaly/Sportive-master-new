@@ -52,6 +52,8 @@
     <string name="enter_your_message">Enter your Message</string>
     <string name="pay_cash">Pay cash</string>
     <string name="pay_online">Pay online</string>
+    <string name="my_centers">My centers</string>
+    <string name="about_us">About us</string>
 
     <string-array name="type">
         <item name="Update" />

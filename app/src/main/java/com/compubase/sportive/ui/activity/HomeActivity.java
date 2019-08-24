@@ -115,6 +115,8 @@ public class HomeActivity extends AppCompatActivity
 
         } else if (id == R.id.contact_us) {
 
+        }else if (id == R.id.myCenters){
+            startActivity(new Intent(HomeActivity.this,CentersActivity.class));
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

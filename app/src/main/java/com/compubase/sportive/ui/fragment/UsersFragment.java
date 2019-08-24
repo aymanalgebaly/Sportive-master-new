@@ -56,8 +56,8 @@ import static android.content.Context.MODE_PRIVATE;
 public class UsersFragment extends Fragment {
 
 
-    @BindView(R.id.rcv_users)
-    RecyclerView rcvUsers;
+    @BindView(R.id.rcv)
+    RecyclerView rcv;
     Unbinder unbinder;
     private UsersAdapter adapter;
     private String[] name;
@@ -90,7 +90,7 @@ public class UsersFragment extends Fragment {
 //        name_user = getArguments().getString("name", "");
         setup();
         JSON_DATA_WEB_CALL();
-        //data();
+//        //data();
 
 
         return view;
@@ -98,10 +98,10 @@ public class UsersFragment extends Fragment {
 
     private void setup() {
 
-        rcvUsers.setHasFixedSize(true);
+        rcv.setHasFixedSize(true);
 
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
-        rcvUsers.setLayoutManager(llm);
+        rcv.setLayoutManager(llm);
 
     }
 
@@ -168,7 +168,7 @@ public class UsersFragment extends Fragment {
             }
 
             adapter = new UsersAdapter(userList);
-            rcvUsers.setAdapter(adapter);
+            rcv.setAdapter(adapter);
 
             adapter.notifyDataSetChanged();
 

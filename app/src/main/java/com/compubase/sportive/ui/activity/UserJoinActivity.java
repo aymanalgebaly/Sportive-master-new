@@ -44,6 +44,10 @@ public class UserJoinActivity extends AppCompatActivity {
 
         id = String.valueOf(getIntent().getExtras().getInt("id_center"));
 
+        Intent intent = new Intent(this,CentersActivity.class);
+        intent.putExtra("id_center",id);
+        startActivity(intent);
+
         Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
 
 
