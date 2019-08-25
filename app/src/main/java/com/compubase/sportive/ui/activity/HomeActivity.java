@@ -47,6 +47,7 @@ public class HomeActivity extends AppCompatActivity
 
     private View mView;
     private DrawerLayout drawer;
+    private String type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +58,7 @@ public class HomeActivity extends AppCompatActivity
         preferences = getSharedPreferences("user",MODE_PRIVATE);
         name = preferences.getString("name", "");
         email = preferences.getString("email", "");
+        type = preferences.getString("type", "");
 
 
         viewPager = findViewById(R.id.viewPager_user);
@@ -117,7 +119,9 @@ public class HomeActivity extends AppCompatActivity
 
         if (id == R.id.profile) {
             // Handle the camera action
+
             startActivity(new Intent(HomeActivity.this,UserProfileActivity.class));
+
         } else if (id == R.id.logout) {
 
             startActivity(new Intent(HomeActivity.this,LoginActivity.class));

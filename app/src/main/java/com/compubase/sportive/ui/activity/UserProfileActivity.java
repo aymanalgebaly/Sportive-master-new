@@ -97,6 +97,7 @@ public class UserProfileActivity extends AppCompatActivity {
     Uri filePath;
 
     String imageURL;
+    private String type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,6 +118,7 @@ public class UserProfileActivity extends AppCompatActivity {
         pass = preferences.getString("pass", "");
         phone = preferences.getString("phone", "");
         id = preferences.getString("id", "");
+        type = preferences.getString("type", "");
 
         imageURL = preferences.getString("image","image");
 
@@ -174,6 +176,12 @@ public class UserProfileActivity extends AppCompatActivity {
 
                         if (string.equals("True")) {
                             Toast.makeText(UserProfileActivity.this, "Updated", Toast.LENGTH_SHORT).show();
+
+                            if (type.equals("center")){
+                                startActivity(new Intent(UserProfileActivity.this,CenterHomeActivity.class));
+                            }else {
+                                startActivity(new Intent(UserProfileActivity.this,HomeActivity.class));
+                            }
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -256,7 +264,13 @@ public class UserProfileActivity extends AppCompatActivity {
 
                                     preferences = getSharedPreferences("user", MODE_PRIVATE);
 
+                                    editor.putBoolean("login", true);
+
                                     editor.putString("image", imageURL);
+                                    editor.putString("name",userName);
+                                    editor.putString("email",userMail);
+                                    editor.putString("phone",userphone);
+                                    editor.putString("pass",userpass);
 
                                     editor.apply();
 

@@ -20,12 +20,12 @@
         android:orientation="horizontal"
         android:weightSum="4">
 
+
         <ImageView
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="90dp"
             android:layout_weight="1"
-            android:layout_margin="5dp"
-            android:background="@drawable/bg_sportive"
+            android:layout_margin="10dp"
             android:id="@+id/center_img"/>
 
         <LinearLayout
@@ -40,6 +40,8 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:text=""
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
                 android:id="@+id/name_center"
                 android:textSize="18sp"
                 android:layout_marginTop="10dp"
@@ -54,7 +56,6 @@
                 android:textSize="12sp"
                 android:id="@+id/phone_center"
                 android:layout_marginTop="10dp"
-                android:textColor="@color/black"
                 android:textStyle="bold"/>
         </LinearLayout>
     </LinearLayout>
@@ -88,6 +89,7 @@
         android:layout_below="@id/frame_map_center"/>
 
     <LinearLayout
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/btn_join"

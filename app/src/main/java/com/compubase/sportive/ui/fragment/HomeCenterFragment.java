@@ -23,17 +23,21 @@ import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.compubase.sportive.R;
 import com.compubase.sportive.adapter.GameAdapter;
 import com.compubase.sportive.helper.TinyDB;
 import com.compubase.sportive.model.GameActivityResponse;
 import com.compubase.sportive.model.GameModel;
 import com.compubase.sportive.ui.activity.AddGameActivity;
+import com.compubase.sportive.ui.activity.UserProfileActivity;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -90,12 +94,15 @@ public class HomeCenterFragment extends Fragment implements OnMapReadyCallback {
     private String id,center_name,center_phone;
     private String[] game,name;
     private int i ;
+    private DiskCacheStrategy diskCacheStrategy;
+    private View mview;
 
     RequestQueue requestQueue;
 
     TinyDB tinyDB;
 
     List<GameModel> gamesList = new ArrayList<>();
+    private String center_name_user,center_phone_user,image_user;
 
 
     public HomeCenterFragment() {
@@ -109,13 +116,25 @@ public class HomeCenterFragment extends Fragment implements OnMapReadyCallback {
         unbinder = ButterKnife.bind(this, view);
 
 
+
+
         preferences = Objects.requireNonNull(getActivity()).getSharedPreferences("user", Context.MODE_PRIVATE);
         id = preferences.getString("id", "");
-        center_name = preferences.getString("name", "");
-        center_phone = preferences.getString("phone", "");
+        center_name_user = preferences.getString("name", "");
+        center_phone_user = preferences.getString("phone", "");
+        image_user = preferences.getString("image", "");
 
-        nameCenter.setText(center_name);
-        phoneCenter.setText(center_phone);
+        nameCenter.setText(center_name_user);
+        phoneCenter.setText(center_phone_user);
+
+        Glide.with(getActivity())
+                .load(image_user)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .fitCenter()
+                .into(centerImg);
+
+
 
         mapFragment = (SupportMapFragment) getChildFragmentManager()
                 .findFragmentById(R.id.map_center);
@@ -135,7 +154,6 @@ public class HomeCenterFragment extends Fragment implements OnMapReadyCallback {
 
         return view;
     }
-
 
     private void JSON_DATA_WEB_CALL(){
 
@@ -164,6 +182,7 @@ public class HomeCenterFragment extends Fragment implements OnMapReadyCallback {
         requestQueue = Volley.newRequestQueue(Objects.requireNonNull(getActivity()));
 
         requestQueue.add(stringRequest);
+
     }
 
 
@@ -276,6 +295,8 @@ public class HomeCenterFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onResume() {
         super.onResume();
+
+        
 
         gamesList.clear();
 

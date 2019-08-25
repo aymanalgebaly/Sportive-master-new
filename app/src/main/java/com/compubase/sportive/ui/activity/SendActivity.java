@@ -77,6 +77,7 @@ public class SendActivity extends AppCompatActivity {
 
         url = "http://sportive.technowow.net/sportive.asmx/insert_activites?id_send="+myid+"&id_recived="+user_id+"&message="+msg.getText().toString().trim()+"&type="+spinner.getSelectedItem().toString().trim();
 
+        Toast.makeText(this, user_id, Toast.LENGTH_SHORT).show();
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new com.android.volley.Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

@@ -65,6 +65,7 @@ public class LoginActivity extends AppCompatActivity {
 
     String name,lat,lang,phone,image;
     private double latitude,longitude;
+    private String type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,6 +128,7 @@ public class LoginActivity extends AppCompatActivity {
                             phone = loginActivityResponses.get(0).getPhone();
                             email = loginActivityResponses.get(0).getEmail();
                             image = loginActivityResponses.get(0).getImages();
+                            type = loginActivityResponses.get(0).getType();
 
                             if(loginActivityResponses.get(0).getType().equals("center"))
                             {
@@ -171,6 +173,8 @@ public class LoginActivity extends AppCompatActivity {
         editor.putString("long", lang);
         editor.putString("phone", phone);
         editor.putString("image", image);
+        editor.putString("type",type);
+        editor.putString("pass",password);
 
         editor.apply();
     }

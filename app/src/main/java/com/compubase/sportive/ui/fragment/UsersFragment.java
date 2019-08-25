@@ -113,7 +113,7 @@ public class UsersFragment extends Fragment {
 
         String url;
 
-        url = "http://sportive.technowow.net/sportive.asmx/select_join_iduser?id_user="+id;
+        url = "http://sportive.technowow.net/sportive.asmx/select_join_center?id_center="+id;
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new com.android.volley.Response.Listener<String>() {
             @Override

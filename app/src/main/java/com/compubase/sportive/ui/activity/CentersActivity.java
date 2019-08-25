@@ -1,11 +1,14 @@
 package com.compubase.sportive.ui.activity;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -36,6 +39,14 @@ public class CentersActivity extends AppCompatActivity {
 
     @BindView(R.id.rcv_users)
     RecyclerView rcvUsers;
+    @BindView(R.id.txt_title)
+    TextView txtTitle;
+    @BindView(R.id.rel_title)
+    RelativeLayout relTitle;
+    @BindView(R.id.toolbar_centers_list)
+    Toolbar toolbarCentersList;
+    @BindView(R.id.abbBar_centers_list)
+    AppBarLayout abbBarCentersList;
     private UsersAdapter adapter;
     private String[] name;
     private int i;
@@ -56,10 +67,14 @@ public class CentersActivity extends AppCompatActivity {
         setContentView(R.layout.activity_centers);
         ButterKnife.bind(this);
 
+        Toolbar toolbar = findViewById(R.id.toolbar_centers_list);
+        setSupportActionBar(toolbar);
+
+        txtTitle.setText("My centers");
+
         SharedPreferences shared = getSharedPreferences("user", MODE_PRIVATE);
         id = (shared.getString("id", ""));
 
-        Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
 
         setup();
         JSON_DATA_WEB_CALL();
@@ -69,7 +84,7 @@ public class CentersActivity extends AppCompatActivity {
 
         String url;
 
-        url = "http://sportive.technowow.net/sportive.asmx/select_join_center?id_center=" + id;
+        url = "http://sportive.technowow.net/sportive.asmx/select_join_iduser?id_user=" + id;
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override

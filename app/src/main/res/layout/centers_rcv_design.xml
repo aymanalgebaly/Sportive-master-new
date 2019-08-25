@@ -26,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_weight="6">
+                android:layout_gravity="center_vertical">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -34,10 +34,11 @@
                     android:text=""
                     android:textColor="@color/black"
                     android:textSize="18sp"
+                    android:gravity="center_vertical"
+                    android:layout_gravity="center_vertical"
                     android:id="@+id/txt_name_of_center"
                     android:paddingEnd="2dp"
                     android:layout_marginStart="5dp"
-                    android:layout_marginTop="10dp"
                     android:paddingStart="2dp" />
 
                 <TextView
@@ -46,9 +47,9 @@
                     android:text=""
                     android:id="@+id/txt_km"
                     android:textSize="12sp"
+                    android:layout_gravity="center_vertical"
                     android:gravity="center_vertical"
                     android:drawableStart="@drawable/ic_location_on_black_24dp"
-                    android:layout_marginTop="5dp"
                     android:paddingStart="2dp"
                     android:paddingEnd="2dp"/>
             </LinearLayout>

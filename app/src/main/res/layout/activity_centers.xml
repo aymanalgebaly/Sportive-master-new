@@ -6,10 +6,43 @@
     android:layout_height="match_parent"
     tools:context=".ui.activity.CentersActivity">
 
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/abbBar_centers_list">
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_centers_list"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/blue" >
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/rel_title">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@color/white"
+                android:id="@+id/txt_title"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:gravity="center" />
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/rcv_users">
+        android:id="@+id/rcv_users"
+        android:layout_below="@+id/abbBar_centers_list">
 
     </android.support.v7.widget.RecyclerView>
 

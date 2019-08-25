@@ -34,6 +34,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -98,6 +99,8 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
 
     private ImageView imageView;
     private TextView center_name,center_mail;
+    private String phone;
+    private String image;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -123,7 +126,7 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
         lang = getIntent().getExtras().getString("long");
         lat = getIntent().getExtras().getString("lat");
         name = getIntent().getExtras().getString("name");
-        String phone = getIntent().getExtras().getString("phone");
+        phone = getIntent().getExtras().getString("phone");
         id = String.valueOf(getIntent().getExtras().getInt("id_center"));
 
         UserJoinActivity.id = id;
@@ -135,6 +138,9 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
 
         SharedPreferences shared = getSharedPreferences("user", MODE_PRIVATE);
         myid = (shared.getString("id", ""));
+        image = shared.getString("image", "");
+
+        Picasso.get().load(image).into(centerImg);
 
 
         rcvCenterHome.setHasFixedSize(true);
