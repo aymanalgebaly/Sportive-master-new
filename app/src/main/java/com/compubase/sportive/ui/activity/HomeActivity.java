@@ -1,6 +1,7 @@
 package com.compubase.sportive.ui.activity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.GradientDrawable;
@@ -9,6 +10,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -43,23 +45,18 @@ public class HomeActivity extends AppCompatActivity
     private ImageView imageView;
     private TextView user_name,user_mail;
 
+    private View mView;
+    private DrawerLayout drawer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+
         preferences = getSharedPreferences("user",MODE_PRIVATE);
         name = preferences.getString("name", "");
         email = preferences.getString("email", "");
-
-//        imageView = findViewById(R.id.imageView);
-//        user_name = findViewById(R.id.name_profile_system_user);
-//        user_mail = findViewById(R.id.mail_profile_system_user);
-//
-//        Toast.makeText(this, email, Toast.LENGTH_SHORT).show();
-//
-//        user_name.setText(name);
-//        user_mail.setText(email);
 
 
         viewPager = findViewById(R.id.viewPager_user);
@@ -79,26 +76,36 @@ public class HomeActivity extends AppCompatActivity
         }
 
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar_user);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        drawer = findViewById(R.id.drawer_layout_user);
+        NavigationView navigationView = findViewById(R.id.nav_view_user);
+        mView = navigationView.getHeaderView(0);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                HomeActivity.this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-        navigationView.setNavigationItemSelectedListener(this);
+
+//        imageView =  drawer.findViewById(R.id.imageView_user);
+//        user_name =(TextView) drawer.findViewById(R.id.name_profile_system_user);
+//        user_mail =(TextView) drawer.findViewById(R.id.mail_profile_system_user);
+//
+//        user_name.setText(name);
+//        user_mail.setText(email);
+
+        navigationView.setNavigationItemSelectedListener(HomeActivity.this);
+
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout_user);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+             alartExit();
         }
     }
 
@@ -113,14 +120,38 @@ public class HomeActivity extends AppCompatActivity
             startActivity(new Intent(HomeActivity.this,UserProfileActivity.class));
         } else if (id == R.id.logout) {
 
+            startActivity(new Intent(HomeActivity.this,LoginActivity.class));
+            finish();
+//            alartExit();
+
         } else if (id == R.id.contact_us) {
 
         }else if (id == R.id.myCenters){
             startActivity(new Intent(HomeActivity.this,CentersActivity.class));
         }
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout_user);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void alartExit() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Do you want to exit ?").setCancelable(false).setPositiveButton("yes", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+
+                Intent a = new Intent(Intent.ACTION_MAIN);
+                a.addCategory(Intent.CATEGORY_HOME);
+                a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(a);
+
+                //Main2Activity.this.finish();
+            }
+        }).setNegativeButton("no", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+            }
+        });
+        builder.create().show();
     }
 }

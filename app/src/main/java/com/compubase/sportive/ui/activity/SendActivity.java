@@ -47,6 +47,8 @@ public class SendActivity extends AppCompatActivity {
 
         types.add("Rate");
         types.add("Update");
+        types.add("Message");
+        types.add("Comment");
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(SendActivity.this, android.R.layout.simple_spinner_item, types);
 

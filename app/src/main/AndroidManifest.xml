@@ -54,7 +54,6 @@
         <activity
             android:name=".ui.fragment.MapsNewActivity"
             android:label="@string/title_activity_maps_new" />
-        <activity android:name=".ui.activity.CenterProfileActivity" />
         <activity android:name=".ui.activity.UserProfileActivity" />
         <activity
             android:name=".ui.activity.HomeActivity"

@@ -26,12 +26,13 @@ import retrofit2.Response;
 
 public class UserJoinActivity extends AppCompatActivity {
 
+    public static String id;
     @BindView(R.id.pay_cash_btn)
     Button payCashBtn;
     @BindView(R.id.pay_online_btn)
     Button payOnlineBtn;
     private String myid;
-    private String id;
+//    private String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,11 +43,11 @@ public class UserJoinActivity extends AppCompatActivity {
         SharedPreferences shared = getSharedPreferences("user", MODE_PRIVATE);
         myid = (shared.getString("id", ""));
 
-        id = String.valueOf(getIntent().getExtras().getInt("id_center"));
+//        id = String.valueOf(getIntent().getExtras().getInt("id_center"));
 
-        Intent intent = new Intent(this,CentersActivity.class);
-        intent.putExtra("id_center",id);
-        startActivity(intent);
+//        Intent intent = new Intent(this,CentersActivity.class);
+//        intent.putExtra("id_center",id);
+//        startActivity(intent);
 
         Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
 

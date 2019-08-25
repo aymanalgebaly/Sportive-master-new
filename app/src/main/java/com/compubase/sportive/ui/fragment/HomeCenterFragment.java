@@ -192,9 +192,7 @@ public class HomeCenterFragment extends Fragment implements OnMapReadyCallback {
 
             adapter = new GameAdapter(gamesList);
             rcvCenterHome.setAdapter(adapter);
-
             adapter.notifyDataSetChanged();
-
 
         }catch (JSONException e) {
             e.printStackTrace();
@@ -224,7 +222,7 @@ public class HomeCenterFragment extends Fragment implements OnMapReadyCallback {
         rcvCenterHome.setLayoutManager(gridLayoutManager);
         //adapter = new GameAdapter(getActivity());
         rcvCenterHome.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+//        adapter.notifyDataSetChanged();
     }
 
     private void data() {
@@ -239,7 +237,7 @@ public class HomeCenterFragment extends Fragment implements OnMapReadyCallback {
         }
 
        // adapter.setData(gameModels);
-        adapter.notifyDataSetChanged();
+//        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -273,6 +271,15 @@ public class HomeCenterFragment extends Fragment implements OnMapReadyCallback {
                 startActivity(new Intent(getContext(), AddGameActivity.class));
                 break;
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        gamesList.clear();
+
+        JSON_DATA_WEB_CALL();
     }
 
 }

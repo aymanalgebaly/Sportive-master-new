@@ -82,8 +82,6 @@ public class ActivitiesFragment extends Fragment {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setReverseLayout(true);
-        linearLayoutManager.setStackFromEnd(false);
-        rcvActivities.smoothScrollToPosition(0);
         rcvActivities.setLayoutManager(linearLayoutManager);
 
     }

@@ -54,6 +54,7 @@
     <string name="pay_online">Pay online</string>
     <string name="my_centers">My centers</string>
     <string name="about_us">About us</string>
+    <string name="send">send</string>
 
     <string-array name="type">
         <item name="Update" />

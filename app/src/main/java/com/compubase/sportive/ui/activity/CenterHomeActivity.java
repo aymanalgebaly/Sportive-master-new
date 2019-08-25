@@ -1,12 +1,15 @@
 package com.compubase.sportive.ui.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -17,7 +20,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.compubase.sportive.R;
 import com.compubase.sportive.adapter.VP_HomeCenter;
@@ -29,6 +35,10 @@ public class CenterHomeActivity extends AppCompatActivity
     private VP_HomeCenter vp_scheduleAdapter;
     private ViewPager viewPager;
     private TabLayout tabLayout;
+    private ImageView imageView;
+    private TextView user_name,user_mail;
+    private SharedPreferences preferences;
+    private String name,email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +74,20 @@ public class CenterHomeActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+
+        preferences = getSharedPreferences("user",MODE_PRIVATE);
+        name = preferences.getString("name", "");
+        email = preferences.getString("email", "");
+
+
+//        imageView = findViewById(R.id.imageView_center);
+//        user_name = findViewById(R.id.center_name_system);
+//        user_mail = findViewById(R.id.center_mail_system);
+//
+//        Toast.makeText(this, email, Toast.LENGTH_SHORT).show();
+//
+//        user_name.setText(name);
+//        user_mail.setText(email);
     }
 
     @Override
@@ -72,7 +96,7 @@ public class CenterHomeActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            alartExit();
         }
     }
 
@@ -84,9 +108,13 @@ public class CenterHomeActivity extends AppCompatActivity
 
         if (id == R.id.center_profile) {
 
-            startActivity(new Intent(CenterHomeActivity.this,CenterProfileActivity.class));
+            startActivity(new Intent(CenterHomeActivity.this,UserProfileActivity.class));
             // Handle the camera action
         } else if (id == R.id.center_logout) {
+
+//            alartExit();
+            startActivity(new Intent(CenterHomeActivity.this,LoginActivity.class));
+            finish();
 
         } else if (id == R.id.center_contact_us) {
 
@@ -95,5 +123,25 @@ public class CenterHomeActivity extends AppCompatActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void alartExit() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Do you want to exit ?").setCancelable(false).setPositiveButton("yes", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+
+                Intent a = new Intent(Intent.ACTION_MAIN);
+                a.addCategory(Intent.CATEGORY_HOME);
+                a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(a);
+
+                //Main2Activity.this.finish();
+            }
+        }).setNegativeButton("no", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+            }
+        });
+        builder.create().show();
     }
 }

@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -97,7 +98,7 @@ public class CentersAdapter extends RecyclerView.Adapter<CentersAdapter.ViewHold
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(context, UserJoinActivity.class);
+                Intent intent = new Intent(context, CenterDetailsActivity.class);
                 intent.putExtra("name",center.getName());
                 intent.putExtra("email",center.getEmail());
                 intent.putExtra("id_center",center.getId());
@@ -106,6 +107,13 @@ public class CentersAdapter extends RecyclerView.Adapter<CentersAdapter.ViewHold
                 intent.putExtra("long",center.getLang());
                 intent.putExtra("phone",center.getPhone());
                 context.startActivity(intent);
+            }
+        });
+
+        viewHolderCenters.send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
     }
@@ -128,12 +136,14 @@ public class CentersAdapter extends RecyclerView.Adapter<CentersAdapter.ViewHold
 
         ImageView imageView;
         TextView name,km;
+        Button send;
         ViewHolderCenters(@NonNull View itemView) {
             super(itemView);
 
             imageView = itemView.findViewById(R.id.img_centers_design);
             km = itemView.findViewById(R.id.txt_km);
             name = itemView.findViewById(R.id.txt_name_of_center);
+            send = itemView.findViewById(R.id.btn_send);
 
         }
     }

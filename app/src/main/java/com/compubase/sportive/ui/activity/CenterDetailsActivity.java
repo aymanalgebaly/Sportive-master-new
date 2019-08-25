@@ -126,6 +126,8 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
         String phone = getIntent().getExtras().getString("phone");
         id = String.valueOf(getIntent().getExtras().getInt("id_center"));
 
+        UserJoinActivity.id = id;
+
        // Toast.makeText(CenterDetailsActivity.this, id, Toast.LENGTH_SHORT).show();
 
         nameCenter.setText(name);
