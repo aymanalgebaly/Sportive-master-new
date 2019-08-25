@@ -1,6 +1,7 @@
 package com.compubase.sportive.ui.activity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -33,6 +34,8 @@ import com.compubase.sportive.data.API;
 import com.compubase.sportive.helper.RetrofitClient;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -89,6 +92,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
 
     StorageReference storageReference;
+    FirebaseStorage storage;
 
     Uri filePath;
 
@@ -101,6 +105,11 @@ public class UserProfileActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+        FirebaseApp.initializeApp(this);
+
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
 
         preferences = getSharedPreferences("user", Context.MODE_PRIVATE);
         name =preferences.getString("name","");
@@ -132,6 +141,8 @@ public class UserProfileActivity extends AppCompatActivity {
                 break;
             case R.id.btn_edit:
                 updateData();
+
+                //Toast.makeText(UserProfileActivity.this, imageURL, Toast.LENGTH_SHORT).show();
                 break;
             case R.id.change_img:
                 pickFromGallery();
@@ -149,19 +160,20 @@ public class UserProfileActivity extends AppCompatActivity {
         Retrofit retrofit = RetrofitClient.getInstant();
         API api = retrofit.create(API.class);
         Call<ResponseBody> responseBodyCall = api.UpdateData(userName, userMail, userpass, userphone,0.000 ,
-                0.0000, "image", "famous", "des",id);
+                0.0000, imageURL, "famous", "des",id);
         responseBodyCall.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
                 if (response.isSuccessful()) {
                     try {
+
                         assert response.body() != null;
                         String string = response.body().string();
 
 
                         if (string.equals("True")) {
-                            startActivity(new Intent(UserProfileActivity.this, CenterHomeActivity.class));
+                            Toast.makeText(UserProfileActivity.this, "Updated", Toast.LENGTH_SHORT).show();
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -189,7 +201,7 @@ public class UserProfileActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == 72 && resultCode == RESULT_OK && data != null && data.getData() != null)
+        if(requestCode == GALLERY_REQUEST_CODE && resultCode == RESULT_OK && data != null && data.getData() != null)
         {
             filePath = data.getData();
 
@@ -218,7 +230,7 @@ public class UserProfileActivity extends AppCompatActivity {
         if(customfilepath != null)
         {
             final ProgressDialog progressDialog = new ProgressDialog(this);
-            progressDialog.setTitle("جارى الرفع٠٠٠");
+            progressDialog.setTitle("Uploading...");
             progressDialog.show();
             progressDialog.setCancelable(false);
             progressDialog.setCanceledOnTouchOutside(false);
@@ -234,7 +246,21 @@ public class UserProfileActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Uri uri) {
 
+                                    progressDialog.dismiss();
+
+                                    Toast.makeText(UserProfileActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
+
                                     imageURL = uri.toString();
+
+                                    SharedPreferences.Editor editor = getSharedPreferences("user", MODE_PRIVATE).edit();
+
+                                    preferences = getSharedPreferences("user", MODE_PRIVATE);
+
+                                    editor.putString("image", imageURL);
+
+                                    editor.apply();
+
+                                    Glide.with(UserProfileActivity.this).load(imageURL).into(imgUserProfile);
 
                                 }
                             });
@@ -245,6 +271,8 @@ public class UserProfileActivity extends AppCompatActivity {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             progressDialog.dismiss();
+                            Toast.makeText(UserProfileActivity.this, "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
+
                         }
                     })
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {

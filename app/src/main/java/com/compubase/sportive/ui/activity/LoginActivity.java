@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
 
     TinyDB tinyDB;
 
-    String name,lat,lang,phone;
+    String name,lat,lang,phone,image;
     private double latitude,longitude;
 
     @Override
@@ -90,6 +90,14 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent a = new Intent(Intent.ACTION_MAIN);
+        a.addCategory(Intent.CATEGORY_HOME);
+        a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(a);
+    }
+
     public void userLogin() {
         email = mailLogin.getText().toString();
         password = editText.getText().toString();
@@ -105,34 +113,38 @@ public class LoginActivity extends AppCompatActivity {
                     GsonBuilder builder = new GsonBuilder();
                     Gson gson = builder.create();
 
-                        try {
-                            assert response.body() != null;
-                            List<Center> loginActivityResponses =
-                                    Arrays.asList(gson.fromJson(response.body().string(), Center[].class));
-                            if (response.isSuccessful()){
+                    assert response.body() != null;
+                    try {
 
-                                id = loginActivityResponses.get(0).getId();
+                        List<Center> loginActivityResponses = Arrays.asList(gson.fromJson(response.body().string(), Center[].class));
+                        if (response.isSuccessful()){
 
-                                name = loginActivityResponses.get(0).getName();
-                                lang = loginActivityResponses.get(0).getLang();
-                                lat = loginActivityResponses.get(0).getLat();
-                                phone = loginActivityResponses.get(0).getPhone();
-                                email = loginActivityResponses.get(0).getEmail();
+                            id = loginActivityResponses.get(0).getId();
 
-                                if(loginActivityResponses.get(0).getType().equals("center"))
-                                {
-                                    startActivity(new Intent(LoginActivity.this,CenterHomeActivity.class));
-                                }else
-                                    {
-                                        startActivity(new Intent(LoginActivity.this,HomeActivity.class));
-                                    }
+                            name = loginActivityResponses.get(0).getName();
+                            lang = loginActivityResponses.get(0).getLang();
+                            lat = loginActivityResponses.get(0).getLat();
+                            phone = loginActivityResponses.get(0).getPhone();
+                            email = loginActivityResponses.get(0).getEmail();
+                            image = loginActivityResponses.get(0).getImages();
 
-                                sharedLogin();
-
+                            if(loginActivityResponses.get(0).getType().equals("center"))
+                            {
+                                startActivity(new Intent(LoginActivity.this,CenterHomeActivity.class));
+                            }else
+                            {
+                                startActivity(new Intent(LoginActivity.this,HomeActivity.class));
                             }
-                        } catch (IOException e) {
-                            e.printStackTrace();
+
+                            sharedLogin();
+
                         }
+
+                    }catch (Exception e)
+                    {
+                        Toast.makeText(LoginActivity.this, "Wrong Email or Pass", Toast.LENGTH_SHORT).show();
+                    }
+
                 }
 
                 @Override
@@ -158,6 +170,7 @@ public class LoginActivity extends AppCompatActivity {
         editor.putString("lat", lat);
         editor.putString("long", lang);
         editor.putString("phone", phone);
+        editor.putString("image", image);
 
         editor.apply();
     }

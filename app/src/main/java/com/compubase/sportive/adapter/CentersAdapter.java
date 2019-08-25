@@ -73,8 +73,8 @@ public class CentersAdapter extends RecyclerView.Adapter<CentersAdapter.ViewHold
         String lang = centerList.get(i).getLang();
 
         if(!lang.equals("") || !lat.equals("")){
-             lo = Double.parseDouble(lang);
-             la = Double.parseDouble(lat);
+            lo = Double.parseDouble(lang);
+            la = Double.parseDouble(lat);
 
             locationA.setLatitude(la);
             locationA.setLongitude(lo);

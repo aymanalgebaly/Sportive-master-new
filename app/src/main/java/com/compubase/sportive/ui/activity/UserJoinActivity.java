@@ -49,7 +49,7 @@ public class UserJoinActivity extends AppCompatActivity {
 //        intent.putExtra("id_center",id);
 //        startActivity(intent);
 
-        Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
+     //   Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
 
 
     }

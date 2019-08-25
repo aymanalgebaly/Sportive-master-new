@@ -1,6 +1,7 @@
 package com.compubase.sportive.adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -16,6 +17,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class ActivitiesAdapter extends RecyclerView.Adapter<ActivitiesAdapter.ViewHolderActities> {
 
@@ -45,6 +48,7 @@ public class ActivitiesAdapter extends RecyclerView.Adapter<ActivitiesAdapter.Vi
         viewHolderActities.name.setText(userActivityActivityResponse.getName());
         viewHolderActities.title.setText(userActivityActivityResponse.getType1());
         viewHolderActities.txt.setText(userActivityActivityResponse.getMessage());
+
 
 //        Picasso.get()
 //                .load(!TextUtils.isEmpty(userActivityActivityResponse.getImages()) ? APIMethods.LIVE_SERVER + userActivityActivityResponse.getImages()
