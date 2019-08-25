@@ -87,7 +87,7 @@ public class CentersAdapter extends RecyclerView.Adapter<CentersAdapter.ViewHold
             float distance = locationA.distanceTo(locationB);
             String s = String.valueOf(distance);
 
-            viewHolderCenters.km.setText(s);
+            viewHolderCenters.km.setText(s+" KM");
 
         }
 //        viewHolderCenters.km.setText(center.);
@@ -107,13 +107,6 @@ public class CentersAdapter extends RecyclerView.Adapter<CentersAdapter.ViewHold
                 intent.putExtra("long",center.getLang());
                 intent.putExtra("phone",center.getPhone());
                 context.startActivity(intent);
-            }
-        });
-
-        viewHolderCenters.send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
             }
         });
     }
@@ -136,14 +129,12 @@ public class CentersAdapter extends RecyclerView.Adapter<CentersAdapter.ViewHold
 
         ImageView imageView;
         TextView name,km;
-        Button send;
         ViewHolderCenters(@NonNull View itemView) {
             super(itemView);
 
             imageView = itemView.findViewById(R.id.img_centers_design);
             km = itemView.findViewById(R.id.txt_km);
             name = itemView.findViewById(R.id.txt_name_of_center);
-            send = itemView.findViewById(R.id.btn_send);
 
         }
     }
