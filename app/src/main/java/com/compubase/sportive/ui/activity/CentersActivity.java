@@ -20,6 +20,7 @@ import com.android.volley.toolbox.Volley;
 import com.compubase.sportive.R;
 import com.compubase.sportive.adapter.UsersAdapter;
 import com.compubase.sportive.helper.TinyDB;
+import com.compubase.sportive.model.ActivityListResponse;
 import com.compubase.sportive.model.Center;
 import com.compubase.sportive.model.UsersModel;
 
@@ -57,7 +58,7 @@ public class CentersActivity extends AppCompatActivity {
 
     TinyDB tinyDB;
 
-    List<Center> userList = new ArrayList<>();
+    List<ActivityListResponse> userList = new ArrayList<>();
     private String id_center;
 
 
@@ -123,18 +124,17 @@ public class CentersActivity extends AppCompatActivity {
 
                 JSONObject childJSONObject = js.getJSONObject(i);
 
-                Center user = new Center();
+                ActivityListResponse activityListResponse = new ActivityListResponse();
+                activityListResponse.setName(childJSONObject.getString("name"));
 
-                user.setName(childJSONObject.getString("name"));
+                activityListResponse.setPhone(childJSONObject.getString("phone"));
 
-                user.setPhone(childJSONObject.getString("phone"));
+                activityListResponse.setEmail(childJSONObject.getString("email"));
 
-                user.setEmail(childJSONObject.getString("email"));
-
-                user.setImages(childJSONObject.getString("images"));
+                activityListResponse.setImages(childJSONObject.getString("images"));
 
 
-                userList.add(user);
+                userList.add(activityListResponse);
 
             }
 

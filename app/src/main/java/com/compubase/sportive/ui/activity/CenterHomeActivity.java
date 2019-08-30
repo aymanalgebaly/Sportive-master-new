@@ -108,7 +108,7 @@ public class CenterHomeActivity extends AppCompatActivity
 
         if (id == R.id.center_profile) {
 
-            startActivity(new Intent(CenterHomeActivity.this,UserProfileActivity.class));
+            startActivity(new Intent(CenterHomeActivity.this,EditProfileCenterActivity.class));
             // Handle the camera action
         } else if (id == R.id.center_logout) {
 

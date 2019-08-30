@@ -75,6 +75,7 @@ public class ActivitiesFragment extends Fragment {
         Log.i( "id",id_user);
         setupRecycler();
         fetchData();
+
         return view;
     }
 

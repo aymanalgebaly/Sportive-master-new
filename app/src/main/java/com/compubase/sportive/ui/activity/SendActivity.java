@@ -1,9 +1,11 @@
 package com.compubase.sportive.ui.activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,6 +28,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class SendActivity extends AppCompatActivity {
+    public static int id_recievd;
     @BindView(R.id.spinner)
     Spinner spinner;
     @BindView(R.id.msg)
@@ -38,6 +41,8 @@ public class SendActivity extends AppCompatActivity {
     String myid,user_id;
 
     RequestQueue requestQueue;
+    private int id_center;
+    private int id_user;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,7 +66,8 @@ public class SendActivity extends AppCompatActivity {
         myid = (shared.getString("id", ""));
 
 
-        user_id = String.valueOf(Objects.requireNonNull(getIntent().getExtras()).getInt("id_center"));
+        Intent intent = getIntent();
+        id_user = intent.getIntExtra("id_user", id_center);
     }
 
     @OnClick(R.id.send_btn)
@@ -70,14 +76,13 @@ public class SendActivity extends AppCompatActivity {
         JSON_DATA_WEB_CALL();
     }
 
-
     private void JSON_DATA_WEB_CALL(){
 
         String url;
 
-        url = "http://sportive.technowow.net/sportive.asmx/insert_activites?id_send="+myid+"&id_recived="+user_id+"&message="+msg.getText().toString().trim()+"&type="+spinner.getSelectedItem().toString().trim();
+        url = "http://sportive.technowow.net/sportive.asmx/insert_activites?id_send="+myid+"&id_recived="+id_recievd+"&message="+msg.getText().toString().trim()+"&type="+spinner.getSelectedItem().toString().trim();
 
-        Toast.makeText(this, user_id, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, String.valueOf(id_recievd), Toast.LENGTH_SHORT).show();
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new com.android.volley.Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

@@ -17,7 +17,7 @@
 
         <ImageView
             android:layout_width="0dp"
-            android:background="@drawable/bg_sportive"
+            android:background="@drawable/center_defult_img"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:layout_margin="5dp"

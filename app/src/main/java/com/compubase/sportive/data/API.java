@@ -22,7 +22,12 @@ public interface API {
             @Field("lat") Object lat,
             @Field("images") String images,
             @Field("famous") String famous,
-            @Field("des") String des
+            @Field("des") String des,
+            @Field("history") String history,
+            @Field("img_1") String img_1,
+            @Field("img_2") String img_2,
+            @Field("img_3") String img_3,
+            @Field("img_4") String img_4
     );
 
     @FormUrlEncoded
@@ -101,5 +106,17 @@ public interface API {
     @POST("select_join_iduser")
     Call<ResponseBody>CentersJoin(
             @Field("id_user") String id_user
+    );
+
+    @FormUrlEncoded
+    @POST("update_center")
+    Call<ResponseBody>UpdateProfile(
+            @Field("des") String des,
+            @Field("history") String history,
+            @Field("img_1") String img_1,
+            @Field("img_2") String img_2,
+            @Field("img_3") String img_3,
+            @Field("img_4") String img_4,
+            @Field("id") String id
     );
 }

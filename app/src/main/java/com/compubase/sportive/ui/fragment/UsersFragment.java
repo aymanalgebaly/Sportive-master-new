@@ -22,6 +22,7 @@ import com.compubase.sportive.adapter.UsersAdapter;
 import com.compubase.sportive.data.API;
 import com.compubase.sportive.helper.RetrofitClient;
 import com.compubase.sportive.helper.TinyDB;
+import com.compubase.sportive.model.ActivityListResponse;
 import com.compubase.sportive.model.Center;
 import com.compubase.sportive.model.GameModel;
 import com.compubase.sportive.model.UsersJoinsResponse;
@@ -69,7 +70,7 @@ public class UsersFragment extends Fragment {
 
     TinyDB tinyDB;
 
-    List<Center> userList = new ArrayList<>();
+    List<ActivityListResponse> userList = new ArrayList<>();
 
     public UsersFragment() {
         // Required empty public constructor
@@ -152,18 +153,18 @@ public class UsersFragment extends Fragment {
 
                 JSONObject childJSONObject = js.getJSONObject(i);
 
-                Center user = new Center();
+                ActivityListResponse activityListResponse = new ActivityListResponse();
 
-                user.setName(childJSONObject.getString("name"));
+                activityListResponse.setName(childJSONObject.getString("name"));
 
-                user.setPhone(childJSONObject.getString("phone"));
+                activityListResponse.setPhone(childJSONObject.getString("phone"));
 
-                user.setEmail(childJSONObject.getString("email"));
+                activityListResponse.setEmail(childJSONObject.getString("email"));
 
-                user.setImages(childJSONObject.getString("images"));
+                activityListResponse.setImages(childJSONObject.getString("images"));
 
 
-                userList.add(user);
+                userList.add(activityListResponse);
 
             }
 

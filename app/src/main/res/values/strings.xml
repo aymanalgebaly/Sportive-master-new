@@ -55,6 +55,13 @@
     <string name="my_centers">My centers</string>
     <string name="about_us">About us</string>
     <string name="send">send</string>
+    <string name="personal">Personal</string>
+    <string name="profile">Profile</string>
+    <string name="save">Save</string>
+    <string name="add_game">Add Game</string>
+    <string name="description">Description</string>
+    <string name="history">History</string>
+    <string name="upload_images">Upload Images</string>
 
     <string-array name="type">
         <item name="Update" />

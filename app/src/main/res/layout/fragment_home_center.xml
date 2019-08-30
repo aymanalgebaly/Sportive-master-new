@@ -33,15 +33,13 @@
             android:layout_height="match_parent"
             android:layout_weight="3"
             android:orientation="vertical"
-            android:weightSum="2">
+            android:weightSum="3">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:text=""
-                android:layout_gravity="center_vertical"
-                android:gravity="center_vertical"
                 android:id="@+id/name_center"
                 android:textSize="18sp"
                 android:layout_marginTop="10dp"
@@ -53,16 +51,28 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:text=""
+                android:id="@+id/mail_center"
+                android:textSize="12sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text=""
+                android:gravity="top"
+                android:layout_gravity="top"
                 android:textSize="12sp"
                 android:id="@+id/phone_center"
-                android:layout_marginTop="10dp"
                 android:textStyle="bold"/>
+
+
         </LinearLayout>
     </LinearLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
         android:id="@+id/frame_map_center"
         android:layout_below="@id/lin_center_one">
 
@@ -75,24 +85,102 @@
         </fragment>
     </FrameLayout>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_margin="10dp"
-        android:background="@drawable/button_design_curv_yellow"
-        android:text="@string/join"
-        android:visibility="gone"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:textColor="@color/white"
-        android:id="@+id/btn_join"
-        android:layout_below="@id/frame_map_center"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/description"
+            android:textStyle="bold"
+            android:layout_marginStart="5dp"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:layout_marginTop="10dp"
+            android:id="@+id/txt_des"
+            android:layout_below="@id/frame_map_center"/>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_value_des"
+            android:layout_marginStart="5dp"
+            android:layout_below="@id/txt_des"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:id="@+id/lin_img_one"
+            android:weightSum="2"
+            android:layout_below="@id/txt_value_des"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_margin="10dp"
+                android:id="@+id/img_one"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_margin="10dp"
+                android:id="@+id/img_two"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:id="@+id/lin_img_two"
+            android:weightSum="2"
+            android:layout_below="@id/lin_img_one"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_margin="10dp"
+                android:id="@+id/img_three"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_margin="10dp"
+                android:id="@+id/img_four"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/history"
+            android:textStyle="bold"
+            android:layout_marginStart="5dp"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:id="@+id/txt_his"
+            android:layout_below="@id/lin_img_two"/>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_value_his"
+            android:layout_marginStart="5dp"
+            android:layout_below="@id/txt_his"/>
 
     <LinearLayout
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/btn_join"
+        android:layout_below="@id/txt_value_his"
         android:id="@+id/lin_txt"
         android:weightSum="2"
         android:background="@color/gray"
@@ -131,22 +219,12 @@
             android:layout_marginEnd="10dp"
             android:layout_marginStart="10dp"
             android:layout_marginBottom="10dp"
+
             android:id="@+id/rcv_center_home">
 
         </android.support.v7.widget.RecyclerView>
     </FrameLayout>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_margin="10dp"
-        android:id="@+id/add_btn"
-        android:text="@string/add"
-        android:background="@drawable/button_design_curv_orange"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:textColor="@color/white"
-        android:layout_below="@id/frame_rcv"/>
     </RelativeLayout>
 
 </ScrollView>

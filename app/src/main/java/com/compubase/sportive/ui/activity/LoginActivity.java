@@ -21,6 +21,7 @@ import com.compubase.sportive.helper.RetrofitClient;
 import com.compubase.sportive.helper.TinyDB;
 import com.compubase.sportive.model.Center;
 import com.compubase.sportive.model.LoginActivityResponse;
+import com.compubase.sportive.model.LoginModel;
 import com.compubase.sportive.model.UserActivityActivityResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -66,6 +67,9 @@ public class LoginActivity extends AppCompatActivity {
     String name,lat,lang,phone,image;
     private double latitude,longitude;
     private String type;
+    private String des;
+    private String imgone,imgtwo,imgthree,imgfour;
+    private String history;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,7 +121,7 @@ public class LoginActivity extends AppCompatActivity {
                     assert response.body() != null;
                     try {
 
-                        List<Center> loginActivityResponses = Arrays.asList(gson.fromJson(response.body().string(), Center[].class));
+                        List<LoginModel> loginActivityResponses = Arrays.asList(gson.fromJson(response.body().string(), LoginModel[].class));
                         if (response.isSuccessful()){
 
                             id = loginActivityResponses.get(0).getId();
@@ -129,6 +133,12 @@ public class LoginActivity extends AppCompatActivity {
                             email = loginActivityResponses.get(0).getEmail();
                             image = loginActivityResponses.get(0).getImages();
                             type = loginActivityResponses.get(0).getType();
+                            des = loginActivityResponses.get(0).getDes();
+                            imgone = loginActivityResponses.get(0).getImg1();
+                            imgtwo = loginActivityResponses.get(0).getImg2();
+                            imgthree = loginActivityResponses.get(0).getImg3();
+                            imgfour = loginActivityResponses.get(0).getImg4();
+                            history = loginActivityResponses.get(0).getHistory();
 
                             if(loginActivityResponses.get(0).getType().equals("center"))
                             {
@@ -175,6 +185,12 @@ public class LoginActivity extends AppCompatActivity {
         editor.putString("image", image);
         editor.putString("type",type);
         editor.putString("pass",password);
+        editor.putString("des",des);
+        editor.putString("imgone",imgone);
+        editor.putString("imgtwo",imgtwo);
+        editor.putString("imgthree",imgthree);
+        editor.putString("imgfour",imgfour);
+        editor.putString("history",history);
 
         editor.apply();
     }

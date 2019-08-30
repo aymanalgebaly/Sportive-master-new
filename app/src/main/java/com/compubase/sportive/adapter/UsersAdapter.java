@@ -2,7 +2,6 @@ package com.compubase.sportive.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,25 +12,28 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.compubase.sportive.R;
-import com.compubase.sportive.model.Center;
-import com.compubase.sportive.model.UsersJoinsResponse;
-import com.compubase.sportive.model.UsersModel;
-import com.compubase.sportive.ui.activity.CenterDetailsActivity;
+import com.compubase.sportive.model.ActivityListResponse;
 import com.compubase.sportive.ui.activity.SendActivity;
-import com.compubase.sportive.ui.fragment.UsersFragment;
-import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHlder> {
 
     private Context context;
-    private List<Center> usersModelsist;
+    private List<ActivityListResponse> activityListResponseList;
 
-
-    public UsersAdapter(List<Center> usersModelsist) {
-        this.usersModelsist = usersModelsist;
+    public UsersAdapter(List<ActivityListResponse> activityListResponseList) {
+        this.activityListResponseList = activityListResponseList;
     }
+
+    public UsersAdapter(Context context) {
+        this.context = context;
+    }
+
+    private String id_resieved;
+
 
     @NonNull
     @Override
@@ -46,26 +48,36 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHlder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHlder viewHlder, int i) {
 
-        final Center user = usersModelsist.get(i);
+        ActivityListResponse activityListResponse = activityListResponseList.get(i);
 
-        viewHlder.name.setText(user.getName());
+//        for (int j = 0; j <activityListResponse.size() ; j++) {
+//
+//            viewHlder.name.setText(activityListResponse.get(j).getName());
+//
+//            Glide.with(context).load(activityListResponse.get(j).getImages()).placeholder(R.drawable.bg_sportive).into(viewHlder.img);
+//
+//            final int idReceive = activityListResponse.get(j).getIdReceive();
+//
+//            SendActivity.id_recievd = idReceive;
+//
+//            id_resieved = String.valueOf(idReceive);
+//            viewHlder.itemView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//
+//                    Intent intent = new Intent(context,SendActivity.class);
+//                    intent.putExtra("id_user",idReceive);
+//                    context.startActivity(intent);
+//                }
+//            });
+//        }
 
-        Glide.with(context).load(user.getImages()).placeholder(R.drawable.bg_sportive).into(viewHlder.img);
 
-        viewHlder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(context,SendActivity.class);
-                intent.putExtra("id_user",user.getId());
-                context.startActivity(intent);
-            }
-        });
     }
 
     @Override
     public int getItemCount() {
-        return usersModelsist != null ? usersModelsist.size():0;
+        return activityListResponseList != null ? activityListResponseList.size():0;
     }
 
 

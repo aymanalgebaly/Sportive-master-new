@@ -17,7 +17,6 @@
             android:layout_height="100dp"
             android:layout_weight="3"
             android:id="@+id/img_activity_design"
-            android:background="@drawable/bg_sportive"
             android:layout_margin="5dp"/>
 
         <LinearLayout

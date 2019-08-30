@@ -36,7 +36,8 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="m">
-        <activity android:name=".ui.activity.CentersActivity"></activity>
+        <activity android:name=".ui.activity.EditProfileCenterActivity"></activity>
+        <activity android:name=".ui.activity.CentersActivity" />
         <activity android:name=".ui.activity.UserJoinActivity" />
         <activity android:name=".ui.activity.AddGameActivity" />
         <!--
@@ -95,7 +96,7 @@
         </activity>
         <activity android:name=".ui.activity.CenterDetailsActivity" />
         <activity android:name=".ui.activity.SendActivity" />
-        <activity android:name=".ui.activity.UserJoinActivity"/>
+        <activity android:name=".ui.activity.UserJoinActivity" />
     </application>
 
 </manifest>

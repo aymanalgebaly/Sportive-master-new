@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.compubase.sportive.R;
 import com.compubase.sportive.adapter.CentersAdapter;
 import com.compubase.sportive.data.API;
@@ -33,6 +35,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -146,6 +149,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         rcvHome.setLayoutManager(linearLayoutManager);
+        rcvHome.setNestedScrollingEnabled(false);
 
     }
     private void fetchData (){
@@ -179,6 +183,11 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                             center.setLang(centerList.get(j).getLang());
                             center.setLat(centerList.get(j).getLat());
 
+                            String images = centerList.get(j).getImages();
+
+//                            Glide.with(getActivity())
+//                                    .load(images)
+//                                    .into();
                             String lang = centerList.get(j).getLang();
                             String lat = centerList.get(j).getLat();
                             if(!lang.equals("") || !lat.equals(""))

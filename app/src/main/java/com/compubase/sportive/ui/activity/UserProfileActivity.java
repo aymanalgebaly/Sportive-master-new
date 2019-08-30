@@ -300,4 +300,13 @@ public class UserProfileActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+
+        fullNameUserProfile.setText(name);
+        emailUserProfile.setText(email);
+        passwordUserProfile.setText(pass);
+        phoneNumUserProfile.setText(phone);
+    }
 }

@@ -3,9 +3,9 @@ package com.compubase.sportive.ui.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -19,14 +19,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.compubase.sportive.MainActivity;
 import com.compubase.sportive.R;
 import com.compubase.sportive.data.API;
 import com.compubase.sportive.helper.RetrofitClient;
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.GooglePlayServicesRepairableException;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.ui.PlacePicker;
 import com.schibstedspain.leku.LocationPickerActivity;
 
 import java.io.IOException;
@@ -84,17 +79,21 @@ public class RegisterActivity extends AppCompatActivity {
     TextView textQs;
     @BindView(R.id.text_login)
     TextView textLogin;
+    EditText history;
+    @BindView(R.id.lin_center)
+    LinearLayout linCenter;
 
-    private String userName, userMail, userphone, userpass,userLocation;
+    private String userName, userMail, userphone, userpass, userLocation;
     int PLACE_PICKER_REQUEST = 1;
 
     private String radio;
     private SharedPreferences preferences;
     private String string;
-    private double latitude,longitude;
+    private double latitude, longitude;
     private String address;
     private double latitude_center;
     private double longitude_center;
+    private String s_description,s_history;
 
 
     @Override
@@ -104,7 +103,6 @@ public class RegisterActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-
 
 
     }
@@ -124,14 +122,14 @@ public class RegisterActivity extends AppCompatActivity {
             phoneNum.setError("PhoneNumber is required");
         } else if (TextUtils.isEmpty(userpass)) {
             password.setError("Password is required");
-        }
-        else if (TextUtils.isEmpty(userLocation)){
+        } else if (TextUtils.isEmpty(userLocation)) {
             location.setError("Location is required");
         }else {
             Retrofit retrofit = RetrofitClient.getInstant();
             API api = retrofit.create(API.class);
             Call<ResponseBody> responseBodyCall = api.UserRegister(userName, userMail, userpass, userphone, radio, longitude
-                    , latitude, "image", "famous", "des");
+                    , latitude, "image", "famous", "","",
+                    "img_1","img_2","img_3","img_4");
             responseBodyCall.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -141,15 +139,14 @@ public class RegisterActivity extends AppCompatActivity {
                             assert response.body() != null;
                             String string = response.body().string();
 
-                            //Toast.makeText(RegisterActivity.this, string, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterActivity.this, string, Toast.LENGTH_SHORT).show();
 
                             if (string.equals("True")) {
                                 onBackPressed();
                                 //startActivity(new Intent(RegisterActivity.this, CenterHomeActivity.class));
-                            }else
-                                {
-                                    Toast.makeText(RegisterActivity.this, string, Toast.LENGTH_SHORT).show();
-                                }
+                            } else {
+                                Toast.makeText(RegisterActivity.this, string, Toast.LENGTH_SHORT).show();
+                            }
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -183,7 +180,7 @@ public class RegisterActivity extends AppCompatActivity {
             Retrofit retrofit = RetrofitClient.getInstant();
             API api = retrofit.create(API.class);
             Call<ResponseBody> responseBodyCall = api.UserRegister(userName, userMail, userpass, userphone, radio, longitude_center
-                    , latitude_center, "image", "famous", "des");
+                    , latitude_center, "image", "famous", "des","his","img1","img2","img3","img4");
             responseBodyCall.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -216,11 +213,11 @@ public class RegisterActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.center_btn:
                 radio = "center";
-                location.setVisibility(View.VISIBLE);
+                linCenter.setVisibility(View.VISIBLE);
                 break;
             case R.id.user_btn:
                 radio = "user";
-                location.setVisibility(View.GONE);
+                linCenter.setVisibility(View.GONE);
                 break;
             case R.id.location:
                 placePacker();
@@ -243,7 +240,7 @@ public class RegisterActivity extends AppCompatActivity {
     private void placePacker() {
 
         Intent locationPickerIntent = new LocationPickerActivity.Builder()
-                .withLocation(41.4036299, 2.1743558)
+                .withLocation(latitude, longitude)
                 .withSearchZone("es_ES")
                 .shouldReturnOkOnBackPressed()
                 .withStreetHidden()

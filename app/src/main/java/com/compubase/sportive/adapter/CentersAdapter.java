@@ -14,12 +14,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.compubase.sportive.R;
 import com.compubase.sportive.helper.GPSTracker;
 import com.compubase.sportive.helper.TinyDB;
 import com.compubase.sportive.model.Center;
 import com.compubase.sportive.ui.activity.CenterDetailsActivity;
 import com.compubase.sportive.ui.activity.UserJoinActivity;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +67,12 @@ public class CentersAdapter extends RecyclerView.Adapter<CentersAdapter.ViewHold
         latitude = tinyDB.getDouble("latitude", this.latitude);
         longitude = tinyDB.getDouble("longitude", this.longitude);
 
+        SharedPreferences preferences = context.getSharedPreferences("user",Context.MODE_PRIVATE);
+        String image = preferences.getString("image", "");
+
+        Glide.with(context)
+                .load(image)
+                .into(viewHolderCenters.imageView);
         viewHolderCenters.name.setText(center.getName());
 
         Location locationA = new Location("point A");
