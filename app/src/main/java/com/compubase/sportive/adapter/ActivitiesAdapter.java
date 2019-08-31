@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.compubase.sportive.R;
 import com.compubase.sportive.model.UserActivityActivityResponse;
 import com.squareup.picasso.Picasso;
@@ -36,6 +37,8 @@ public class ActivitiesAdapter extends RecyclerView.Adapter<ActivitiesAdapter.Vi
     @NonNull
     @Override
     public ViewHolderActities onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        context = viewGroup.getContext();
+
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.activites_design, viewGroup, false);
         return new ViewHolderActities(view);
     }
@@ -46,15 +49,11 @@ public class ActivitiesAdapter extends RecyclerView.Adapter<ActivitiesAdapter.Vi
         UserActivityActivityResponse userActivityActivityResponse = userActivityList.get(i);
 
         viewHolderActities.name.setText(userActivityActivityResponse.getName());
-        viewHolderActities.title.setText(userActivityActivityResponse.getType1());
+        viewHolderActities.title.setText(userActivityActivityResponse.getType());
         viewHolderActities.txt.setText(userActivityActivityResponse.getMessage());
 
+        Glide.with(context).load(userActivityActivityResponse.getImages()).placeholder(R.drawable.user_defualt_img).into(viewHolderActities.imageView);
 
-//        Picasso.get()
-//                .load(!TextUtils.isEmpty(userActivityActivityResponse.getImages()) ? APIMethods.LIVE_SERVER + userActivityActivityResponse.getImages()
-//                        : R.drawable.ic_person_black_24dp)
-//                .placeholder(R.drawable.ic_person_black_24dp)
-//                .into(viewHolderActities.imageView);
     }
 
     @Override

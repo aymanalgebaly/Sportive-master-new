@@ -175,7 +175,7 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
             googleMap.addMarker(marker);
         }
     }
-    
+
     private void JSON_DATA_WEB_CALL(){
 
         String url;

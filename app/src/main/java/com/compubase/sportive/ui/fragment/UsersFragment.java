@@ -17,37 +17,22 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.compubase.sportive.R;
-import com.compubase.sportive.adapter.GameAdapter;
 import com.compubase.sportive.adapter.UsersAdapter;
-import com.compubase.sportive.data.API;
-import com.compubase.sportive.helper.RetrofitClient;
 import com.compubase.sportive.helper.TinyDB;
-import com.compubase.sportive.model.ActivityListResponse;
-import com.compubase.sportive.model.Center;
-import com.compubase.sportive.model.GameModel;
 import com.compubase.sportive.model.UsersJoinsResponse;
 import com.compubase.sportive.model.UsersModel;
-import com.compubase.sportive.ui.activity.CenterDetailsActivity;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -70,7 +55,7 @@ public class UsersFragment extends Fragment {
 
     TinyDB tinyDB;
 
-    List<ActivityListResponse> userList = new ArrayList<>();
+    ArrayList<UsersJoinsResponse> userList = new ArrayList<UsersJoinsResponse>();
 
     public UsersFragment() {
         // Required empty public constructor
@@ -153,18 +138,20 @@ public class UsersFragment extends Fragment {
 
                 JSONObject childJSONObject = js.getJSONObject(i);
 
-                ActivityListResponse activityListResponse = new ActivityListResponse();
+                UsersJoinsResponse usersJoinsResponse = new UsersJoinsResponse();
 
-                activityListResponse.setName(childJSONObject.getString("name"));
+                usersJoinsResponse.setName(childJSONObject.getString("name"));
 
-                activityListResponse.setPhone(childJSONObject.getString("phone"));
+                usersJoinsResponse.setPhone(childJSONObject.getString("phone"));
 
-                activityListResponse.setEmail(childJSONObject.getString("email"));
+                usersJoinsResponse.setEmail(childJSONObject.getString("email"));
 
-                activityListResponse.setImages(childJSONObject.getString("images"));
+                usersJoinsResponse.setImages(childJSONObject.getString("images"));
+
+                usersJoinsResponse.setIdUser(childJSONObject.getInt("id_user"));
 
 
-                userList.add(activityListResponse);
+                userList.add(usersJoinsResponse);
 
             }
 

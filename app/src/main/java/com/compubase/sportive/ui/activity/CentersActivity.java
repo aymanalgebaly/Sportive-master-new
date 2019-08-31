@@ -22,6 +22,7 @@ import com.compubase.sportive.adapter.UsersAdapter;
 import com.compubase.sportive.helper.TinyDB;
 import com.compubase.sportive.model.ActivityListResponse;
 import com.compubase.sportive.model.Center;
+import com.compubase.sportive.model.UsersJoinsResponse;
 import com.compubase.sportive.model.UsersModel;
 
 import org.json.JSONArray;
@@ -58,7 +59,7 @@ public class CentersActivity extends AppCompatActivity {
 
     TinyDB tinyDB;
 
-    List<ActivityListResponse> userList = new ArrayList<>();
+    List<UsersJoinsResponse> usersJoinsResponses = new ArrayList<>();
     private String id_center;
 
 
@@ -114,7 +115,7 @@ public class CentersActivity extends AppCompatActivity {
     public void JSON_PARSE_DATA_AFTER_WEBCALL2(String Jobj) {
 
         //to clear the array first
-        userList.clear();
+        usersJoinsResponses.clear();
 
         try {
 
@@ -124,21 +125,23 @@ public class CentersActivity extends AppCompatActivity {
 
                 JSONObject childJSONObject = js.getJSONObject(i);
 
-                ActivityListResponse activityListResponse = new ActivityListResponse();
-                activityListResponse.setName(childJSONObject.getString("name"));
+                UsersJoinsResponse usersJoinsResponse = new UsersJoinsResponse();
+                usersJoinsResponse.setName(childJSONObject.getString("name"));
 
-                activityListResponse.setPhone(childJSONObject.getString("phone"));
+                usersJoinsResponse.setPhone(childJSONObject.getString("phone"));
 
-                activityListResponse.setEmail(childJSONObject.getString("email"));
+                usersJoinsResponse.setEmail(childJSONObject.getString("email"));
 
-                activityListResponse.setImages(childJSONObject.getString("images"));
+                usersJoinsResponse.setImages(childJSONObject.getString("images"));
+
+                usersJoinsResponse.setIdCenter(childJSONObject.getInt("id_center"));
 
 
-                userList.add(activityListResponse);
+                usersJoinsResponses.add(usersJoinsResponse);
 
             }
 
-            adapter = new UsersAdapter(userList);
+            adapter = new UsersAdapter(usersJoinsResponses);
             rcvUsers.setAdapter(adapter);
 
             adapter.notifyDataSetChanged();

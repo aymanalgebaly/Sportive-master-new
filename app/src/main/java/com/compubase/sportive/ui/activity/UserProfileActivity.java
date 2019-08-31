@@ -122,7 +122,9 @@ public class UserProfileActivity extends AppCompatActivity {
 
         imageURL = preferences.getString("image","image");
 
-        Glide.with(this).load(imageURL).placeholder(R.drawable.ic_person_black_24dp).into(imgUserProfile);
+        Toast.makeText(this, imageURL, Toast.LENGTH_SHORT).show();
+
+        Glide.with(this).load(imageURL).placeholder(R.drawable.center_defult_img).into(imgUserProfile);
 
 
         fullNameUserProfile.setText(name);

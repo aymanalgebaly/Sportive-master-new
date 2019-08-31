@@ -157,6 +157,7 @@ public class HomeCenterFragment extends Fragment implements OnMapReadyCallback {
 
         Glide.with(getActivity())
                 .load(image_user)
+                .placeholder(R.drawable.center_defult_img)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true)
                 .fitCenter()
@@ -165,24 +166,28 @@ public class HomeCenterFragment extends Fragment implements OnMapReadyCallback {
 
         Glide.with(getActivity())
                 .load(imgone)
+                .placeholder(R.drawable.back_img)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true)
                 .fitCenter()
                 .into(imgOne);
         Glide.with(getActivity())
                 .load(imgtwo)
+                .placeholder(R.drawable.back_img)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true)
                 .fitCenter()
                 .into(imgTwo);
         Glide.with(getActivity())
                 .load(imgthree)
+                .placeholder(R.drawable.back_img)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true)
                 .fitCenter()
                 .into(imgThree);
         Glide.with(getActivity())
                 .load(imgfour)
+                .placeholder(R.drawable.back_img)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true)
                 .fitCenter()
@@ -303,8 +308,8 @@ public class HomeCenterFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
-        String lang = preferences.getString("long", "0.000000");
-        String lat = preferences.getString("lat", "0.00000000");
+        String lang = preferences.getString("long", "");
+        String lat = preferences.getString("lat", "");
         assert lang != null;
         assert lat != null;
         if (!lang.equals("") || !lat.equals("")) {

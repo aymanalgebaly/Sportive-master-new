@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.compubase.sportive.R;
 import com.compubase.sportive.model.ActivityListResponse;
+import com.compubase.sportive.model.UsersJoinsResponse;
 import com.compubase.sportive.ui.activity.SendActivity;
 
 import java.util.ArrayList;
@@ -22,10 +23,10 @@ import java.util.List;
 public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHlder> {
 
     private Context context;
-    private List<ActivityListResponse> activityListResponseList;
+    private List<UsersJoinsResponse> usersJoinsResponses;
 
-    public UsersAdapter(List<ActivityListResponse> activityListResponseList) {
-        this.activityListResponseList = activityListResponseList;
+    public UsersAdapter(List<UsersJoinsResponse> usersJoinsResponseList) {
+        this.usersJoinsResponses = usersJoinsResponseList;
     }
 
     public UsersAdapter(Context context) {
@@ -48,36 +49,30 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHlder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHlder viewHlder, int i) {
 
-        ActivityListResponse activityListResponse = activityListResponseList.get(i);
-
-//        for (int j = 0; j <activityListResponse.size() ; j++) {
-//
-//            viewHlder.name.setText(activityListResponse.get(j).getName());
-//
-//            Glide.with(context).load(activityListResponse.get(j).getImages()).placeholder(R.drawable.bg_sportive).into(viewHlder.img);
-//
-//            final int idReceive = activityListResponse.get(j).getIdReceive();
-//
-//            SendActivity.id_recievd = idReceive;
-//
-//            id_resieved = String.valueOf(idReceive);
-//            viewHlder.itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//
-//                    Intent intent = new Intent(context,SendActivity.class);
-//                    intent.putExtra("id_user",idReceive);
-//                    context.startActivity(intent);
-//                }
-//            });
-//        }
+        UsersJoinsResponse usersJoinsResponse1 = usersJoinsResponses.get(i);
 
 
-    }
+            viewHlder.name.setText(usersJoinsResponse1.getName());
+
+            Glide.with(context).load(usersJoinsResponse1.getImages()).placeholder(R.drawable.bg_sportive).into(viewHlder.img);
+
+        final int idUser = usersJoinsResponse1.getIdUser();
+
+        viewHlder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Intent intent = new Intent(context, SendActivity.class);
+                    intent.putExtra("id_user", idUser);
+                    context.startActivity(intent);
+                }
+            });
+        }
+
 
     @Override
     public int getItemCount() {
-        return activityListResponseList != null ? activityListResponseList.size():0;
+        return usersJoinsResponses != null ? usersJoinsResponses.size():0;
     }
 
 

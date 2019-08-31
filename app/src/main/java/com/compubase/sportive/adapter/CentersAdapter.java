@@ -67,12 +67,18 @@ public class CentersAdapter extends RecyclerView.Adapter<CentersAdapter.ViewHold
         latitude = tinyDB.getDouble("latitude", this.latitude);
         longitude = tinyDB.getDouble("longitude", this.longitude);
 
-        SharedPreferences preferences = context.getSharedPreferences("user",Context.MODE_PRIVATE);
-        String image = preferences.getString("image", "");
+//        SharedPreferences preferences = context.getSharedPreferences("user",Context.MODE_PRIVATE);
+//        String image = preferences.getString("image", "");
+
+//        Toast.makeText(context, image, Toast.LENGTH_SHORT).show();
+
+        int id = center.getId();
 
         Glide.with(context)
-                .load(image)
+                .load(centerList.get(i).getImages())
+                .placeholder(R.drawable.center_defult_img)
                 .into(viewHolderCenters.imageView);
+
         viewHolderCenters.name.setText(center.getName());
 
         Location locationA = new Location("point A");

@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.compubase.sportive.R;
 import com.compubase.sportive.adapter.ActivitiesAdapter;
+import com.compubase.sportive.adapter.CentersListAdapter;
 import com.compubase.sportive.data.API;
 import com.compubase.sportive.helper.RetrofitClient;
 import com.compubase.sportive.model.UserActivityActivityResponse;

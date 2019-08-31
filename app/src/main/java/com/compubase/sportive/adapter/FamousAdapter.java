@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.compubase.sportive.R;
 import com.compubase.sportive.model.FamousActivityResponse;
 import com.compubase.sportive.ui.activity.CenterDetailsActivity;
@@ -47,6 +48,8 @@ public class FamousAdapter extends RecyclerView.Adapter<FamousAdapter.ViewHolder
 
         viewHolderFamous.type.setText(famousActivityResponse.getType());
         viewHolderFamous.name.setText(famousActivityResponse.getName());
+
+        Glide.with(context).load(famousActivityResponse.getImages()).placeholder(R.drawable.center_defult_img).into(viewHolderFamous.imageView);
 
         viewHolderFamous.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

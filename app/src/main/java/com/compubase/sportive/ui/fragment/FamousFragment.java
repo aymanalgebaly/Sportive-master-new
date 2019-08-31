@@ -109,6 +109,7 @@ public class FamousFragment extends Fragment {
                             famous.setPhone(famousList.get(j).getPhone());
                             famous.setLang(famousList.get(j).getLang());
                             famous.setLat(famousList.get(j).getLat());
+                            famous.setImages(famousList.get(j).getImages());
 
                             centerArrayList.add(famous);
                         }

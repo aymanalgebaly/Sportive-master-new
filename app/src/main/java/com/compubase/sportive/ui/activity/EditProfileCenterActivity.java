@@ -211,6 +211,11 @@ public class EditProfileCenterActivity extends AppCompatActivity {
         descCenterProfile.setText(des);
         historyCenterProfile.setText(history);
 
+        Glide.with(this).load(imgone).placeholder(R.drawable.back_img).into(img1);
+        Glide.with(this).load(imgtwo).placeholder(R.drawable.back_img).into(img2);
+        Glide.with(this).load(imgthree).placeholder(R.drawable.back_img).into(img3);
+        Glide.with(this).load(imgfour).placeholder(R.drawable.back_img).into(img4);
+
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE }, 0);
         }
@@ -487,6 +492,10 @@ public class EditProfileCenterActivity extends AppCompatActivity {
                                     editor.apply();
 
                                     Glide.with(EditProfileCenterActivity.this).load(imageURL).into(imgCenterEditProfile);
+                                    Glide.with(EditProfileCenterActivity.this).load(imgone).into(img1);
+                                    Glide.with(EditProfileCenterActivity.this).load(imgtwo).into(img2);
+                                    Glide.with(EditProfileCenterActivity.this).load(imgthree).into(img3);
+                                    Glide.with(EditProfileCenterActivity.this).load(imgfour).into(img4);
 
                                 }
                             });
@@ -510,5 +519,17 @@ public class EditProfileCenterActivity extends AppCompatActivity {
                         }
                     });
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        fullNameCenterProfile.setText(name);
+        emailCenterProfile.setText(email);
+        passwordCenterProfile.setText(pass);
+        phoneNumCenterProfile.setText(phone);
+        descCenterProfile.setText(des);
+        historyCenterProfile.setText(history);
     }
 }
