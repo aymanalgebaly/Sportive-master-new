@@ -2,7 +2,6 @@ package com.compubase.sportive.ui.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
@@ -18,13 +17,13 @@ import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.compubase.sportive.R;
 import com.compubase.sportive.adapter.GameAdapter;
-import com.compubase.sportive.data.API;
-import com.compubase.sportive.helper.RetrofitClient;
 import com.compubase.sportive.helper.TinyDB;
 import com.compubase.sportive.model.GameModel;
 import com.google.android.gms.maps.GoogleMap;
@@ -34,23 +33,17 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class CenterDetailsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -90,17 +83,43 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
     String lat;
 
     String name;
+    @BindView(R.id.txt_des_details)
+    TextView txtDesDetails;
+    @BindView(R.id.txt_value_des_details)
+    TextView txtValueDesDetails;
+    @BindView(R.id.img_one_details)
+    ImageView imgOneDetails;
+    @BindView(R.id.img_two_details)
+    ImageView imgTwoDetails;
+    @BindView(R.id.lin_img_one)
+    LinearLayout linImgOne;
+    @BindView(R.id.img_three_details)
+    ImageView imgThreeDetails;
+    @BindView(R.id.img_four_details)
+    ImageView imgFourDetails;
+    @BindView(R.id.lin_img_two)
+    LinearLayout linImgTwo;
+    @BindView(R.id.txt_his_details)
+    TextView txtHisDetails;
+    @BindView(R.id.txt_value_his_details)
+    TextView txtValueHisDetails;
+    @BindView(R.id.mail_center)
+    TextView mailCenter;
+//    @BindView(R.id.map_center)
+//    android.widget.fragment mapCenter;
     private GameAdapter adapter;
     private int i;
 
     List<GameModel> gamesList = new ArrayList<>();
     private SharedPreferences preferences;
-    private String name_shared,email_shared;
+    private String name_shared, email_shared;
 
     private ImageView imageView;
-    private TextView center_name,center_mail;
+    private TextView center_name, center_mail;
     private String phone;
     private String image;
+    private String des, history, imagess, img1, img2, img3, img4;
+    private String mail;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -126,21 +145,40 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
         lang = getIntent().getExtras().getString("long");
         lat = getIntent().getExtras().getString("lat");
         name = getIntent().getExtras().getString("name");
+        mail = getIntent().getExtras().getString("email");
         phone = getIntent().getExtras().getString("phone");
         id = String.valueOf(getIntent().getExtras().getInt("id_center"));
+        des = getIntent().getExtras().getString("des");
+        history = getIntent().getExtras().getString("history");
+        imagess = getIntent().getExtras().getString("image");
+        img1 = getIntent().getExtras().getString("imageone");
+        img2 = getIntent().getExtras().getString("imagetwo");
+        img3 = getIntent().getExtras().getString("imagethree");
+        img4 = getIntent().getExtras().getString("imagefour");
+
+        txtValueDesDetails.setText(des);
+        txtValueHisDetails.setText(history);
+        nameCenter.setText(name);
+        phoneCenter.setText(phone);
+        mailCenter.setText(mail);
+
+        Glide.with(this).load(imagess).placeholder(R.drawable.center_defult_img).into(centerImg);
+
+
+        Glide.with(this).load(img1).placeholder(R.drawable.back_img).into(imgOneDetails);
+        Glide.with(this).load(img2).placeholder(R.drawable.back_img).into(imgTwoDetails);
+        Glide.with(this).load(img3).placeholder(R.drawable.back_img).into(imgThreeDetails);
+        Glide.with(this).load(img4).placeholder(R.drawable.back_img).into(imgFourDetails);
 
         UserJoinActivity.id = id;
 
-       // Toast.makeText(CenterDetailsActivity.this, id, Toast.LENGTH_SHORT).show();
-
-        nameCenter.setText(name);
-        phoneCenter.setText(phone);
+        // Toast.makeText(CenterDetailsActivity.this, id, Toast.LENGTH_SHORT).show();
 
         SharedPreferences shared = getSharedPreferences("user", MODE_PRIVATE);
         myid = (shared.getString("id", ""));
         image = shared.getString("image", "");
 
-        Picasso.get().load(image).into(centerImg);
+//        Picasso.get().load(image).into(centerImg);
 
 
         rcvCenterHome.setHasFixedSize(true);
@@ -157,7 +195,7 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(CenterDetailsActivity.this,UserJoinActivity.class));
+                startActivity(new Intent(CenterDetailsActivity.this, UserJoinActivity.class));
             }
         });
     }
@@ -167,31 +205,30 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
 
         assert lang != null;
         assert lat != null;
-        if(lang != null || lat != null)
-        {
+        if (lang != null || lat != null) {
             double lo = Double.parseDouble(lang);
             double la = Double.parseDouble(lat);
-            MarkerOptions marker = new MarkerOptions().position(new LatLng(lo,la)).title(name);
+            MarkerOptions marker = new MarkerOptions().position(new LatLng(lo, la)).title(name);
             googleMap.addMarker(marker);
         }
     }
 
-    private void JSON_DATA_WEB_CALL(){
+    private void JSON_DATA_WEB_CALL() {
 
         String url;
 
-        url = "http://sportive.technowow.net/sportive.asmx/select_game?id_center="+id;
+        url = "http://sportive.technowow.net/sportive.asmx/select_game?id_center=" + id;
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new com.android.volley.Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
-               // showMessage(response);
+                // showMessage(response);
 
                 JSON_PARSE_DATA_AFTER_WEBCALL2(response);
 
             }
-        }, new com.android.volley.Response.ErrorListener() {
+        }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
 
@@ -233,7 +270,7 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
             adapter.notifyDataSetChanged();
 
 
-        }catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }

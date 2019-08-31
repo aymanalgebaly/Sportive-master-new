@@ -140,6 +140,8 @@ public class EditProfileCenterActivity extends AppCompatActivity {
     private int GALLERY_REQUEST_CODE_FIVE = 5;
     private String imgone,imgtwo,imgthree,imgfour;
     private String history;
+    private String description;
+    private String hist;
 
 
     @Override
@@ -147,6 +149,20 @@ public class EditProfileCenterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile_center);
         ButterKnife.bind(this);
+
+        description = descCenterProfile.getText().toString();
+        hist = historyCenterProfile.getText().toString();
+
+        SharedPreferences.Editor editor = getSharedPreferences("user", MODE_PRIVATE).edit();
+
+        preferences = getSharedPreferences("user", MODE_PRIVATE);
+
+        editor.putBoolean("login", true);
+
+        editor.putString("des",description);
+        editor.putString("history",hist);
+
+        editor.apply();
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
@@ -192,16 +208,16 @@ public class EditProfileCenterActivity extends AppCompatActivity {
         phone = preferences.getString("phone", "");
         id = preferences.getString("id", "");
         type = preferences.getString("type", "");
-        des = preferences.getString("des", "");
+//        des = preferences.getString("des", "");
         imgone = preferences.getString("imgone", "");
         imgtwo = preferences.getString("imgtwo", "");
         imgthree = preferences.getString("imgthree", "");
         imgfour = preferences.getString("imgfour", "");
-        history = preferences.getString("history", "");
+//        history = preferences.getString("history", "");
 
         imageURL = preferences.getString("image","image");
 
-        Glide.with(this).load(imageURL).placeholder(R.drawable.ic_person_black_24dp).into(imgCenterEditProfile);
+        Glide.with(this).load(imageURL).placeholder(R.drawable.center_defult_img).into(imgCenterEditProfile);
 
 
         fullNameCenterProfile.setText(name);
@@ -242,7 +258,7 @@ public class EditProfileCenterActivity extends AppCompatActivity {
     private void updateProfile() {
         Retrofit retrofit = RetrofitClient.getInstant();
         API api = retrofit.create(API.class);
-        Call<ResponseBody> responseBodyCall = api.UpdateProfile(des, history, imgone, imgtwo, imgthree, imgfour, id);
+        Call<ResponseBody> responseBodyCall = api.UpdateProfile(description, hist, imgone, imgtwo, imgthree, imgfour, id);
         responseBodyCall.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -251,7 +267,23 @@ public class EditProfileCenterActivity extends AppCompatActivity {
                         String string = response.body().string();
 
                         if (string.equals("True")){
+
+                            SharedPreferences.Editor editor = getSharedPreferences("user", MODE_PRIVATE).edit();
+
+                            preferences = getSharedPreferences("user", MODE_PRIVATE);
+
+                            editor.putBoolean("login", true);
+
+                            editor.putString("des",description);
+                            editor.putString("history",hist);
+
+                            editor.apply();
+
+                            Toast.makeText(EditProfileCenterActivity.this, description, Toast.LENGTH_SHORT).show();
+
+
                             startActivity(new Intent(EditProfileCenterActivity.this,CenterHomeActivity.class));
+
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -290,6 +322,24 @@ public class EditProfileCenterActivity extends AppCompatActivity {
 
 
                         if (string.equals("True")) {
+
+                            SharedPreferences.Editor editor = getSharedPreferences("user", MODE_PRIVATE).edit();
+
+                            preferences = getSharedPreferences("user", MODE_PRIVATE);
+
+                            editor.putBoolean("login", true);
+
+                            editor.putString("name",userName);
+                            editor.putString("email",userMail);
+                            editor.putString("phone",userphone);
+                            editor.putString("pass",userpass);
+
+                            editor.apply();
+
+                            fullNameCenterProfile.setText(name);
+                            emailCenterProfile.setText(email);
+                            passwordCenterProfile.setText(pass);
+                            phoneNumCenterProfile.setText(phone);
                             Toast.makeText(EditProfileCenterActivity.this, "Updated", Toast.LENGTH_SHORT).show();
 
                             if (type.equals("center")){
@@ -519,17 +569,5 @@ public class EditProfileCenterActivity extends AppCompatActivity {
                         }
                     });
         }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        fullNameCenterProfile.setText(name);
-        emailCenterProfile.setText(email);
-        passwordCenterProfile.setText(pass);
-        phoneNumCenterProfile.setText(phone);
-        descCenterProfile.setText(des);
-        historyCenterProfile.setText(history);
     }
 }

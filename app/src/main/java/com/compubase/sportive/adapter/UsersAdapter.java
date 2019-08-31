@@ -63,7 +63,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHlder> {
                 public void onClick(View v) {
 
                     Intent intent = new Intent(context, SendActivity.class);
-                    intent.putExtra("id_user", idUser);
+                    intent.putExtra("id_reciever", idUser);
                     context.startActivity(intent);
                 }
             });

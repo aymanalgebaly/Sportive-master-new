@@ -127,8 +127,8 @@ public class RegisterActivity extends AppCompatActivity {
         }else {
             Retrofit retrofit = RetrofitClient.getInstant();
             API api = retrofit.create(API.class);
-            Call<ResponseBody> responseBodyCall = api.UserRegister(userName, userMail, userpass, userphone, radio, longitude
-                    , latitude, "image", "famous", "","",
+            Call<ResponseBody> responseBodyCall = api.UserRegister(userName, userMail, userpass, userphone, radio, longitude_center
+                    , latitude_center, "image", "famous", "","",
                     "img_1","img_2","img_3","img_4");
             responseBodyCall.enqueue(new Callback<ResponseBody>() {
                 @Override
@@ -179,8 +179,8 @@ public class RegisterActivity extends AppCompatActivity {
         } else {
             Retrofit retrofit = RetrofitClient.getInstant();
             API api = retrofit.create(API.class);
-            Call<ResponseBody> responseBodyCall = api.UserRegister(userName, userMail, userpass, userphone, radio, longitude_center
-                    , latitude_center, "image", "famous", "des","his","img1","img2","img3","img4");
+            Call<ResponseBody> responseBodyCall = api.UserRegister(userName, userMail, userpass, userphone, radio, 0.000
+                    , 0.000, "image", "famous", "des","his","img1","img2","img3","img4");
             responseBodyCall.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -261,10 +261,10 @@ public class RegisterActivity extends AppCompatActivity {
 
                 latitude_center = data.getDoubleExtra(LATITUDE, 0.0);
 //                Log.d("LATITUDE****", latitude.toString());
-//                Toast.makeText(RegisterActivity.this, String.valueOf(latitude), Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this, String.valueOf(latitude_center), Toast.LENGTH_SHORT).show();
                 longitude_center = data.getDoubleExtra(LONGITUDE, 0.0);
 //                Log.d("LONGITUDE****", longitude.toString());
-//                Toast.makeText(RegisterActivity.this, String.valueOf(longitude), Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this, String.valueOf(longitude_center), Toast.LENGTH_SHORT).show();
                 address = data.getStringExtra(LOCATION_ADDRESS);
                 location.setText(address);
                 //Log.d("ADDRESS****", address);

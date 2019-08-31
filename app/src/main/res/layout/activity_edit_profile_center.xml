@@ -64,8 +64,7 @@
                 android:id="@+id/img_center_edit_profile"
                 android:layout_height="100dp"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="100dp"
-                android:background="@drawable/center_defult_img"/>
+                android:layout_marginTop="100dp" />
 
             <TextView
                 android:layout_width="match_parent"

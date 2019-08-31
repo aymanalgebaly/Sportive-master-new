@@ -9,9 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.compubase.sportive.R;
+import com.compubase.sportive.model.ActivityListResponse;
 import com.compubase.sportive.model.UsersJoinsResponse;
 import com.compubase.sportive.ui.activity.SendActivity;
 
@@ -20,10 +22,10 @@ import java.util.List;
 public class CentersListAdapter extends RecyclerView.Adapter<CentersListAdapter.ViewHolder> {
 
     private Context context;
-    private List<UsersJoinsResponse> usersJoinsResponses;
+    private List<ActivityListResponse> activityListResponseList;
 
-    public CentersListAdapter(List<UsersJoinsResponse> usersJoinsResponses) {
-        this.usersJoinsResponses = usersJoinsResponses;
+    public CentersListAdapter(List<ActivityListResponse> activityListResponses) {
+        this.activityListResponseList = activityListResponses;
     }
 
     public CentersListAdapter(Context context) {
@@ -41,28 +43,31 @@ public class CentersListAdapter extends RecyclerView.Adapter<CentersListAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        UsersJoinsResponse usersJoinsResponse = usersJoinsResponses.get(i);
+        ActivityListResponse activityListResponse = activityListResponseList.get(i);
 
-        viewHolder.name.setText(usersJoinsResponse.getName());
 
-        Glide.with(context).load(usersJoinsResponse.getImages()).placeholder(R.drawable.bg_sportive).into(viewHolder.img);
+        viewHolder.name.setText(activityListResponse.getName());
 
-        final int idCenter = usersJoinsResponse.getIdCenter();
+
+        Glide.with(context).load(activityListResponse.getImages()).placeholder(R.drawable.bg_sportive).into(viewHolder.img);
+
+        final int idCenter = activityListResponse.getIdReceive();
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Intent intent = new Intent(context, SendActivity.class);
-                intent.putExtra("id_center", idCenter);
+                intent.putExtra("id_reciever", idCenter);
                 context.startActivity(intent);
+
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return usersJoinsResponses != null ? usersJoinsResponses.size():0;
+        return activityListResponseList != null ? activityListResponseList.size():0;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

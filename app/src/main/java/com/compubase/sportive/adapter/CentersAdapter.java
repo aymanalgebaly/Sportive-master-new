@@ -120,6 +120,12 @@ public class CentersAdapter extends RecyclerView.Adapter<CentersAdapter.ViewHold
                 intent.putExtra("lat",center.getLat());
                 intent.putExtra("long",center.getLang());
                 intent.putExtra("phone",center.getPhone());
+                intent.putExtra("des",center.getDes());
+                intent.putExtra("history",center.getHistory());
+                intent.putExtra("imageone",center.getImg1());
+                intent.putExtra("imagetwo",center.getImg2());
+                intent.putExtra("imagethree",center.getImg3());
+                intent.putExtra("imagefour",center.getImg4());
                 context.startActivity(intent);
             }
         });

@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:background="@color/white"
     android:layout_height="match_parent"
-    tools:context=".ui.fragment.HomeCenterFragment">
+    tools:context=".ui.activity.CenterDetailsActivity">
 
     <!-- TODO: Update blank fragment layout -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,7 +22,6 @@
 
         <ImageView
             android:layout_width="0dp"
-            android:background="@drawable/center_defult_img"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:layout_margin="5dp"
@@ -28,7 +32,7 @@
             android:layout_height="match_parent"
             android:layout_weight="3"
             android:orientation="vertical"
-            android:weightSum="2">
+            android:weightSum="3">
 
             <TextView
                 android:layout_width="match_parent"
@@ -48,11 +52,17 @@
                 android:layout_weight="1"
                 android:layout_marginStart="3dp"
                 android:text=""
+                android:id="@+id/mail_center"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginStart="3dp"
+                android:text=""
                 android:textSize="12sp"
-                android:id="@+id/phone_center"
-                android:layout_marginTop="10dp"
-                android:textColor="@color/black"
-                android:textStyle="bold"/>
+                android:id="@+id/phone_center" />
         </LinearLayout>
     </LinearLayout>
 
@@ -71,6 +81,98 @@
         </fragment>
     </FrameLayout>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/description"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/txt_des_details"
+        android:layout_below="@id/frame_map_center"/>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txt_value_des_details"
+        android:layout_marginStart="5dp"
+        android:layout_below="@id/txt_des_details"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:id="@+id/lin_img_one"
+        android:weightSum="2"
+        android:layout_below="@id/txt_value_des_details"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_margin="10dp"
+            android:id="@+id/img_one_details"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_margin="10dp"
+            android:id="@+id/img_two_details"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:id="@+id/lin_img_two"
+        android:weightSum="2"
+        android:layout_below="@id/lin_img_one"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_margin="10dp"
+            android:id="@+id/img_three_details"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_margin="10dp"
+            android:id="@+id/img_four_details"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/history"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:id="@+id/txt_his_details"
+        android:layout_below="@id/lin_img_two"/>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txt_value_his_details"
+        android:layout_marginStart="5dp"
+        android:layout_below="@id/txt_his_details"/>
+
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -81,7 +183,7 @@
         android:textStyle="bold"
         android:textColor="@color/white"
         android:id="@+id/btn_join"
-        android:layout_below="@id/frame_map_center"/>
+        android:layout_below="@id/txt_value_his_details"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -132,4 +234,6 @@
     </FrameLayout>
 
 
-</RelativeLayout>
+    </RelativeLayout>
+
+</ScrollView>

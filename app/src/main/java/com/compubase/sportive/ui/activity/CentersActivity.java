@@ -18,6 +18,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.compubase.sportive.R;
+import com.compubase.sportive.adapter.CentersListAdapter;
 import com.compubase.sportive.adapter.UsersAdapter;
 import com.compubase.sportive.helper.TinyDB;
 import com.compubase.sportive.model.ActivityListResponse;
@@ -49,7 +50,7 @@ public class CentersActivity extends AppCompatActivity {
     Toolbar toolbarCentersList;
     @BindView(R.id.abbBar_centers_list)
     AppBarLayout abbBarCentersList;
-    private UsersAdapter adapter;
+    private CentersListAdapter adapter;
     private String[] name;
     private int i;
     private String id, name_user;
@@ -141,7 +142,7 @@ public class CentersActivity extends AppCompatActivity {
 
             }
 
-            adapter = new UsersAdapter(usersJoinsResponses);
+//            adapter = new CentersListAdapter(usersJoinsResponses);
             rcvUsers.setAdapter(adapter);
 
             adapter.notifyDataSetChanged();

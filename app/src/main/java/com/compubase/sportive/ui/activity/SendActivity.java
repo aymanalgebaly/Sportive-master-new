@@ -43,6 +43,8 @@ public class SendActivity extends AppCompatActivity {
     RequestQueue requestQueue;
     private int id_center;
     private int id_user;
+    private int id_id_user;
+    private int id_id_center;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,11 +69,9 @@ public class SendActivity extends AppCompatActivity {
 
 
         Intent intent = getIntent();
-        id_user = intent.getIntExtra("id_user", id_center);
+        id_id_user = intent.getIntExtra("id_reciever", id_user);
 
 
-        Intent intent2 = getIntent();
-        id_center = intent.getIntExtra("id_center", id_center);
     }
 
     @OnClick(R.id.send_btn)
@@ -84,9 +84,9 @@ public class SendActivity extends AppCompatActivity {
 
         String url;
 
-        url = "http://sportive.technowow.net/sportive.asmx/insert_activites?id_send="+myid+"&id_recived="+id_user+"&message="+msg.getText().toString().trim()+"&type="+spinner.getSelectedItem().toString().trim();
+        url = "http://sportive.technowow.net/sportive.asmx/insert_activites?id_send="+myid+"&id_recived="+id_id_user+"&message="+msg.getText().toString().trim()+"&type="+spinner.getSelectedItem().toString().trim();
 
-        Toast.makeText(this, String.valueOf(id_user), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, String.valueOf(id_id_user), Toast.LENGTH_SHORT).show();
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new com.android.volley.Response.Listener<String>() {
             @Override
