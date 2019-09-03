@@ -122,9 +122,9 @@ public class UserProfileActivity extends AppCompatActivity {
 
         imageURL = preferences.getString("image","image");
 
-        Toast.makeText(this, imageURL, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, imageURL, Toast.LENGTH_SHORT).show();
 
-        Glide.with(this).load(imageURL).placeholder(R.drawable.center_defult_img).into(imgUserProfile);
+        Glide.with(this).load(imageURL).placeholder(R.drawable.user_defualt_img).into(imgUserProfile);
 
 
         fullNameUserProfile.setText(name);
@@ -156,14 +156,14 @@ public class UserProfileActivity extends AppCompatActivity {
 
     private void updateData() {
 
-        userName = fullNameUserProfile.getText().toString();
-        userMail = emailUserProfile.getText().toString();
-        userphone = phoneNumUserProfile.getText().toString();
-        userpass = passwordUserProfile.getText().toString();
+        name = fullNameUserProfile.getText().toString();
+        email = emailUserProfile.getText().toString();
+        phone = phoneNumUserProfile.getText().toString();
+        pass = passwordUserProfile.getText().toString();
 
         Retrofit retrofit = RetrofitClient.getInstant();
         API api = retrofit.create(API.class);
-        Call<ResponseBody> responseBodyCall = api.UpdateData(userName, userMail, userpass, userphone,0.000 ,
+        Call<ResponseBody> responseBodyCall = api.UpdateData(name, email, pass, phone,0.000 ,
                 0.0000, imageURL, "famous", "des",id);
         responseBodyCall.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -269,10 +269,10 @@ public class UserProfileActivity extends AppCompatActivity {
                                     editor.putBoolean("login", true);
 
                                     editor.putString("image", imageURL);
-                                    editor.putString("name",userName);
-                                    editor.putString("email",userMail);
-                                    editor.putString("phone",userphone);
-                                    editor.putString("pass",userpass);
+                                    editor.putString("name",name);
+                                    editor.putString("email",email);
+                                    editor.putString("phone",phone);
+                                    editor.putString("pass",pass);
 
                                     editor.apply();
 

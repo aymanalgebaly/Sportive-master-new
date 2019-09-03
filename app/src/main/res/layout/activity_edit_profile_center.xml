@@ -244,9 +244,7 @@
                 android:background="@drawable/edit_text"
                 android:drawablePadding="15dp"
                 android:hint="@string/description"
-                android:inputType="textPersonName"
-                android:textSize="12sp"
-                tools:ignore="RtlHardcoded" />
+                android:textSize="12sp"/>
 
             <View
                 android:id="@+id/view10"
@@ -267,10 +265,7 @@
                 android:background="@drawable/edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="90dp"
-                android:ems="10"
-                android:inputType="textEmailAddress"
-                android:layout_marginStart="3dp"
-                tools:ignore="RtlHardcoded" />
+                android:layout_marginStart="3dp" />
 
             <View
                 android:id="@+id/view20"

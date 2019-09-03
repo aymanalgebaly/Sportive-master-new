@@ -86,8 +86,10 @@ public class AddGameActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
 
-                Toast.makeText(AddGameActivity.this, response, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(AddGameActivity.this, response, Toast.LENGTH_SHORT).show();
                 if (response.equals("True")){
+
+                    startActivity(new Intent(AddGameActivity.this,CenterHomeActivity.class));
                     onBackPressed();
                 }
                 // showMessage(response);

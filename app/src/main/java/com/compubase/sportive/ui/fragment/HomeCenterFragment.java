@@ -29,9 +29,11 @@ import com.compubase.sportive.adapter.GameAdapter;
 import com.compubase.sportive.helper.TinyDB;
 import com.compubase.sportive.model.GameActivityResponse;
 import com.compubase.sportive.model.GameModel;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -151,8 +153,8 @@ public class HomeCenterFragment extends Fragment implements OnMapReadyCallback {
         nameCenter.setText(center_name_user);
         phoneCenter.setText(center_phone_user);
         mailCenter.setText(email);
-        txtValueDes.setText(des);
-        txtValueHis.setText(history);
+//        txtValueDes.setText(des);
+//        txtValueHis.setText(history);
 
 
         Glide.with(getActivity())
@@ -281,30 +283,6 @@ public class HomeCenterFragment extends Fragment implements OnMapReadyCallback {
         Toast.makeText(getContext(), s, Toast.LENGTH_LONG).show();
     }
 
-
-    private void setup() {
-        LinearLayoutManager gridLayoutManager = new LinearLayoutManager(getActivity());
-        rcvCenterHome.setLayoutManager(gridLayoutManager);
-        //adapter = new GameAdapter(getActivity());
-        rcvCenterHome.setAdapter(adapter);
-//        adapter.notifyDataSetChanged();
-    }
-
-    private void data() {
-        List<GameModel> gameModels = new ArrayList<>();
-
-        game = new String[]{"Football", "Football", "Football", "Football", "Football"};
-        name = new String[]{"ahmed", "ahmed", "ahmed", "ahmed", "ahmed"};
-
-        for (i = 0; i < game.length; i++) {
-            //  gameModels.add(new GameModel(game[i],name[i]));
-
-        }
-
-        // adapter.setData(gameModels);
-//        adapter.notifyDataSetChanged();
-    }
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
@@ -317,6 +295,15 @@ public class HomeCenterFragment extends Fragment implements OnMapReadyCallback {
             double la = Double.parseDouble(lat);
             MarkerOptions marker = new MarkerOptions().position(new LatLng(la, lo)).title(center_name);
             googleMap.addMarker(marker);
+
+            CameraPosition cameraPosition = new CameraPosition.Builder()
+                    .target(new LatLng(la,lo))      // Sets the center of the map to location user
+                    .zoom(17)                   // Sets the zoom
+                    .bearing(90)                // Sets the orientation of the camera to east
+                    .tilt(40)                   // Sets the tilt of the camera to 30 degrees
+                    .build();                   // Creates a CameraPosition from the builder
+            googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
         }
     }
 

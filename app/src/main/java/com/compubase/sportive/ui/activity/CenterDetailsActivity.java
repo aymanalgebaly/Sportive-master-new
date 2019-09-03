@@ -26,9 +26,11 @@ import com.compubase.sportive.R;
 import com.compubase.sportive.adapter.GameAdapter;
 import com.compubase.sportive.helper.TinyDB;
 import com.compubase.sportive.model.GameModel;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
@@ -131,6 +133,8 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
         assert mapFragment != null;
         mapFragment.getMapAsync(this);
 
+        tinyDB = new TinyDB(this);
+
 //        preferences = getSharedPreferences("user",MODE_PRIVATE);
 //        name_shared = preferences.getString("name", "");
 //        email_shared = preferences.getString("email", "");
@@ -156,6 +160,8 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
         img3 = getIntent().getExtras().getString("imagethree");
         img4 = getIntent().getExtras().getString("imagefour");
 
+        Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
+
         txtValueDesDetails.setText(des);
         txtValueHisDetails.setText(history);
         nameCenter.setText(name);
@@ -170,7 +176,6 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
         Glide.with(this).load(img3).placeholder(R.drawable.back_img).into(imgThreeDetails);
         Glide.with(this).load(img4).placeholder(R.drawable.back_img).into(imgFourDetails);
 
-        UserJoinActivity.id = id;
 
         // Toast.makeText(CenterDetailsActivity.this, id, Toast.LENGTH_SHORT).show();
 
@@ -195,7 +200,13 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(CenterDetailsActivity.this, UserJoinActivity.class));
+                tinyDB.putString("id",id);
+
+                Intent intent = new Intent(CenterDetailsActivity.this,UserJoinActivity.class);
+//                intent.putExtra("id_center",id);
+                startActivity(intent);
+
+//                startActivity(new Intent(CenterDetailsActivity.this, UserJoinActivity.class));
             }
         });
     }
@@ -210,8 +221,17 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
             double la = Double.parseDouble(lat);
             MarkerOptions marker = new MarkerOptions().position(new LatLng(lo, la)).title(name);
             googleMap.addMarker(marker);
+
+            CameraPosition cameraPosition = new CameraPosition.Builder()
+                    .target(new LatLng(la,lo))      // Sets the center of the map to location user
+                    .zoom(17)                   // Sets the zoom
+                    .bearing(90)                // Sets the orientation of the camera to east
+                    .tilt(40)                   // Sets the tilt of the camera to 30 degrees
+                    .build();                   // Creates a CameraPosition from the builder
+            googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         }
     }
+
 
     private void JSON_DATA_WEB_CALL() {
 

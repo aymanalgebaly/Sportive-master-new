@@ -142,6 +142,7 @@ public class EditProfileCenterActivity extends AppCompatActivity {
     private String history;
     private String description;
     private String hist;
+    private String lat,s_Long;
 
 
     @Override
@@ -150,19 +151,16 @@ public class EditProfileCenterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_profile_center);
         ButterKnife.bind(this);
 
-        description = descCenterProfile.getText().toString();
-        hist = historyCenterProfile.getText().toString();
+//        SharedPreferences.Editor editor = getSharedPreferences("user", MODE_PRIVATE).edit();
 
-        SharedPreferences.Editor editor = getSharedPreferences("user", MODE_PRIVATE).edit();
-
-        preferences = getSharedPreferences("user", MODE_PRIVATE);
-
-        editor.putBoolean("login", true);
-
-        editor.putString("des",description);
-        editor.putString("history",hist);
-
-        editor.apply();
+//        preferences = getSharedPreferences("user", MODE_PRIVATE);
+//
+//        editor.putBoolean("login", true);
+//
+//        editor.putString("des",description);
+//        editor.putString("history",hist);
+//
+//        editor.apply();
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
@@ -208,12 +206,14 @@ public class EditProfileCenterActivity extends AppCompatActivity {
         phone = preferences.getString("phone", "");
         id = preferences.getString("id", "");
         type = preferences.getString("type", "");
-//        des = preferences.getString("des", "");
+        des = preferences.getString("des", "");
         imgone = preferences.getString("imgone", "");
         imgtwo = preferences.getString("imgtwo", "");
         imgthree = preferences.getString("imgthree", "");
         imgfour = preferences.getString("imgfour", "");
-//        history = preferences.getString("history", "");
+        history = preferences.getString("history", "");
+        lat = preferences.getString("lat", "");
+        s_Long = preferences.getString("long", "");
 
         imageURL = preferences.getString("image","image");
 
@@ -256,9 +256,13 @@ public class EditProfileCenterActivity extends AppCompatActivity {
     }
 
     private void updateProfile() {
+
+        des = descCenterProfile.getText().toString();
+        history = historyCenterProfile.getText().toString();
+
         Retrofit retrofit = RetrofitClient.getInstant();
         API api = retrofit.create(API.class);
-        Call<ResponseBody> responseBodyCall = api.UpdateProfile(description, hist, imgone, imgtwo, imgthree, imgfour, id);
+        Call<ResponseBody> responseBodyCall = api.UpdateProfile(des, history, imgone, imgtwo, imgthree, imgfour, id);
         responseBodyCall.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -274,12 +278,15 @@ public class EditProfileCenterActivity extends AppCompatActivity {
 
                             editor.putBoolean("login", true);
 
-                            editor.putString("des",description);
-                            editor.putString("history",hist);
+                            editor.putString("des",des);
+                            editor.putString("history",history);
 
                             editor.apply();
 
-                            Toast.makeText(EditProfileCenterActivity.this, description, Toast.LENGTH_SHORT).show();
+                            descCenterProfile.setText(des);
+                            historyCenterProfile.setText(history);
+
+                            Toast.makeText(EditProfileCenterActivity.this, des, Toast.LENGTH_SHORT).show();
 
 
                             startActivity(new Intent(EditProfileCenterActivity.this,CenterHomeActivity.class));
@@ -300,16 +307,16 @@ public class EditProfileCenterActivity extends AppCompatActivity {
 
     private void updateData() {
 
-        userName = fullNameCenterProfile.getText().toString();
-        userMail = emailCenterProfile.getText().toString();
-        userphone = phoneNumCenterProfile.getText().toString();
-        userpass = passwordCenterProfile.getText().toString();
-        userDesc = descCenterProfile.getText().toString();
+        name = fullNameCenterProfile.getText().toString();
+        email = emailCenterProfile.getText().toString();
+        phone = phoneNumCenterProfile.getText().toString();
+        pass = passwordCenterProfile.getText().toString();
+        des = descCenterProfile.getText().toString();
 
         Retrofit retrofit = RetrofitClient.getInstant();
         API api = retrofit.create(API.class);
-        Call<ResponseBody> responseBodyCall = api.UpdateData(userName, userMail, userpass, userphone,0.000 ,
-                0.0000, imageURL, "famous", userDesc,id);
+        Call<ResponseBody> responseBodyCall = api.UpdateData(name, email, pass, phone, Double.valueOf(s_Long),
+                lat, imageURL, "famous",des,id);
         responseBodyCall.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -329,10 +336,11 @@ public class EditProfileCenterActivity extends AppCompatActivity {
 
                             editor.putBoolean("login", true);
 
-                            editor.putString("name",userName);
-                            editor.putString("email",userMail);
-                            editor.putString("phone",userphone);
-                            editor.putString("pass",userpass);
+                            editor.putString("name",name);
+                            editor.putString("email",email);
+                            editor.putString("phone",phone);
+                            editor.putString("pass",pass);
+//                            editor.putString("des",des);
 
                             editor.apply();
 
@@ -340,6 +348,7 @@ public class EditProfileCenterActivity extends AppCompatActivity {
                             emailCenterProfile.setText(email);
                             passwordCenterProfile.setText(pass);
                             phoneNumCenterProfile.setText(phone);
+//                            descCenterProfile.setText(des);
                             Toast.makeText(EditProfileCenterActivity.this, "Updated", Toast.LENGTH_SHORT).show();
 
                             if (type.equals("center")){
@@ -381,7 +390,7 @@ public class EditProfileCenterActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        Toast.makeText(this, String.valueOf(requestCode), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, String.valueOf(requestCode), Toast.LENGTH_SHORT).show();
 
         if(requestCode == GALLERY_REQUEST_CODE && resultCode == RESULT_OK && data != null && data.getData() != null)
         {
@@ -530,10 +539,10 @@ public class EditProfileCenterActivity extends AppCompatActivity {
                                     editor.putBoolean("login", true);
 
                                     editor.putString("image", imageURL);
-                                    editor.putString("name",userName);
-                                    editor.putString("email",userMail);
-                                    editor.putString("phone",userphone);
-                                    editor.putString("pass",userpass);
+                                    editor.putString("name",name);
+                                    editor.putString("email",email);
+                                    editor.putString("phone",phone);
+                                    editor.putString("pass",pass);
                                     editor.putString("imgone",imgone);
                                     editor.putString("imgtwo",imgtwo);
                                     editor.putString("imgthree",imgthree);

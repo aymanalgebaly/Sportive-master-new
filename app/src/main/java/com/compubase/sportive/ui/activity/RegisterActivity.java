@@ -145,7 +145,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 onBackPressed();
                                 //startActivity(new Intent(RegisterActivity.this, CenterHomeActivity.class));
                             } else {
-                                Toast.makeText(RegisterActivity.this, string, Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(RegisterActivity.this, string, Toast.LENGTH_SHORT).show();
                             }
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -261,10 +261,10 @@ public class RegisterActivity extends AppCompatActivity {
 
                 latitude_center = data.getDoubleExtra(LATITUDE, 0.0);
 //                Log.d("LATITUDE****", latitude.toString());
-                Toast.makeText(RegisterActivity.this, String.valueOf(latitude_center), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(RegisterActivity.this, String.valueOf(latitude_center), Toast.LENGTH_SHORT).show();
                 longitude_center = data.getDoubleExtra(LONGITUDE, 0.0);
 //                Log.d("LONGITUDE****", longitude.toString());
-                Toast.makeText(RegisterActivity.this, String.valueOf(longitude_center), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(RegisterActivity.this, String.valueOf(longitude_center), Toast.LENGTH_SHORT).show();
                 address = data.getStringExtra(LOCATION_ADDRESS);
                 location.setText(address);
                 //Log.d("ADDRESS****", address);

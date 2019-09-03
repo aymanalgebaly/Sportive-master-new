@@ -32,25 +32,22 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="3"
-            android:orientation="vertical"
-            android:weightSum="3">
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:text=""
                 android:id="@+id/name_center"
                 android:textSize="18sp"
                 android:gravity="bottom"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:textColor="@color/black"
                 android:textStyle="bold"/>
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:text=""
                 android:id="@+id/mail_center"
                 android:textSize="12sp"
@@ -58,8 +55,7 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:text=""
                 android:gravity="top"
                 android:layout_gravity="top"

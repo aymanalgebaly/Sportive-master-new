@@ -51,8 +51,7 @@
                 android:id="@+id/img_user_profile"
                 android:layout_height="100dp"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="100dp"
-                android:background="@drawable/user_defualt_img"/>
+                android:layout_marginTop="100dp" />
 
             <TextView
                 android:layout_width="match_parent"

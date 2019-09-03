@@ -22,10 +22,10 @@ import java.util.List;
 public class CentersListAdapter extends RecyclerView.Adapter<CentersListAdapter.ViewHolder> {
 
     private Context context;
-    private List<ActivityListResponse> activityListResponseList;
+    private List<UsersJoinsResponse> usersJoinsResponseList;
 
-    public CentersListAdapter(List<ActivityListResponse> activityListResponses) {
-        this.activityListResponseList = activityListResponses;
+    public CentersListAdapter(List<UsersJoinsResponse> usersJoinsResponses) {
+        this.usersJoinsResponseList = usersJoinsResponses;
     }
 
     public CentersListAdapter(Context context) {
@@ -43,15 +43,15 @@ public class CentersListAdapter extends RecyclerView.Adapter<CentersListAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        ActivityListResponse activityListResponse = activityListResponseList.get(i);
+        UsersJoinsResponse usersJoinsResponse = usersJoinsResponseList.get(i);
 
 
-        viewHolder.name.setText(activityListResponse.getName());
+        viewHolder.name.setText(usersJoinsResponse.getName());
 
 
-        Glide.with(context).load(activityListResponse.getImages()).placeholder(R.drawable.bg_sportive).into(viewHolder.img);
+        Glide.with(context).load(usersJoinsResponse.getImages()).placeholder(R.drawable.bg_sportive).into(viewHolder.img);
 
-        final int idCenter = activityListResponse.getIdReceive();
+        final int idCenter = usersJoinsResponse.getIdCenter();
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,7 +67,7 @@ public class CentersListAdapter extends RecyclerView.Adapter<CentersListAdapter.
 
     @Override
     public int getItemCount() {
-        return activityListResponseList != null ? activityListResponseList.size():0;
+        return usersJoinsResponseList != null ? usersJoinsResponseList.size():0;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

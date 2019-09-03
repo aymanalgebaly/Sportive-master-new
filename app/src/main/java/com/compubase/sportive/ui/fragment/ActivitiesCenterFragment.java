@@ -77,7 +77,7 @@ public class ActivitiesCenterFragment extends Fragment {
     private void setupRecycler() {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setReverseLayout(false);
         rcvCenterActiv.setLayoutManager(linearLayoutManager);
 
     }
@@ -109,7 +109,7 @@ public class ActivitiesCenterFragment extends Fragment {
                             userActivityResponse.setName(userActivityActivityResponses.get(j).getName());
                             userActivityResponse.setImages(userActivityActivityResponses.get(j).getImages());
                             userActivityResponse.setMessage(userActivityActivityResponses.get(j).getMessage());
-                            userActivityResponse.setType1(userActivityActivityResponses.get(j).getType1());
+                            userActivityResponse.setType(userActivityActivityResponses.get(j).getType());
 
                             userActivityActivityResponseArrayList.add(userActivityResponse);
                         }

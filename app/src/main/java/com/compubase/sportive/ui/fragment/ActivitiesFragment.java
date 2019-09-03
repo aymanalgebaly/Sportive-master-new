@@ -114,7 +114,7 @@ public class ActivitiesFragment extends Fragment {
                             userActivityResponse.setName(userActivityActivityResponses.get(j).getName());
                             userActivityResponse.setImages(userActivityActivityResponses.get(j).getImages());
                             userActivityResponse.setMessage(userActivityActivityResponses.get(j).getMessage());
-                            userActivityResponse.setType1(userActivityActivityResponses.get(j).getType1());
+                            userActivityResponse.setType(userActivityActivityResponses.get(j).getType());
 
                             userActivityActivityResponseArrayList.add(userActivityResponse);
                         }

@@ -78,6 +78,8 @@ public class CentersActivity extends AppCompatActivity {
         SharedPreferences shared = getSharedPreferences("user", MODE_PRIVATE);
         id = (shared.getString("id", ""));
 
+        Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
+
 
         setup();
         JSON_DATA_WEB_CALL();
@@ -142,7 +144,7 @@ public class CentersActivity extends AppCompatActivity {
 
             }
 
-//            adapter = new CentersListAdapter(usersJoinsResponses);
+            adapter = new CentersListAdapter(usersJoinsResponses);
             rcvUsers.setAdapter(adapter);
 
             adapter.notifyDataSetChanged();
