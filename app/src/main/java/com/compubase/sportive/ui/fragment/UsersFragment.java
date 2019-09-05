@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,22 +18,34 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.compubase.sportive.R;
+import com.compubase.sportive.adapter.CentersListAdapter;
 import com.compubase.sportive.adapter.UsersAdapter;
+import com.compubase.sportive.data.API;
+import com.compubase.sportive.helper.RetrofitClient;
 import com.compubase.sportive.helper.TinyDB;
 import com.compubase.sportive.model.UsersJoinsResponse;
 import com.compubase.sportive.model.UsersModel;
+import com.compubase.sportive.ui.activity.CentersActivity;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -48,14 +61,16 @@ public class UsersFragment extends Fragment {
     private UsersAdapter adapter;
     private String[] name;
     private int i;
-    private String id,name_user;
+    private String id, name_user;
     private int[] img;
 
     RequestQueue requestQueue;
 
     TinyDB tinyDB;
 
-    ArrayList<UsersJoinsResponse> userList = new ArrayList<UsersJoinsResponse>();
+    private UsersJoinsResponse usersJoinsResponse;
+    ArrayList<UsersJoinsResponse> usersJoinsResponseArrayList = new ArrayList<UsersJoinsResponse>();
+    private String image;
 
     public UsersFragment() {
         // Required empty public constructor
@@ -70,12 +85,15 @@ public class UsersFragment extends Fragment {
         unbinder = ButterKnife.bind(this, view);
 
         SharedPreferences shared = Objects.requireNonNull(getActivity()).getSharedPreferences("user", MODE_PRIVATE);
-        id = (shared.getString("id", ""));
+        id = shared.getString("id", "");
+        image = shared.getString("image", "");
+
 
 //        id = getArguments().getString("id", "");
 //        name_user = getArguments().getString("name", "");
         setup();
-        JSON_DATA_WEB_CALL();
+        fetchData();
+//        JSON_DATA_WEB_CALL();
 //        //data();
 
 
@@ -91,80 +109,131 @@ public class UsersFragment extends Fragment {
 
     }
 
+    private void fetchData (){
 
+        //to clear the array first
+        usersJoinsResponseArrayList.clear();
 
+        Call<ResponseBody> call2 = RetrofitClient.getInstant().create(API.class).UsersJoin(id);
 
-
-    private void JSON_DATA_WEB_CALL(){
-
-        String url;
-
-        url = "http://sportive.technowow.net/sportive.asmx/select_join_center?id_center="+id;
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new com.android.volley.Response.Listener<String>() {
+        call2.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(String response) {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
-                // showMessage(response);
+                GsonBuilder builder = new GsonBuilder();
+                Gson gson = builder.create();
 
-                JSON_PARSE_DATA_AFTER_WEBCALL2(response);
+
+                try {
+                    assert response.body() != null;
+                    List<UsersJoinsResponse> usersJoinsResponses = Arrays.asList(gson.fromJson(response.body().string(), UsersJoinsResponse[].class));
+
+                    if (response.isSuccessful()){
+
+                        for (int j = 0; j <usersJoinsResponses.size() ; j++) {
+
+                            usersJoinsResponse = new UsersJoinsResponse();
+
+                            usersJoinsResponse.setName(usersJoinsResponses.get(j).getName());
+                            usersJoinsResponse.setImages(usersJoinsResponses.get(j).getImages());
+//                            usersJoinsResponse.setDes(usersJoinsResponses.get(j).getDes());
+//                            usersJoinsResponse.setType(userActivityActivityResponses.get(j).getType());
+
+                            usersJoinsResponseArrayList.add(usersJoinsResponse);
+                        }
+                        adapter = new UsersAdapter(usersJoinsResponseArrayList);
+                        rcv.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
+
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
             }
-        }, new com.android.volley.Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
 
-                showMessage(error.getMessage());
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_LONG).show();
+
+                Log.i("onFailure: ",t.getMessage());
             }
         });
 
-
-        requestQueue = Volley.newRequestQueue(Objects.requireNonNull(getActivity()));
-
-        requestQueue.add(stringRequest);
     }
 
 
-    public void JSON_PARSE_DATA_AFTER_WEBCALL2(String Jobj) {
+//    private void JSON_DATA_WEB_CALL(){
+//
+//        String url;
+//
+//        url = "http://sportive.technowow.net/sportive.asmx/select_join_center?id_center="+id;
+//
+//        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new com.android.volley.Response.Listener<String>() {
+//            @Override
+//            public void onResponse(String response) {
+//
+//                // showMessage(response);
+//
+//                JSON_PARSE_DATA_AFTER_WEBCALL2(response);
+//
+//            }
+//        }, new com.android.volley.Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//
+//                showMessage(error.getMessage());
+//            }
+//        });
+//
+//
+//        requestQueue = Volley.newRequestQueue(Objects.requireNonNull(getActivity()));
+//
+//        requestQueue.add(stringRequest);
+//    }
+//
+//
+//    public void JSON_PARSE_DATA_AFTER_WEBCALL2(String Jobj) {
+//
+//        //to clear the array first
+//        userList.clear();
+//
+//        try {
+//
+//            JSONArray js = new JSONArray(Jobj);
+//
+//            for (int i = 0; i < js.length(); i++) {
+//
+//                JSONObject childJSONObject = js.getJSONObject(i);
+//
+//                UsersJoinsResponse usersJoinsResponse = new UsersJoinsResponse();
+//
+//                usersJoinsResponse.setName(childJSONObject.getString("name"));
+//
+//                usersJoinsResponse.setPhone(childJSONObject.getString("phone"));
+//
+//                usersJoinsResponse.setEmail(childJSONObject.getString("email"));
+//
+//                usersJoinsResponse.setImages(childJSONObject.getString("images"));
+//
+//                usersJoinsResponse.setIdUser(childJSONObject.getInt("id_user"));
+//
+//
+//                userList.add(usersJoinsResponse);
+//
+//            }
+//
+//            adapter = new UsersAdapter(userList);
+//            rcv.setAdapter(adapter);
+//
+//            adapter.notifyDataSetChanged();
+//
+//
+//        }catch (JSONException e) {
+//            e.printStackTrace();
+//        }
 
-        //to clear the array first
-        userList.clear();
-
-        try {
-
-            JSONArray js = new JSONArray(Jobj);
-
-            for (int i = 0; i < js.length(); i++) {
-
-                JSONObject childJSONObject = js.getJSONObject(i);
-
-                UsersJoinsResponse usersJoinsResponse = new UsersJoinsResponse();
-
-                usersJoinsResponse.setName(childJSONObject.getString("name"));
-
-                usersJoinsResponse.setPhone(childJSONObject.getString("phone"));
-
-                usersJoinsResponse.setEmail(childJSONObject.getString("email"));
-
-                usersJoinsResponse.setImages(childJSONObject.getString("images"));
-
-                usersJoinsResponse.setIdUser(childJSONObject.getInt("id_user"));
-
-
-                userList.add(usersJoinsResponse);
-
-            }
-
-            adapter = new UsersAdapter(userList);
-            rcv.setAdapter(adapter);
-
-            adapter.notifyDataSetChanged();
-
-
-        }catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
+//    }
 
 
 

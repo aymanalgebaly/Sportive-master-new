@@ -37,7 +37,7 @@ public class CentersListAdapter extends RecyclerView.Adapter<CentersListAdapter.
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         context = viewGroup.getContext();
 
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.users_design, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.centers_design, viewGroup, false);
         return new ViewHolder(view);
     }
 
@@ -47,6 +47,7 @@ public class CentersListAdapter extends RecyclerView.Adapter<CentersListAdapter.
 
 
         viewHolder.name.setText(usersJoinsResponse.getName());
+        viewHolder.des.setText(usersJoinsResponse.getDes());
 
 
         Glide.with(context).load(usersJoinsResponse.getImages()).placeholder(R.drawable.bg_sportive).into(viewHolder.img);
@@ -72,13 +73,15 @@ public class CentersListAdapter extends RecyclerView.Adapter<CentersListAdapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView name;
+        TextView name,des;
         ImageView img;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            name = itemView.findViewById(R.id.user_name);
-            img = itemView.findViewById(R.id.user_img);
+            name = itemView.findViewById(R.id.center_name);
+            img = itemView.findViewById(R.id.center_img_design);
+            des = itemView.findViewById(R.id.center_des);
+
         }
     }
 }

@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activity.TrainerActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/blue"
+        android:id="@+id/abb_bar_trainer_profile">
+
+        <android.support.v7.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/center_trainer_toolbar">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/edit_profile"
+                    android:textColor="@color/white"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:textSize="20sp"/>
+            </RelativeLayout>
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/abb_bar_trainer_profile">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/rel_img">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/personal"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"/>
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="100dp"
+                    android:id="@+id/img_trainer_edit_profile"
+                    android:layout_height="100dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="100dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/change"
+                    android:id="@+id/change_img_trainer"
+                    android:layout_below="@id/img_trainer_edit_profile"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/black"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/RV_OR"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="50dp"
+                android:layout_below="@id/rel_img"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/sign_up_design"
+                tools:ignore="RtlHardcoded">
+
+                <EditText
+                    android:id="@+id/full_name_trainer_profile"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginStart="3dp"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/edit_text"
+                    android:drawableStart="@drawable/ic_person_black_24dp"
+                    android:drawableLeft="@drawable/ic_person_black_24dp"
+                    android:drawablePadding="15dp"
+                    android:hint="@string/full_name"
+                    android:inputType="textPersonName"
+                    android:textSize="12sp"
+                    tools:ignore="RtlHardcoded" />
+
+                <View
+                    android:id="@+id/view1"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray"
+                    android:layout_below="@id/full_name_trainer_profile">
+
+                </View>
+
+                <EditText
+                    android:id="@+id/email_trainer_profile"
+                    android:layout_below="@id/view1"
+                    android:drawableLeft="@drawable/ic_email_black_24dp"
+                    android:hint="@string/enter_your_email"
+                    android:drawablePadding="15dp"
+                    android:textSize="12sp"
+                    android:layout_marginLeft="3dp"
+                    android:background="@drawable/edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:ems="10"
+                    android:inputType="textEmailAddress"
+                    android:drawableStart="@drawable/ic_email_black_24dp"
+                    android:layout_marginStart="3dp"
+                    tools:ignore="RtlHardcoded" />
+
+                <View
+                    android:id="@+id/view2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray"
+                    android:layout_below="@id/email_trainer_profile">
+
+                </View>
+
+                <EditText
+                    android:id="@+id/password_trainer_profile"
+                    android:background="@drawable/edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:ems="10"
+                    android:layout_marginLeft="3dp"
+                    android:layout_below="@id/view2"
+                    android:drawableLeft="@drawable/ic_lock_open_black_24dp"
+                    android:hint="............"
+                    android:drawablePadding="15dp"
+                    android:textSize="12sp"
+                    android:inputType="textPassword"
+                    android:drawableStart="@drawable/ic_lock_open_black_24dp"
+                    android:layout_marginStart="3dp"
+                    tools:ignore="RtlHardcoded" />
+
+                <View
+                    android:id="@+id/view3"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray"
+                    android:layout_below="@id/password_trainer_profile">
+
+                </View>
+
+                <EditText
+                    android:id="@+id/phone_num_trainer_profile"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_below="@id/view3"
+                    android:background="@drawable/edit_text"
+                    android:drawableLeft="@drawable/ic_phone_black_24dp"
+                    android:hint="@string/mobile_number"
+                    android:textSize="12sp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="3dp"
+                    android:drawablePadding="15dp"
+                    android:ems="10"
+                    android:inputType="phone"
+                    android:drawableStart="@drawable/ic_phone_black_24dp"
+                    android:layout_marginStart="3dp"
+                    tools:ignore="RtlHardcoded" />
+
+                <View
+                    android:id="@+id/view4"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray"
+                    android:layout_below="@id/phone_num_trainer_profile">
+
+                </View>
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_marginEnd="70dp"
+                    android:layout_marginStart="70dp"
+                    android:text="@string/edit"
+                    android:textSize="18sp"
+                    android:id="@+id/btn_edit_trainer_profile"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_height="30dp"
+                    android:layout_below="@id/phone_num_trainer_profile"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/button_design_curv_yellow"/>
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/RV_OR"
+                android:text="@string/profile"
+                android:layout_marginTop="30dp"
+                android:layout_marginStart="20dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="22sp"
+                android:id="@+id/txt_profile_trainer"/>
+
+            <RelativeLayout
+                android:id="@+id/RV_profile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="50dp"
+                android:layout_below="@id/txt_profile_trainer"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/sign_up_design"
+                tools:ignore="RtlHardcoded">
+
+                <EditText
+                    android:id="@+id/desc_trainer_profile"
+                    android:layout_width="match_parent"
+                    android:layout_height="90dp"
+                    android:layout_marginStart="3dp"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/edit_text"
+                    android:drawablePadding="15dp"
+                    android:hint="@string/description"
+                    android:textSize="12sp"/>
+
+                <View
+                    android:id="@+id/view10"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray"
+                    android:layout_below="@id/desc_trainer_profile">
+
+                </View>
+
+                <EditText
+                    android:id="@+id/history_trainer_profile"
+                    android:layout_below="@id/view10"
+                    android:hint="@string/history"
+                    android:drawablePadding="15dp"
+                    android:textSize="12sp"
+                    android:layout_marginLeft="3dp"
+                    android:background="@drawable/edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="90dp"
+                    android:layout_marginStart="3dp" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_marginEnd="70dp"
+                    android:layout_marginStart="70dp"
+                    android:text="@string/save"
+                    android:textSize="18sp"
+                    android:id="@+id/btn_save_trainer"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_height="30dp"
+                    android:layout_below="@id/history_trainer_profile"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/button_design_curv_yellow"/>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

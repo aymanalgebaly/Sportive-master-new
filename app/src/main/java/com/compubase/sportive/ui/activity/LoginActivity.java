@@ -143,9 +143,11 @@ public class LoginActivity extends AppCompatActivity {
                             if(loginActivityResponses.get(0).getType().equals("center"))
                             {
                                 startActivity(new Intent(LoginActivity.this,CenterHomeActivity.class));
-                            }else
+                            }else if (loginActivityResponses.get(0).getType().equals("user"))
                             {
                                 startActivity(new Intent(LoginActivity.this,HomeActivity.class));
+                            }else {
+                                startActivity(new Intent(LoginActivity.this,TrainerActivity.class));
                             }
 
                             sharedLogin();

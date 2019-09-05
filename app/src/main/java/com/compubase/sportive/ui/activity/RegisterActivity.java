@@ -82,6 +82,8 @@ public class RegisterActivity extends AppCompatActivity {
     EditText history;
     @BindView(R.id.lin_center)
     LinearLayout linCenter;
+    @BindView(R.id.trainer_btn)
+    RadioButton trainerBtn;
 
     private String userName, userMail, userphone, userpass, userLocation;
     int PLACE_PICKER_REQUEST = 1;
@@ -93,7 +95,7 @@ public class RegisterActivity extends AppCompatActivity {
     private String address;
     private double latitude_center;
     private double longitude_center;
-    private String s_description,s_history;
+    private String s_description, s_history;
 
 
     @Override
@@ -124,12 +126,12 @@ public class RegisterActivity extends AppCompatActivity {
             password.setError("Password is required");
         } else if (TextUtils.isEmpty(userLocation)) {
             location.setError("Location is required");
-        }else {
+        } else {
             Retrofit retrofit = RetrofitClient.getInstant();
             API api = retrofit.create(API.class);
             Call<ResponseBody> responseBodyCall = api.UserRegister(userName, userMail, userpass, userphone, radio, longitude_center
-                    , latitude_center, "image", "famous", "","",
-                    "img_1","img_2","img_3","img_4");
+                    , latitude_center, "image", "famous", "", "",
+                    "img_1", "img_2", "img_3", "img_4");
             responseBodyCall.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -180,7 +182,7 @@ public class RegisterActivity extends AppCompatActivity {
             Retrofit retrofit = RetrofitClient.getInstant();
             API api = retrofit.create(API.class);
             Call<ResponseBody> responseBodyCall = api.UserRegister(userName, userMail, userpass, userphone, radio, 0.000
-                    , 0.000, "image", "famous", "des","his","img1","img2","img3","img4");
+                    , 0.000, "image", "famous", "", "", "img1", "img2", "img3", "img4");
             responseBodyCall.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -208,7 +210,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick({R.id.center_btn, R.id.user_btn, R.id.location, R.id.BTN_signUp_registar, R.id.text_login})
+    @OnClick({R.id.center_btn, R.id.user_btn, R.id.location, R.id.BTN_signUp_registar, R.id.text_login, R.id.trainer_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.center_btn:
@@ -228,12 +230,16 @@ public class RegisterActivity extends AppCompatActivity {
                     ValidateCenter();
                 } else if (userBtn.isChecked()) {
                     Validate();
+                } else if (trainerBtn.isChecked()) {
+                    Validate();
                 }
 
                 break;
             case R.id.text_login:
                 startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                 break;
+            case R.id.trainer_btn:
+                radio = "trainer";
         }
     }
 

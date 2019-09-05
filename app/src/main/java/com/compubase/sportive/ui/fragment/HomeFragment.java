@@ -190,11 +190,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                             center.setImg4(centerList.get(j).getImg4());
                             center.setEmail(centerList.get(j).getEmail());
 
-                            String images = centerList.get(j).getImages();
 
-//                            Glide.with(getActivity())
-//                                    .load(images)
-//                                    .into();
                             String lang = centerList.get(j).getLang();
                             String lat = centerList.get(j).getLat();
                             if(!lang.equals("") || !lat.equals(""))
@@ -230,27 +226,10 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
     }
 
-    public boolean isServicesOK(){
-
-        int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(getActivity());
-
-        if(available == ConnectionResult.SUCCESS){
-            //everything is fine and the user can make map requests
-            return true;
-        }
-        else if(GoogleApiAvailability.getInstance().isUserResolvableError(available)){
-            //an error occured but we can resolve it
-            Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(getActivity(), available, ERROR_DIALOG_REQUEST);
-            dialog.show();
-        }else{
-            Toast.makeText(getActivity(), "You can't make map requests", Toast.LENGTH_SHORT).show();
-        }
-        return false;
-    }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
     }
+
 }

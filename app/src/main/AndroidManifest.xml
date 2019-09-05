@@ -36,7 +36,8 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="m">
-        <activity android:name=".ui.activity.EditProfileCenterActivity"></activity>
+        <activity android:name=".ui.activity.TrainerActivity"></activity>
+        <activity android:name=".ui.activity.EditProfileCenterActivity" />
         <activity android:name=".ui.activity.CentersActivity" />
         <activity android:name=".ui.activity.UserJoinActivity" />
         <activity android:name=".ui.activity.AddGameActivity" />
