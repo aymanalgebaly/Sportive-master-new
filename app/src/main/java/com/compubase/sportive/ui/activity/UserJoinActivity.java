@@ -85,10 +85,10 @@ public class UserJoinActivity extends AppCompatActivity {
 
         Intent in = new Intent(getApplicationContext(), PayTabActivity.class);
         in.putExtra(PaymentParams.MERCHANT_EMAIL, "sportive2050@gmail.com"); //this a demo account for testing the sdk
-        in.putExtra(PaymentParams.SECRET_KEY," t5eeZqLRUSZ2lTCzYhruLiKShpuKFwb9CqnCR9tL2tOomrXlIoPuHznYZSIEoUO1kcDbl7XoBMMXdKjW98qQHNPGGxl5s96MmJYH ");//Add your Secret Key Here
+        in.putExtra(PaymentParams.SECRET_KEY,"t5eeZqLRUSZ2lTCzYhruLiKShpuKFwb9CqnCR9tL2tOomrXlIoPuHznYZSIEoUO1kcDbl7XoBMMXdKjW98qQHNPGGxl5s96MmJYH");//Add your Secret Key Here
         in.putExtra(PaymentParams.LANGUAGE,PaymentParams.ENGLISH);
-        in.putExtra(PaymentParams.TRANSACTION_TITLE, "Test Paytabs android library");
-        in.putExtra(PaymentParams.AMOUNT, 5.0);
+        in.putExtra(PaymentParams.TRANSACTION_TITLE, "Payment");
+        in.putExtra(PaymentParams.AMOUNT, 25.0);
 
         in.putExtra(PaymentParams.CURRENCY_CODE, "SAU");
         in.putExtra(PaymentParams.CUSTOMER_PHONE_NUMBER, "00966515435133");
