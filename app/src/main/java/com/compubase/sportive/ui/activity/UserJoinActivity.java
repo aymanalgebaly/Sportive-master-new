@@ -56,7 +56,7 @@ public class UserJoinActivity extends AppCompatActivity {
 //         id_center = Objects.requireNonNull(getIntent().getExtras()).getString("id_center","");
 //         s_id_center = String.valueOf(id_center);
 
-        Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
+     //   Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
 
 //        id = String.valueOf(getIntent().getExtras().getInt("id_center"));
 
@@ -88,9 +88,9 @@ public class UserJoinActivity extends AppCompatActivity {
         in.putExtra(PaymentParams.SECRET_KEY,"t5eeZqLRUSZ2lTCzYhruLiKShpuKFwb9CqnCR9tL2tOomrXlIoPuHznYZSIEoUO1kcDbl7XoBMMXdKjW98qQHNPGGxl5s96MmJYH");//Add your Secret Key Here
         in.putExtra(PaymentParams.LANGUAGE,PaymentParams.ENGLISH);
         in.putExtra(PaymentParams.TRANSACTION_TITLE, "Payment");
-        in.putExtra(PaymentParams.AMOUNT, 25.0);
+        in.putExtra(PaymentParams.AMOUNT, 5.0);
 
-        in.putExtra(PaymentParams.CURRENCY_CODE, "SAU");
+        in.putExtra(PaymentParams.CURRENCY_CODE, "SAR");
         in.putExtra(PaymentParams.CUSTOMER_PHONE_NUMBER, "00966515435133");
         in.putExtra(PaymentParams.CUSTOMER_EMAIL, "customer-email@example.com");
         in.putExtra(PaymentParams.ORDER_ID, "123456");

@@ -160,7 +160,7 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
         img3 = getIntent().getExtras().getString("imagethree");
         img4 = getIntent().getExtras().getString("imagefour");
 
-        Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
 
         txtValueDesDetails.setText(des);
         txtValueHisDetails.setText(history);

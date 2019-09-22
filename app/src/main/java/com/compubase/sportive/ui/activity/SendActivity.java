@@ -71,6 +71,7 @@ public class SendActivity extends AppCompatActivity {
         Intent intent = getIntent();
         id_id_user = intent.getIntExtra("id_reciever", id_user);
 
+       // showMessage(String.valueOf(id_id_user));
 
     }
 
