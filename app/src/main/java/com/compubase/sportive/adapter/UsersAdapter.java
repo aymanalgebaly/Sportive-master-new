@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.compubase.sportive.R;
@@ -33,9 +34,6 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHlder> {
         this.context = context;
     }
 
-    private String id_resieved;
-
-
     @NonNull
     @Override
     public ViewHlder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -54,16 +52,20 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHlder> {
 
             viewHlder.name.setText(usersJoinsResponse1.getName());
 
-            Glide.with(context).load(usersJoinsResponse1.getImages()).placeholder(R.drawable.bg_sportive).into(viewHlder.img);
+            Glide.with(context).load(usersJoinsResponse1.getImages()).placeholder(R.drawable.user_defualt_img).into(viewHlder.img);
 
-        final int idUser = usersJoinsResponse1.getIdUser();
+           final int idUser = usersJoinsResponse1.getIdUser();
+           final String s_id_user = String.valueOf(idUser);
+
 
         viewHlder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
                     Intent intent = new Intent(context, SendActivity.class);
-                    intent.putExtra("id_reciever", idUser);
+                    intent.putExtra("id_recieved", idUser);
+                    Toast.makeText(context, String.valueOf(idUser), Toast.LENGTH_SHORT).show();
+
                     context.startActivity(intent);
                 }
             });

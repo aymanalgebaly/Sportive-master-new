@@ -50,7 +50,7 @@ public class CentersListAdapter extends RecyclerView.Adapter<CentersListAdapter.
         viewHolder.des.setText(usersJoinsResponse.getDes());
 
 
-        Glide.with(context).load(usersJoinsResponse.getImages()).placeholder(R.drawable.bg_sportive).into(viewHolder.img);
+        Glide.with(context).load(usersJoinsResponse.getImages()).placeholder(R.drawable.center_defult_img).into(viewHolder.img);
 
         final int idCenter = usersJoinsResponse.getIdCenter();
 
@@ -59,7 +59,9 @@ public class CentersListAdapter extends RecyclerView.Adapter<CentersListAdapter.
             public void onClick(View v) {
 
                 Intent intent = new Intent(context, SendActivity.class);
-                intent.putExtra("id_reciever", idCenter);
+                intent.putExtra("id_recieved", idCenter);
+                Toast.makeText(context, String.valueOf(idCenter), Toast.LENGTH_SHORT).show();
+
                 context.startActivity(intent);
 
             }

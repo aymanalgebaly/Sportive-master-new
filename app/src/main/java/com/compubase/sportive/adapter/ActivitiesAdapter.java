@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.compubase.sportive.R;
+import com.compubase.sportive.model.ActivityListResponse;
 import com.compubase.sportive.model.UserActivityActivityResponse;
 import com.squareup.picasso.Picasso;
 
@@ -24,9 +25,9 @@ import static android.content.Context.MODE_PRIVATE;
 public class ActivitiesAdapter extends RecyclerView.Adapter<ActivitiesAdapter.ViewHolderActities> {
 
     private Context context;
-    private List<UserActivityActivityResponse>userActivityList;
+    private List<ActivityListResponse>userActivityList;
 
-    public ActivitiesAdapter(List<UserActivityActivityResponse> userActivityList) {
+    public ActivitiesAdapter(List<ActivityListResponse> userActivityList) {
         this.userActivityList = userActivityList;
     }
 
@@ -46,13 +47,13 @@ public class ActivitiesAdapter extends RecyclerView.Adapter<ActivitiesAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolderActities viewHolderActities, int i) {
 
-        UserActivityActivityResponse userActivityActivityResponse = userActivityList.get(i);
+        ActivityListResponse activityListResponse = userActivityList.get(i);
 
-        viewHolderActities.name.setText(userActivityActivityResponse.getName());
-        viewHolderActities.title.setText(userActivityActivityResponse.getType());
-        viewHolderActities.txt.setText(userActivityActivityResponse.getMessage());
+        viewHolderActities.name.setText(activityListResponse.getName());
+        viewHolderActities.title.setText(activityListResponse.getType());
+        viewHolderActities.txt.setText(activityListResponse.getMessage());
 
-        Glide.with(context).load(userActivityActivityResponse.getImages()).placeholder(R.drawable.user_defualt_img).into(viewHolderActities.imageView);
+        Glide.with(context).load(activityListResponse.getImages()).placeholder(R.drawable.user_defualt_img).into(viewHolderActities.imageView);
 
     }
 
@@ -61,7 +62,7 @@ public class ActivitiesAdapter extends RecyclerView.Adapter<ActivitiesAdapter.Vi
         return userActivityList != null ? userActivityList.size():0;
     }
 
-    public void setData(List<UserActivityActivityResponse> activitesModels) {
+    public void setData(List<ActivityListResponse> activitesModels) {
         this.userActivityList = activitesModels;
     }
 

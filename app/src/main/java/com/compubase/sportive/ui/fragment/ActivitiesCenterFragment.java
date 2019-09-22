@@ -18,6 +18,7 @@ import com.compubase.sportive.adapter.ActivitiesAdapter;
 import com.compubase.sportive.adapter.CentersListAdapter;
 import com.compubase.sportive.data.API;
 import com.compubase.sportive.helper.RetrofitClient;
+import com.compubase.sportive.model.ActivityListResponse;
 import com.compubase.sportive.model.UserActivityActivityResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -45,13 +46,13 @@ public class ActivitiesCenterFragment extends Fragment {
     RecyclerView rcvCenterActiv;
     Unbinder unbinder;
     private ActivitiesAdapter adapter;
-    List<UserActivityActivityResponse> userActivityActivityResponses = new ArrayList<>();
 
-    private ArrayList<UserActivityActivityResponse> userActivityActivityResponseArrayList = new ArrayList<>();
-    private UserActivityActivityResponse userActivityResponse;
+    private ArrayList<ActivityListResponse> userActivityActivityResponseArrayList = new ArrayList<>();
+    private ActivityListResponse userActivityResponse;
     private String id;
     private String id_user;
     private SharedPreferences preferences;
+    private List<ActivityListResponse> activityListResponses = new ArrayList<>();
 
 
     public ActivitiesCenterFragment() {
@@ -98,18 +99,18 @@ public class ActivitiesCenterFragment extends Fragment {
 
                 try {
                     assert response.body() != null;
-                    userActivityActivityResponses = Arrays.asList(gson.fromJson(response.body().string(), UserActivityActivityResponse[].class));
+                    activityListResponses = Arrays.asList(gson.fromJson(response.body().string(), ActivityListResponse[].class));
 
                     if (response.isSuccessful()) {
 
-                        for (int j = 0; j < userActivityActivityResponses.size(); j++) {
+                        for (int j = 0; j < activityListResponses.size(); j++) {
 
-                            userActivityResponse = new UserActivityActivityResponse();
+                            userActivityResponse = new ActivityListResponse();
 
-                            userActivityResponse.setName(userActivityActivityResponses.get(j).getName());
-                            userActivityResponse.setImages(userActivityActivityResponses.get(j).getImages());
-                            userActivityResponse.setMessage(userActivityActivityResponses.get(j).getMessage());
-                            userActivityResponse.setType(userActivityActivityResponses.get(j).getType());
+                            userActivityResponse.setName(activityListResponses.get(j).getName());
+                            userActivityResponse.setImages(activityListResponses.get(j).getImages());
+                            userActivityResponse.setMessage(activityListResponses.get(j).getMessage());
+                            userActivityResponse.setType(activityListResponses.get(j).getType());
 
                             userActivityActivityResponseArrayList.add(userActivityResponse);
                         }

@@ -3,6 +3,7 @@ package com.compubase.sportive.ui.activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -18,7 +19,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.compubase.sportive.R;
+import com.compubase.sportive.data.API;
+import com.compubase.sportive.helper.RetrofitClient;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -26,6 +30,11 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class SendActivity extends AppCompatActivity {
     public static int id_recievd;
@@ -38,13 +47,13 @@ public class SendActivity extends AppCompatActivity {
 
     List<String> types = new ArrayList<>();
 
-    String myid,user_id;
+    String myid;
 
     RequestQueue requestQueue;
-    private int id_center;
-    private int id_user;
-    private int id_id_user;
-    private int id_id_center;
+    private String id_id_user;
+    private int id;
+    private String s_id;
+    private int id_recieved;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,7 +78,10 @@ public class SendActivity extends AppCompatActivity {
 
 
         Intent intent = getIntent();
-        id_id_user = intent.getIntExtra("id_reciever", id_user);
+        id_recieved = intent.getIntExtra("id_recieved", id);
+        s_id = String.valueOf(id_recieved);
+
+//        Toast.makeText(this, id_id_user, Toast.LENGTH_SHORT).show();
 
 
     }
@@ -82,33 +94,59 @@ public class SendActivity extends AppCompatActivity {
 
     private void JSON_DATA_WEB_CALL(){
 
-        String url;
 
-        url = "http://sportive.technowow.net/sportive.asmx/insert_activites?id_send="+myid+"&id_recived="+id_id_user+"&message="+msg.getText().toString().trim()+"&type="+spinner.getSelectedItem().toString().trim();
-
-//        Toast.makeText(this, String.valueOf(id_id_user), Toast.LENGTH_SHORT).show();
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new com.android.volley.Response.Listener<String>() {
+        Retrofit retrofit = RetrofitClient.getInstant();
+        API api = retrofit.create(API.class);
+        Call<ResponseBody> responseBodyCall = api.InsertActiv(myid, id_recieved, msg.getText().toString(), spinner.getSelectedItem().toString().trim());
+        responseBodyCall.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(String response) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                try {
+                    assert response.body() != null;
+                    String string = response.body().string();
 
-                 showMessage(response);
-                onBackPressed();
-
-
+                    if (string.equals("True")){
+                        onBackPressed();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-        }, new com.android.volley.Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
 
-                showMessage(error.getMessage());
+            @Override
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                Toast.makeText(SendActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
 
-        requestQueue = Volley.newRequestQueue(this);
-
-        requestQueue.add(stringRequest);
+//        String url;
+//
+//        url = "http://sportive.technowow.net/sportive.asmx/insert_activites?id_send="+myid+"&id_recived="+id_recieved+"&message="+msg.getText().toString().trim()+"&type="+spinner.getSelectedItem().toString().trim();
+//
+//        Toast.makeText(this, String.valueOf(id_id_user), Toast.LENGTH_SHORT).show();
+//
+//        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new com.android.volley.Response.Listener<String>() {
+//            @Override
+//            public void onResponse(String response) {
+//
+//                showMessage(response);
+//                onBackPressed();
+//
+//
+//            }
+//        }, new com.android.volley.Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//
+//                showMessage(error.getMessage());
+//            }
+//        });
+//
+//
+//        requestQueue = Volley.newRequestQueue(this);
+//
+//        requestQueue.add(stringRequest);
     }
 
     private void showMessage(String s) {
