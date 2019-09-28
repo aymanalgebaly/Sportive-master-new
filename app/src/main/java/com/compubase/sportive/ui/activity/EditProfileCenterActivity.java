@@ -134,7 +134,6 @@ public class EditProfileCenterActivity extends AppCompatActivity {
     private String userDesc;
     private int GALLERY_REQUEST_CODE_TWO = 2;
 
-    String pic1,pic2,pic3,pic4,pic5;
     private int GALLERY_REQUEST_CODE_THREE = 3;
     private int GALLERY_REQUEST_CODE_FOUR = 4;
     private int GALLERY_REQUEST_CODE_FIVE = 5;
@@ -143,6 +142,9 @@ public class EditProfileCenterActivity extends AppCompatActivity {
     private String description;
     private String hist;
     private String lat,s_Long;
+
+    String pic1,pic2,pic3,pic4,pic5;
+
 
 
     @Override

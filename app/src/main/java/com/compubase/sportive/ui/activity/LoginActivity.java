@@ -147,7 +147,7 @@ public class LoginActivity extends AppCompatActivity {
                             {
                                 startActivity(new Intent(LoginActivity.this,HomeActivity.class));
                             }else {
-                                startActivity(new Intent(LoginActivity.this,TrainerActivity.class));
+                                startActivity(new Intent(LoginActivity.this,CentersTrainersActivity.class));
                             }
 
                             sharedLogin();

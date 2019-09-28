@@ -62,6 +62,7 @@
     <string name="description">Description</string>
     <string name="history">History</string>
     <string name="upload_images">Upload Images</string>
+    <string name="centers">Centers</string>
 
     <string-array name="type">
         <item name="Update" />

@@ -15,10 +15,14 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,10 +54,10 @@ import retrofit2.Retrofit;
 
 public class TrainerActivity extends AppCompatActivity {
 
-    @BindView(R.id.center_trainer_toolbar)
-    Toolbar centerTrainerToolbar;
-    @BindView(R.id.abb_bar_trainer_profile)
-    AppBarLayout abbBarTrainerProfile;
+//    @BindView(R.id.center_trainer_toolbar)
+//    Toolbar centerTrainerToolbar;
+//    @BindView(R.id.abb_bar_trainer_profile)
+//    AppBarLayout abbBarTrainerProfile;
     @BindView(R.id.img_trainer_edit_profile)
     CircleImageView imgTrainerEditProfile;
     @BindView(R.id.change_img_trainer)
@@ -94,6 +98,8 @@ public class TrainerActivity extends AppCompatActivity {
     RelativeLayout RVProfile;
 
     private int GALLERY_REQUEST_CODE = 1;
+    private String imgone,imgtwo,imgthree,imgfour;
+
 
     private SharedPreferences preferences;
     private String id, name, email, phone, pass, type ;
@@ -105,6 +111,16 @@ public class TrainerActivity extends AppCompatActivity {
 
     String imageURL;
     private String history,des;
+
+    private int GALLERY_REQUEST_CODE_TWO = 2;
+
+    private int GALLERY_REQUEST_CODE_THREE = 3;
+    private int GALLERY_REQUEST_CODE_FOUR = 4;
+    private int GALLERY_REQUEST_CODE_FIVE = 5;
+    ImageView img1;
+    ImageView img2;
+    ImageView img3;
+    ImageView img4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,7 +148,10 @@ public class TrainerActivity extends AppCompatActivity {
         des = preferences.getString("des", "");
         imageURL = preferences.getString("image","");
 
-
+        img1 = findViewById(R.id.pic1);
+        img2 = findViewById(R.id.pic2);
+        img3 = findViewById(R.id.pic3);
+        img4 = findViewById(R.id.pic4);
 
 
         fullNameTrainerProfile.setText(name);
@@ -143,10 +162,44 @@ public class TrainerActivity extends AppCompatActivity {
         historyTrainerProfile.setText(history);
 
         Glide.with(this).load(imageURL).placeholder(R.drawable.user_defualt_img).into(imgTrainerEditProfile);
+        Glide.with(this).load(imgone).placeholder(R.drawable.back_img).into(img1);
+        Glide.with(this).load(imgtwo).placeholder(R.drawable.back_img).into(img2);
+        Glide.with(this).load(imgthree).placeholder(R.drawable.back_img).into(img3);
+        Glide.with(this).load(imgfour).placeholder(R.drawable.back_img).into(img4);
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE }, 0);
         }
+
+        img1 = findViewById(R.id.pic1);
+        img2 = findViewById(R.id.pic2);
+        img3 = findViewById(R.id.pic3);
+        img4 = findViewById(R.id.pic4);
+
+        img1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pickFromGalleryTwo(GALLERY_REQUEST_CODE_TWO);
+            }
+        });
+        img2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pickFromGalleryTwo(GALLERY_REQUEST_CODE_THREE);
+            }
+        });
+        img3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pickFromGalleryTwo(GALLERY_REQUEST_CODE_FOUR);
+            }
+        });
+        img4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pickFromGalleryTwo(GALLERY_REQUEST_CODE_FIVE);
+            }
+        });
     }
 
     @OnClick({R.id.change_img_trainer, R.id.btn_edit_trainer_profile, R.id.btn_save_trainer})
@@ -198,7 +251,7 @@ public class TrainerActivity extends AppCompatActivity {
                             Toast.makeText(TrainerActivity.this, "Saved", Toast.LENGTH_SHORT).show();
 
 
-//                            startActivity(new Intent(TrainerActivity.this,CenterHomeActivity.class));
+                            startActivity(new Intent(TrainerActivity.this,CentersTrainersActivity.class));
 
                         }
                     } catch (IOException e) {
@@ -286,11 +339,20 @@ public class TrainerActivity extends AppCompatActivity {
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), GALLERY_REQUEST_CODE);
     }
 
+    private void pickFromGalleryTwo(int code) {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), code);
+    }
+
 
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+//        Toast.makeText(this, String.valueOf(requestCode), Toast.LENGTH_SHORT).show();
 
         if(requestCode == GALLERY_REQUEST_CODE && resultCode == RESULT_OK && data != null && data.getData() != null)
         {
@@ -304,7 +366,87 @@ public class TrainerActivity extends AppCompatActivity {
 
                 imgTrainerEditProfile.setImageBitmap(bitmap);
 
-                uploadImage(filePath);
+                uploadImage(filePath,GALLERY_REQUEST_CODE);
+
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }else if(requestCode == GALLERY_REQUEST_CODE_TWO && resultCode == RESULT_OK && data != null && data.getData() != null)
+        {
+            filePath = data.getData();
+
+            Bitmap bitmap;
+
+            try {
+
+                bitmap = MediaStore.Images.Media.getBitmap(TrainerActivity.this.getContentResolver(), filePath);
+
+                img1.setImageBitmap(bitmap);
+
+                uploadImage(filePath,GALLERY_REQUEST_CODE_TWO);
+
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }else if(requestCode == GALLERY_REQUEST_CODE_THREE && resultCode == RESULT_OK && data != null && data.getData() != null)
+        {
+            filePath = data.getData();
+
+            Bitmap bitmap;
+
+            try {
+
+                bitmap = MediaStore.Images.Media.getBitmap(TrainerActivity.this.getContentResolver(), filePath);
+
+                img2.setImageBitmap(bitmap);
+
+                uploadImage(filePath,GALLERY_REQUEST_CODE_THREE);
+
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }else if(requestCode == GALLERY_REQUEST_CODE_FOUR && resultCode == RESULT_OK && data != null && data.getData() != null)
+        {
+            filePath = data.getData();
+
+            Bitmap bitmap;
+
+            try {
+
+                bitmap = MediaStore.Images.Media.getBitmap(TrainerActivity.this.getContentResolver(), filePath);
+
+                img3.setImageBitmap(bitmap);
+
+                uploadImage(filePath,GALLERY_REQUEST_CODE_FOUR);
+
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }else if(requestCode == GALLERY_REQUEST_CODE_FIVE && resultCode == RESULT_OK && data != null && data.getData() != null)
+        {
+            filePath = data.getData();
+
+            Bitmap bitmap;
+
+            try {
+
+                bitmap = MediaStore.Images.Media.getBitmap(TrainerActivity.this.getContentResolver(), filePath);
+
+                img4.setImageBitmap(bitmap);
+
+                uploadImage(filePath,GALLERY_REQUEST_CODE_FIVE);
 
 
 
@@ -315,8 +457,7 @@ public class TrainerActivity extends AppCompatActivity {
         }
     }
 
-
-    private void uploadImage(Uri customfilepath) {
+    private void uploadImage(Uri customfilepath, final int requestCode) {
 
         if(customfilepath != null)
         {
@@ -341,7 +482,17 @@ public class TrainerActivity extends AppCompatActivity {
 
                                     Toast.makeText(TrainerActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
 
-                                    imageURL = uri.toString();
+                                    if (requestCode == GALLERY_REQUEST_CODE){
+                                        imageURL = uri.toString();
+                                    }else if (requestCode == GALLERY_REQUEST_CODE_TWO){
+                                        imgone = uri.toString();
+                                    }else if (requestCode == GALLERY_REQUEST_CODE_THREE){
+                                        imgtwo = uri.toString();
+                                    }else if (requestCode == GALLERY_REQUEST_CODE_FOUR){
+                                        imgthree = uri.toString();
+                                    }else if (requestCode == GALLERY_REQUEST_CODE_FIVE){
+                                        imgfour = uri.toString();
+                                    }
 
                                     SharedPreferences.Editor editor = getSharedPreferences("user", MODE_PRIVATE).edit();
 
@@ -354,11 +505,18 @@ public class TrainerActivity extends AppCompatActivity {
                                     editor.putString("email",email);
                                     editor.putString("phone",phone);
                                     editor.putString("pass",pass);
+                                    editor.putString("imgone",imgone);
+                                    editor.putString("imgtwo",imgtwo);
+                                    editor.putString("imgthree",imgthree);
+                                    editor.putString("imgfour",imgfour);
 
                                     editor.apply();
 
-                                    Glide.with(TrainerActivity.this).load(imageURL).placeholder(R.drawable.user_defualt_img)
-                                            .into(imgTrainerEditProfile);
+                                    Glide.with(TrainerActivity.this).load(imageURL).into(imgTrainerEditProfile);
+                                    Glide.with(TrainerActivity.this).load(imgone).into(img1);
+                                    Glide.with(TrainerActivity.this).load(imgtwo).into(img2);
+                                    Glide.with(TrainerActivity.this).load(imgthree).into(img3);
+                                    Glide.with(TrainerActivity.this).load(imgfour).into(img4);
 
                                 }
                             });

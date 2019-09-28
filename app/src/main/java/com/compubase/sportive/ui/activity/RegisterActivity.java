@@ -1,11 +1,14 @@
 package com.compubase.sportive.ui.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -96,7 +99,7 @@ public class RegisterActivity extends AppCompatActivity {
     private double latitude_center;
     private double longitude_center;
     private String s_description, s_history;
-
+    private String m_Text = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -175,9 +178,9 @@ public class RegisterActivity extends AppCompatActivity {
         } else if (TextUtils.isEmpty(userMail)) {
             email.setError("Email is required");
         } else if (TextUtils.isEmpty(userphone)) {
-            phoneNum.setError("Birthday is required");
+            phoneNum.setError("Phone number is required");
         } else if (TextUtils.isEmpty(userpass)) {
-            password.setError("Blood Type is required");
+            password.setError("Password is required");
         } else {
             Retrofit retrofit = RetrofitClient.getInstant();
             API api = retrofit.create(API.class);
@@ -194,7 +197,9 @@ public class RegisterActivity extends AppCompatActivity {
 
                             if (string.equals("True")) {
 
-                                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                                sendMail();
+                                openDialog();
+//                                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                             }
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -208,6 +213,85 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    private void openDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Enter Confirm Code");
+
+// Set up the input
+        final EditText input = new EditText(this);
+// Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        builder.setView(input);
+
+// Set up the buttons
+        builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                m_Text = input.getText().toString();
+                enterCode();
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+    }
+
+    private void sendMail() {
+        Retrofit retrofit = RetrofitClient.getInstant();
+        API api = retrofit.create(API.class);
+        Call<ResponseBody> responseBodyCall = api.SendSMS(userMail);
+        responseBodyCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    assert response.body() != null;
+                    String string = response.body().string();
+                    if (string.equals("True")){
+
+                        enterCode();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(RegisterActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void enterCode() {
+        Retrofit retrofit = RetrofitClient.getInstant();
+        API api = retrofit.create(API.class);
+        Call<ResponseBody> responseBodyCall = api.EnterCode(m_Text);
+        responseBodyCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    String string = response.body().string();
+                    if (string.equals("True")){
+
+                        startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(RegisterActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @OnClick({R.id.center_btn, R.id.user_btn, R.id.location, R.id.BTN_signUp_registar, R.id.text_login, R.id.trainer_btn})
