@@ -43,6 +43,7 @@ public class CentersListAdapter extends RecyclerView.Adapter<CentersListAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+
         UsersJoinsResponse usersJoinsResponse = usersJoinsResponseList.get(i);
 
 
@@ -71,6 +72,10 @@ public class CentersListAdapter extends RecyclerView.Adapter<CentersListAdapter.
     @Override
     public int getItemCount() {
         return usersJoinsResponseList != null ? usersJoinsResponseList.size():0;
+    }
+
+    private void showMessage(String _s) {
+        Toast.makeText(context, _s, Toast.LENGTH_LONG).show();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

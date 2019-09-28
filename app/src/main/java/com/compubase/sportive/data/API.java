@@ -119,4 +119,16 @@ public interface API {
             @Field("img_4") String img_4,
             @Field("id") String id
     );
+
+    @FormUrlEncoded
+    @POST("sendmss")
+    Call<ResponseBody>SendSMS(
+            @Field("email") String email
+    );
+
+    @FormUrlEncoded
+    @POST("entercode")
+    Call<ResponseBody>EnterCode(
+            @Field("enter_code") String code
+    );
 }

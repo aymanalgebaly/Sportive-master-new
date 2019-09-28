@@ -96,7 +96,7 @@ public class CentersActivity extends AppCompatActivity {
         des = shared.getString("des", "");
 
 
-        Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
 
 
         setup();
@@ -129,6 +129,7 @@ public class CentersActivity extends AppCompatActivity {
 
                             usersJoinsResponse = new UsersJoinsResponse();
 
+                            usersJoinsResponse.setIdCenter(usersJoinsResponses.get(j).getIdCenter());
                             usersJoinsResponse.setName(usersJoinsResponses.get(j).getName());
                             usersJoinsResponse.setImages(usersJoinsResponses.get(j).getImages());
                             usersJoinsResponse.setDes(usersJoinsResponses.get(j).getDes());

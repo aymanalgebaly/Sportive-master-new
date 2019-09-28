@@ -83,6 +83,7 @@ public class SendActivity extends AppCompatActivity {
 
 //        Toast.makeText(this, id_id_user, Toast.LENGTH_SHORT).show();
 
+       // showMessage(String.valueOf(id_id_user));
 
     }
 
