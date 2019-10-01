@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -23,9 +24,14 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.compubase.sportive.R;
+import com.compubase.sportive.adapter.CommentAdapter;
 import com.compubase.sportive.adapter.GameAdapter;
+import com.compubase.sportive.data.API;
+import com.compubase.sportive.helper.RetrofitClient;
 import com.compubase.sportive.helper.TinyDB;
+import com.compubase.sportive.model.CommentsListActivity;
 import com.compubase.sportive.model.GameModel;
+import com.compubase.sportive.ui.fragment.CustomDialogFragment;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -43,9 +49,14 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
 
 public class CenterDetailsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -107,7 +118,11 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
     TextView txtValueHisDetails;
     @BindView(R.id.mail_center)
     TextView mailCenter;
-//    @BindView(R.id.map_center)
+    @BindView(R.id.add_comment_center_btn)
+    Button addCommentBtn;
+    @BindView(R.id.rcv_center_comments_list)
+    RecyclerView rcvCenterCommentsList;
+    //    @BindView(R.id.map_center)
 //    android.widget.fragment mapCenter;
     private GameAdapter adapter;
     private int i;
@@ -122,6 +137,11 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
     private String image;
     private String des, history, imagess, img1, img2, img3, img4;
     private String mail;
+    private CommentsListActivity commentsListActivitie;
+    private ArrayList<CommentsListActivity> commentsListActivityArrayList = new ArrayList<>();
+    private CommentAdapter adapter_comments;
+    private CustomDialogFragment dialogFragment;
+    private int id1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -134,24 +154,14 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
         mapFragment.getMapAsync(this);
 
         tinyDB = new TinyDB(this);
+        id1 = tinyDB.getInt("id");
 
-//        preferences = getSharedPreferences("user",MODE_PRIVATE);
-//        name_shared = preferences.getString("name", "");
-//        email_shared = preferences.getString("email", "");
-//
-//        imageView = findViewById(R.id.imageView_center);
-//        center_name = findViewById(R.id.center_name_system);
-//        center_mail = findViewById(R.id.center_mail_system);
-//
-//        center_name.setText(name_shared);
-//        center_mail.setText(email_shared);
-
-        lang = getIntent().getExtras().getString("long");
+        lang = Objects.requireNonNull(getIntent().getExtras()).getString("long");
         lat = getIntent().getExtras().getString("lat");
         name = getIntent().getExtras().getString("name");
         mail = getIntent().getExtras().getString("email");
         phone = getIntent().getExtras().getString("phone");
-        id = String.valueOf(getIntent().getExtras().getInt("id_center"));
+        this.id = String.valueOf(getIntent().getExtras().getInt("id_center"));
         des = getIntent().getExtras().getString("des");
         history = getIntent().getExtras().getString("history");
         imagess = getIntent().getExtras().getString("image");
@@ -160,7 +170,6 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
         img3 = getIntent().getExtras().getString("imagethree");
         img4 = getIntent().getExtras().getString("imagefour");
 
-        //Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
 
         txtValueDesDetails.setText(des);
         txtValueHisDetails.setText(history);
@@ -170,29 +179,20 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
 
         Glide.with(this).load(imagess).placeholder(R.drawable.center_defult_img).into(centerImg);
 
-
         Glide.with(this).load(img1).placeholder(R.drawable.back_img).into(imgOneDetails);
         Glide.with(this).load(img2).placeholder(R.drawable.back_img).into(imgTwoDetails);
         Glide.with(this).load(img3).placeholder(R.drawable.back_img).into(imgThreeDetails);
         Glide.with(this).load(img4).placeholder(R.drawable.back_img).into(imgFourDetails);
 
 
-        // Toast.makeText(CenterDetailsActivity.this, id, Toast.LENGTH_SHORT).show();
-
         SharedPreferences shared = getSharedPreferences("user", MODE_PRIVATE);
         myid = (shared.getString("id", ""));
         image = shared.getString("image", "");
-
-//        Picasso.get().load(image).into(centerImg);
-
 
         rcvCenterHome.setHasFixedSize(true);
 
         LinearLayoutManager llm = new LinearLayoutManager(this);
         rcvCenterHome.setLayoutManager(llm);
-
-        //setup();
-        //data();
 
         JSON_DATA_WEB_CALL();
 
@@ -200,15 +200,75 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
             @Override
             public void onClick(View v) {
 
-                tinyDB.putString("id",id);
+                tinyDB.putString("id", CenterDetailsActivity.this.id);
 
-                Intent intent = new Intent(CenterDetailsActivity.this,UserJoinActivity.class);
-//                intent.putExtra("id_center",id);
+                Intent intent = new Intent(CenterDetailsActivity.this, UserJoinActivity.class);
                 startActivity(intent);
 
-//                startActivity(new Intent(CenterDetailsActivity.this, UserJoinActivity.class));
             }
         });
+
+        setupRecycler();
+        fetchData();
+    }
+
+    private void setupRecycler() {
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setReverseLayout(false);
+        rcvCenterCommentsList.setLayoutManager(linearLayoutManager);
+
+    }
+
+    private void fetchData() {
+
+        commentsListActivityArrayList.clear();
+
+        Call<ResponseBody> call2 = RetrofitClient.getInstant().create(API.class).ViewComment(String.valueOf(id1));
+
+        call2.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+
+                GsonBuilder builder = new GsonBuilder();
+                Gson gson = builder.create();
+
+                assert response.body() != null;
+                try {
+
+                    List<CommentsListActivity> commentsListActivities = Arrays.asList(gson.fromJson(response.body().string(), CommentsListActivity[].class));
+                    if (response.isSuccessful()) {
+
+                        for (int i = 0; i < commentsListActivities.size(); i++) {
+
+                            commentsListActivitie = new CommentsListActivity();
+
+                            commentsListActivitie.setImages(commentsListActivities.get(i).getImages());
+                            commentsListActivitie.setRate(commentsListActivities.get(i).getRate());
+                            commentsListActivitie.setComment(commentsListActivities.get(i).getComment());
+                            commentsListActivitie.setName(commentsListActivities.get(i).getName());
+
+                            commentsListActivityArrayList.add(commentsListActivitie);
+
+                        }
+
+                        adapter_comments = new CommentAdapter(commentsListActivityArrayList);
+                        rcvCenterCommentsList.setAdapter(adapter_comments);
+                        adapter.notifyDataSetChanged();
+                    }
+
+                } catch (Exception e) {
+                    Toast.makeText(CenterDetailsActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(CenterDetailsActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     @Override
@@ -223,7 +283,7 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
             googleMap.addMarker(marker);
 
             CameraPosition cameraPosition = new CameraPosition.Builder()
-                    .target(new LatLng(la,lo))      // Sets the center of the map to location user
+                    .target(new LatLng(la, lo))      // Sets the center of the map to location user
                     .zoom(17)                   // Sets the zoom
                     .bearing(90)                // Sets the orientation of the camera to east
                     .tilt(40)                   // Sets the tilt of the camera to 30 degrees
@@ -323,34 +383,16 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
         adapter.notifyDataSetChanged();
     }
 
-    private void setup() {
-
-        LinearLayoutManager gridLayoutManager = new LinearLayoutManager(this);
-        rcvCenterHome.setLayoutManager(gridLayoutManager);
-        //adapter = new GameAdapter(this);
-        rcvCenterHome.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
-
-    }
-
-//    private void data() {
-//
-//
-//        List<GameModel> gameModels = new ArrayList<>();
-//
-//        game = new String[]{"Football","Football","Football","Football","Football"};
-//        name_game = new String[]{"ahmed", "ahmed", "ahmed", "ahmed", "ahmed"};
-//
-//        for ( i = 0; i <game.length ; i++) {
-//            gameModels.add(new GameModel(game[i],name_game[i]));
-//
-//        }
-//
-//        //adapter.setData(gameModels);
-//        adapter.notifyDataSetChanged();
-//    }
-
     private void showMessage(String s) {
         Toast.makeText(this, s, Toast.LENGTH_LONG).show();
+    }
+
+    @OnClick(R.id.add_comment_center_btn)
+    public void onViewClicked() {
+
+        final FragmentManager fm = getSupportFragmentManager();
+        dialogFragment = new CustomDialogFragment();
+
+        dialogFragment.show(fm,"ttttt");
     }
 }

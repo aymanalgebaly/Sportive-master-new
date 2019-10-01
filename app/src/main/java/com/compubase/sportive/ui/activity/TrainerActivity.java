@@ -2,6 +2,7 @@ package com.compubase.sportive.ui.activity;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -130,47 +131,6 @@ public class TrainerActivity extends AppCompatActivity {
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-
-        FirebaseApp.initializeApp(TrainerActivity.this);
-
-        storage = FirebaseStorage.getInstance();
-        storageReference = storage.getReference();
-
-        preferences = getSharedPreferences("user", MODE_PRIVATE);
-        id = preferences.getString("id", "");
-        name =preferences.getString("name","");
-        email = preferences.getString("email", "");
-        pass = preferences.getString("pass", "");
-        phone = preferences.getString("phone", "");
-        id = preferences.getString("id", "");
-        type = preferences.getString("type", "");
-        history = preferences.getString("history", "");
-        des = preferences.getString("des", "");
-        imageURL = preferences.getString("image","");
-
-        img1 = findViewById(R.id.pic1);
-        img2 = findViewById(R.id.pic2);
-        img3 = findViewById(R.id.pic3);
-        img4 = findViewById(R.id.pic4);
-
-
-        fullNameTrainerProfile.setText(name);
-        emailTrainerProfile.setText(email);
-        phoneNumTrainerProfile.setText(phone);
-        passwordTrainerProfile.setText(pass);
-        descTrainerProfile.setText(des);
-        historyTrainerProfile.setText(history);
-
-        Glide.with(this).load(imageURL).placeholder(R.drawable.user_defualt_img).into(imgTrainerEditProfile);
-        Glide.with(this).load(imgone).placeholder(R.drawable.back_img).into(img1);
-        Glide.with(this).load(imgtwo).placeholder(R.drawable.back_img).into(img2);
-        Glide.with(this).load(imgthree).placeholder(R.drawable.back_img).into(img3);
-        Glide.with(this).load(imgfour).placeholder(R.drawable.back_img).into(img4);
-
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE }, 0);
-        }
-
         img1 = findViewById(R.id.pic1);
         img2 = findViewById(R.id.pic2);
         img3 = findViewById(R.id.pic3);
@@ -200,6 +160,47 @@ public class TrainerActivity extends AppCompatActivity {
                 pickFromGalleryTwo(GALLERY_REQUEST_CODE_FIVE);
             }
         });
+
+        FirebaseApp.initializeApp(this);
+
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
+
+        preferences = getSharedPreferences("user", Context.MODE_PRIVATE);
+        name =preferences.getString("name","");
+        email = preferences.getString("email", "");
+        pass = preferences.getString("pass", "");
+        phone = preferences.getString("phone", "");
+        id = preferences.getString("id", "");
+        type = preferences.getString("type", "");
+        des = preferences.getString("des", "");
+        imgone = preferences.getString("imgone", "");
+        imgtwo = preferences.getString("imgtwo", "");
+        imgthree = preferences.getString("imgthree", "");
+        imgfour = preferences.getString("imgfour", "");
+        history = preferences.getString("history", "");
+
+
+        imageURL = preferences.getString("image","image");
+
+        Glide.with(this).load(imageURL).placeholder(R.drawable.center_defult_img).into(imgTrainerEditProfile);
+
+
+        fullNameTrainerProfile.setText(name);
+        emailTrainerProfile.setText(email);
+        passwordTrainerProfile.setText(pass);
+        phoneNumTrainerProfile.setText(phone);
+        descTrainerProfile.setText(des);
+        historyTrainerProfile.setText(history);
+
+        Glide.with(this).load(imgone).placeholder(R.drawable.back_img).into(img1);
+        Glide.with(this).load(imgtwo).placeholder(R.drawable.back_img).into(img2);
+        Glide.with(this).load(imgthree).placeholder(R.drawable.back_img).into(img3);
+        Glide.with(this).load(imgfour).placeholder(R.drawable.back_img).into(img4);
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE }, 0);
+        }
     }
 
     @OnClick({R.id.change_img_trainer, R.id.btn_edit_trainer_profile, R.id.btn_save_trainer})
@@ -224,12 +225,13 @@ public class TrainerActivity extends AppCompatActivity {
 
         Retrofit retrofit = RetrofitClient.getInstant();
         API api = retrofit.create(API.class);
-        Call<ResponseBody> responseBodyCall = api.UpdateProfile(des, history, "", "", "", "", id);
+        Call<ResponseBody> responseBodyCall = api.UpdateProfile(des, history, imgone, imgtwo, imgthree, imgfour, id);
         responseBodyCall.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()){
                     try {
+                        assert response.body() != null;
                         String string = response.body().string();
 
                         if (string.equals("True")){
@@ -312,6 +314,8 @@ public class TrainerActivity extends AppCompatActivity {
                             phoneNumTrainerProfile.setText(phone);
 //                            descCenterProfile.setText(des);
                             Toast.makeText(TrainerActivity.this, "Updated", Toast.LENGTH_SHORT).show();
+
+                            startActivity(new Intent(TrainerActivity.this,CentersTrainersActivity.class));
 
 //                            if (type.equals("center")){
 //                                startActivity(new Intent(TrainerActivity.this,CenterHomeActivity.class));
@@ -486,6 +490,7 @@ public class TrainerActivity extends AppCompatActivity {
                                         imageURL = uri.toString();
                                     }else if (requestCode == GALLERY_REQUEST_CODE_TWO){
                                         imgone = uri.toString();
+                                        Toast.makeText(TrainerActivity.this, imgone, Toast.LENGTH_SHORT).show();
                                     }else if (requestCode == GALLERY_REQUEST_CODE_THREE){
                                         imgtwo = uri.toString();
                                     }else if (requestCode == GALLERY_REQUEST_CODE_FOUR){
@@ -545,6 +550,6 @@ public class TrainerActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        finishAffinity(); // or finish();
+//        finishAffinity(); // or finish();
     }
 }

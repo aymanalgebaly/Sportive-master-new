@@ -131,4 +131,22 @@ public interface API {
     Call<ResponseBody>EnterCode(
             @Field("enter_code") String code
     );
+
+    @GET("select_all_trainer")
+    Call<ResponseBody>ListOfTrainers();
+
+    @FormUrlEncoded
+    @POST("insert_sportive_comment")
+    Call<ResponseBody>insertComment(
+            @Field("id_user") String id_user,
+            @Field("id_center_or_teriner") String id_center,
+            @Field("Comment") String comment,
+            @Field("Rate") String rate
+    );
+
+    @FormUrlEncoded
+    @POST("select_comment_by_id")
+    Call<ResponseBody>ViewComment(
+            @Field("id") String id
+    );
 }

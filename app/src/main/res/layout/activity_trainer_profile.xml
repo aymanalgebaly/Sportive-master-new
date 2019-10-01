@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/white"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.CenterDetailsActivity">
+    android:orientation="vertical"
+    tools:context=".ui.activity.TrainerProfileActivity">
 
-    <!-- TODO: Update blank fragment layout -->
-
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -66,21 +65,6 @@
         </LinearLayout>
     </LinearLayout>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:id="@+id/frame_map_center"
-        android:layout_below="@id/lin_center_one">
-
-        <fragment
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/map_center"
-            android:name="com.google.android.gms.maps.SupportMapFragment">
-
-        </fragment>
-    </FrameLayout>
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -90,23 +74,20 @@
         android:textColor="@color/black"
         android:textSize="16sp"
         android:layout_marginTop="10dp"
-        android:id="@+id/txt_des_details"
-        android:layout_below="@id/frame_map_center"/>
+        android:id="@+id/txt_des_details" />
 
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/txt_value_des_details"
-        android:layout_marginStart="5dp"
-        android:layout_below="@id/txt_des_details"/>
+        android:layout_marginStart="5dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:id="@+id/lin_img_one"
         android:weightSum="2"
-        android:layout_below="@id/txt_value_des_details"
         android:layout_marginStart="25dp"
         android:layout_marginEnd="25dp"
         android:layout_marginTop="10dp"
@@ -115,14 +96,14 @@
         <ImageView
             android:layout_width="0dp"
             android:layout_margin="10dp"
-            android:id="@+id/img_one_details"
+            android:id="@+id/img_trainer_one_details"
             android:layout_height="match_parent"
             android:layout_weight="1"/>
 
         <ImageView
             android:layout_width="0dp"
             android:layout_margin="10dp"
-            android:id="@+id/img_two_details"
+            android:id="@+id/img_trainer_two_details"
             android:layout_height="match_parent"
             android:layout_weight="1"/>
     </LinearLayout>
@@ -132,7 +113,6 @@
         android:layout_height="150dp"
         android:id="@+id/lin_img_two"
         android:weightSum="2"
-        android:layout_below="@id/lin_img_one"
         android:layout_marginStart="25dp"
         android:layout_marginEnd="25dp"
         android:layout_marginTop="10dp"
@@ -141,83 +121,31 @@
         <ImageView
             android:layout_width="0dp"
             android:layout_margin="10dp"
-            android:id="@+id/img_three_details"
+            android:id="@+id/img_trainer_three_details"
             android:layout_height="match_parent"
             android:layout_weight="1"/>
 
         <ImageView
             android:layout_width="0dp"
             android:layout_margin="10dp"
-            android:id="@+id/img_four_details"
+            android:id="@+id/img_trainer_four_details"
             android:layout_height="match_parent"
             android:layout_weight="1"/>
     </LinearLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/history"
-        android:textStyle="bold"
-        android:layout_marginStart="5dp"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:id="@+id/txt_his_details"
-        android:layout_below="@id/lin_img_two"/>
-
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/txt_value_his_details"
-        android:layout_marginStart="5dp"
-        android:layout_below="@id/txt_his_details"/>
-
-
     <Button
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="35dp"
         android:layout_margin="10dp"
         android:background="@drawable/button_design_curv_yellow"
-        android:text="@string/join"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        android:text="@string/add_comment_and_rate"
         android:textColor="@color/white"
-        android:id="@+id/btn_join"
-        android:layout_below="@id/txt_value_his_details"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/btn_join"
-        android:id="@+id/lin_txt"
-        android:weightSum="2"
-        android:background="@color/gray"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:textColor="@color/blue"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:text="@string/game"
-            android:layout_marginStart="5dp"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:textColor="@color/blue"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:text="@string/trainer"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
+        android:textStyle="bold"
+        android:id="@+id/add_comment_btn"/>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/lin_txt"
         android:id="@+id/frame_rcv"
         android:background="@color/gray">
 
@@ -232,25 +160,6 @@
 
         </android.support.v7.widget.RecyclerView>
     </FrameLayout>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:layout_margin="10dp"
-            android:layout_below="@id/frame_rcv"
-            android:background="@drawable/button_design_curv_yellow"
-            android:text="@string/add_comment_and_rate"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:id="@+id/add_comment_center_btn"/>
-
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/add_comment_btn"
-            android:id="@+id/rcv_center_comments_list">
-
-        </android.support.v7.widget.RecyclerView>
-    </RelativeLayout>
+    </LinearLayout>
 
 </ScrollView>

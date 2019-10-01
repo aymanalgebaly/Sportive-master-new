@@ -60,6 +60,10 @@ public class HomeActivity extends AppCompatActivity
         email = preferences.getString("email", "");
         type = preferences.getString("type", "");
 
+//        if (type.equals("trainer")){
+//            drawer.setVisibility(View.GONE);
+//        }
+
 
         viewPager = findViewById(R.id.viewPager_user);
         tabLayout = findViewById(R.id.tabss);

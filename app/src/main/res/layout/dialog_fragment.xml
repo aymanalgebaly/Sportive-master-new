@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/rate_now"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:layout_margin="5dp"
+        android:id="@+id/txt_titte"/>
+
+    <me.zhanghai.android.materialratingbar.MaterialRatingBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_titte"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/ratbar"
+        android:numStars="5"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_margin="10dp"
+        android:hint="@string/write_comment"
+        android:padding="5dp"
+        android:id="@+id/edit_txt_dialog"
+        android:layout_below="@id/ratbar"
+        android:background="@drawable/edit_text"/>
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edit_txt_dialog"
+        android:layout_alignParentEnd="true"
+        android:text="@string/confirm"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/btn_confirm"
+        android:textColor="@color/white"
+        android:background="@color/yellow"/>
+</RelativeLayout>

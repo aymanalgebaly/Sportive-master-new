@@ -63,6 +63,11 @@
     <string name="history">History</string>
     <string name="upload_images">Upload Images</string>
     <string name="centers">Centers</string>
+    <string name="add_comment_and_rate">Add comment and rate</string>
+    <string name="rate_now">Rate Now</string>
+    <string name="write_comment">Write Comment</string>
+    <string name="confirm">Confirm</string>
+    <string name="rating">rating</string>
 
     <string-array name="type">
         <item name="Update" />

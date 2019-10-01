@@ -9,10 +9,11 @@ import com.compubase.sportive.ui.fragment.ActivitiesCenterFragment;
 import com.compubase.sportive.ui.fragment.ActivitiesFragment;
 import com.compubase.sportive.ui.fragment.FamousFragment;
 import com.compubase.sportive.ui.fragment.HomeFragment;
+import com.compubase.sportive.ui.fragment.TrainersFragment;
 
 public class VP_HomeUser extends FragmentPagerAdapter {
 
-    Fragment[] fragments ={new HomeFragment(),new FamousFragment(),new ActivitiesFragment()};
+    Fragment[] fragments ={new HomeFragment(),new FamousFragment(),new ActivitiesFragment(),new TrainersFragment()};
 
     String title;
 
@@ -43,6 +44,9 @@ public class VP_HomeUser extends FragmentPagerAdapter {
                 break;
             case 2:
                 title = "Activities";
+                break;
+            case 3:
+                title = "Trainers";
                 break;
 
         }

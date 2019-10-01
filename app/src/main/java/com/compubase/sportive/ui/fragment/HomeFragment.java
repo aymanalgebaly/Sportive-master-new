@@ -2,6 +2,8 @@ package com.compubase.sportive.ui.fragment;
 
 
 import android.app.Dialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -79,6 +81,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
     private FusedLocationProviderClient client;
     private double latitude,longitude;
+    private SharedPreferences preferences;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -122,7 +125,9 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
         setupRecycler();
         fetchData();
+
         return view;
+
     }
 
     private void filter(String  s) {
@@ -148,8 +153,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     private void setupRecycler() {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        linearLayoutManager.setReverseLayout(false);
         rcvHome.setLayoutManager(linearLayoutManager);
-        rcvHome.setNestedScrollingEnabled(false);
 
     }
     private void fetchData (){

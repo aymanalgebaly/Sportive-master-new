@@ -270,6 +270,7 @@ public class EditProfileCenterActivity extends AppCompatActivity {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()){
                     try {
+                        assert response.body() != null;
                         String string = response.body().string();
 
                         if (string.equals("True")){
@@ -288,7 +289,7 @@ public class EditProfileCenterActivity extends AppCompatActivity {
                             descCenterProfile.setText(des);
                             historyCenterProfile.setText(history);
 
-                            Toast.makeText(EditProfileCenterActivity.this, des, Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(EditProfileCenterActivity.this, des, Toast.LENGTH_SHORT).show();
 
 
                             startActivity(new Intent(EditProfileCenterActivity.this,CenterHomeActivity.class));
