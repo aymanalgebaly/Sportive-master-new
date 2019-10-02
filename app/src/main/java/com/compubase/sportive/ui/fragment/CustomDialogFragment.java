@@ -110,15 +110,9 @@ public class CustomDialogFragment extends DialogFragment {
                     assert response.body() != null;
                     String string = response.body().string();
 
-                    if (string.equals("True") && type.equals("trainer")){
-
-                            startActivity(new Intent(getActivity(),TrainerProfileActivity.class));
-                        }
-                    else{
-
-                        startActivity(new Intent(getActivity(), CenterDetailsActivity.class));
+                    if (string.equals("True")){
+                        
                     }
-
 
                 } catch (IOException e) {
                     e.printStackTrace();

@@ -153,6 +153,8 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
         assert mapFragment != null;
         mapFragment.getMapAsync(this);
 
+
+
         tinyDB = new TinyDB(this);
         id1 = tinyDB.getInt("id");
 
@@ -188,6 +190,12 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
         SharedPreferences shared = getSharedPreferences("user", MODE_PRIVATE);
         myid = (shared.getString("id", ""));
         image = shared.getString("image", "");
+        String type = shared.getString("type", "");
+
+        assert type != null;
+        if (type.equals("trainer") || type.equals("center")){
+            addCommentBtn.setVisibility(View.INVISIBLE);
+        }
 
         rcvCenterHome.setHasFixedSize(true);
 

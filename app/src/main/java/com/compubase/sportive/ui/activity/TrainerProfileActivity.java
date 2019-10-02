@@ -12,6 +12,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -106,8 +107,12 @@ public class TrainerProfileActivity extends AppCompatActivity {
         String imagetwo = preferences.getString("imagetwo", "");
         String imagethree = preferences.getString("imagethree", "");
         String imagefour = preferences.getString("imagefour", "");
+        String type = preferences.getString("type", "");
 
-
+        assert type != null;
+        if (type.equals("trainer") || type.equals("center")){
+            addCommentBtn.setVisibility(View.INVISIBLE);
+        }
 
         Intent intent = getIntent();
 
