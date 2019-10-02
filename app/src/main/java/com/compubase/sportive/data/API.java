@@ -49,6 +49,9 @@ public interface API {
     @GET("select_all_center")
     Call<ResponseBody>ListOfCenters();
 
+    @GET("select_all_center_famous")
+    Call<ResponseBody>ListOfCentersFamous();
+
     @FormUrlEncoded
     @POST("select_all_active")
     Call<ResponseBody>ListOfActivities(

@@ -20,6 +20,7 @@ import com.compubase.sportive.data.API;
 import com.compubase.sportive.helper.RetrofitClient;
 import com.compubase.sportive.model.Center;
 import com.compubase.sportive.model.FamousActivityResponse;
+import com.compubase.sportive.model.FamousListModel;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
@@ -48,9 +49,9 @@ public class FamousFragment extends Fragment {
     RecyclerView rcvFamous;
     Unbinder unbinder;
     private FamousAdapter adapter;
-    private List<FamousActivityResponse> famousList;
-    private FamousActivityResponse famous;
-    private ArrayList<FamousActivityResponse> centerArrayList = new ArrayList<>();
+    private List<FamousListModel> famousList;
+    private FamousListModel famous;
+    private ArrayList<FamousListModel> centerArrayList = new ArrayList<>();
 
 //    private FamousAdapter adapter;
 
@@ -83,7 +84,7 @@ public class FamousFragment extends Fragment {
         //to clear the array first
         centerArrayList.clear();
 
-        Call<ResponseBody> call2 = RetrofitClient.getInstant().create(API.class).ListOfCenters();
+        Call<ResponseBody> call2 = RetrofitClient.getInstant().create(API.class).ListOfCentersFamous();
 
         call2.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -95,13 +96,13 @@ public class FamousFragment extends Fragment {
 
                 try {
                     assert response.body() != null;
-                    famousList = Arrays.asList(gson.fromJson(response.body().string(), FamousActivityResponse[].class));
+                    famousList = Arrays.asList(gson.fromJson(response.body().string(), FamousListModel[].class));
 
                     if (response.isSuccessful()){
 
                         for (int j = 0; j <famousList.size() ; j++) {
 
-                            famous = new FamousActivityResponse();
+                            famous = new FamousListModel();
 
                             famous.setName(famousList.get(j).getName());
                             famous.setType(famousList.get(j).getType());

@@ -25,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.compubase.sportive.R;
 import com.compubase.sportive.adapter.VP_HomeCenter;
 import com.compubase.sportive.adapter.VP_HomeUser;
@@ -39,11 +40,17 @@ public class CenterHomeActivity extends AppCompatActivity
     private TextView user_name,user_mail;
     private SharedPreferences preferences;
     private String name,email;
+    private String image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_center_home);
+
+        preferences = getSharedPreferences("user",MODE_PRIVATE);
+        name = preferences.getString("name", "");
+        email = preferences.getString("email", "");
+        image = preferences.getString("image", "");
 
         viewPager = findViewById(R.id.viewPager_center);
         tabLayout = findViewById(R.id.tabss_center);
@@ -69,16 +76,19 @@ public class CenterHomeActivity extends AppCompatActivity
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+        View header = navigationView.getHeaderView(0);
+        TextView name_txt = header.findViewById(R.id.name_profile_system_user);
+        ImageView imageView = header.findViewById(R.id.imageView_user);
+        TextView email_txt = header.findViewById(R.id.mail_profile_system_user);
+
+        name_txt.setText(name);
+        email_txt.setText(email);
+        Glide.with(this).load(image).placeholder(R.drawable.bg_sportive).into(imageView);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
-
-        preferences = getSharedPreferences("user",MODE_PRIVATE);
-        name = preferences.getString("name", "");
-        email = preferences.getString("email", "");
-
 
 //        imageView = findViewById(R.id.imageView_center);
 //        user_name = findViewById(R.id.center_name_system);

@@ -1,5 +1,6 @@
 package com.compubase.sportive.ui.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -8,8 +9,11 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -32,6 +36,7 @@ import com.compubase.sportive.helper.TinyDB;
 import com.compubase.sportive.model.CommentsListActivity;
 import com.compubase.sportive.model.GameModel;
 import com.compubase.sportive.ui.fragment.CustomDialogFragment;
+import com.compubase.sportive.ui.fragment.CustomDialogFragmentCenter;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -42,10 +47,12 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -54,9 +61,11 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Retrofit;
 
 public class CenterDetailsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -140,8 +149,17 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
     private CommentsListActivity commentsListActivitie;
     private ArrayList<CommentsListActivity> commentsListActivityArrayList = new ArrayList<>();
     private CommentAdapter adapter_comments;
-    private CustomDialogFragment dialogFragment;
+    private CustomDialogFragmentCenter dialogFragmentCenter;
     private int id1;
+    private String type;
+    private Dialog dialog;
+    private Button submitBtn;
+    private String comment_txt;
+    private MaterialRatingBar ratingBar;
+    private EditText comment_;
+    private float rating;
+    private String name1;
+    private String type1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -163,7 +181,7 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
         name = getIntent().getExtras().getString("name");
         mail = getIntent().getExtras().getString("email");
         phone = getIntent().getExtras().getString("phone");
-        this.id = String.valueOf(getIntent().getExtras().getInt("id_center"));
+        id = String.valueOf(getIntent().getExtras().getInt("id_center"));
         des = getIntent().getExtras().getString("des");
         history = getIntent().getExtras().getString("history");
         imagess = getIntent().getExtras().getString("image");
@@ -171,7 +189,9 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
         img2 = getIntent().getExtras().getString("imagetwo");
         img3 = getIntent().getExtras().getString("imagethree");
         img4 = getIntent().getExtras().getString("imagefour");
+        type = getIntent().getExtras().getString("type");
 
+//        tinyDB.putString("type_center",type);
 
         txtValueDesDetails.setText(des);
         txtValueHisDetails.setText(history);
@@ -190,17 +210,17 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
         SharedPreferences shared = getSharedPreferences("user", MODE_PRIVATE);
         myid = (shared.getString("id", ""));
         image = shared.getString("image", "");
-        String type = shared.getString("type", "");
+        name1 = shared.getString("name", "");
+        type1 = shared.getString("type", "");
 
-        assert type != null;
-        if (type.equals("trainer") || type.equals("center")){
+        assert type1 != null;
+        if (type1.equals("trainer") || type1.equals("center")){
             addCommentBtn.setVisibility(View.INVISIBLE);
         }
 
-        rcvCenterHome.setHasFixedSize(true);
-
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        rcvCenterHome.setLayoutManager(llm);
+//        LinearLayoutManager llm = new LinearLayoutManager(this);
+//        llm.setReverseLayout(true);
+//        rcvCenterHome.setLayoutManager(llm);
 
         JSON_DATA_WEB_CALL();
 
@@ -223,7 +243,10 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
     private void setupRecycler() {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setReverseLayout(false);
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
+        rcvCenterCommentsList.setNestedScrollingEnabled(true);
+//        rcvCenterCommentsList.setNestedScrollingEnabled(true);
         rcvCenterCommentsList.setLayoutManager(linearLayoutManager);
 
     }
@@ -232,7 +255,7 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
 
         commentsListActivityArrayList.clear();
 
-        Call<ResponseBody> call2 = RetrofitClient.getInstant().create(API.class).ViewComment(String.valueOf(id1));
+        Call<ResponseBody> call2 = RetrofitClient.getInstant().create(API.class).ViewComment(id);
 
         call2.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -255,6 +278,7 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
                             commentsListActivitie.setRate(commentsListActivities.get(i).getRate());
                             commentsListActivitie.setComment(commentsListActivities.get(i).getComment());
                             commentsListActivitie.setName(commentsListActivities.get(i).getName());
+                            commentsListActivitie.setIdCenter(commentsListActivities.get(i).getIdCenter());
 
                             commentsListActivityArrayList.add(commentsListActivitie);
 
@@ -262,7 +286,7 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
 
                         adapter_comments = new CommentAdapter(commentsListActivityArrayList);
                         rcvCenterCommentsList.setAdapter(adapter_comments);
-                        adapter.notifyDataSetChanged();
+                        adapter_comments.notifyDataSetChanged();
                     }
 
                 } catch (Exception e) {
@@ -385,7 +409,6 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
             gamesList.add(game);
         }
 
-
         adapter = new GameAdapter(gamesList);
         rcvCenterHome.setAdapter(adapter);
         adapter.notifyDataSetChanged();
@@ -398,9 +421,78 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
     @OnClick(R.id.add_comment_center_btn)
     public void onViewClicked() {
 
-        final FragmentManager fm = getSupportFragmentManager();
-        dialogFragment = new CustomDialogFragment();
 
-        dialogFragment.show(fm,"ttttt");
+        dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_fragment);
+        TextView titleTV = (TextView)dialog.findViewById(R.id.txt_titte);
+        submitBtn = (Button)dialog.findViewById(R.id.btn_confirm);
+        submitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                insertRate();
+            }
+        });
+        ratingBar = (MaterialRatingBar) dialog.findViewById(R.id.ratbar);
+        comment_ = (EditText)dialog.findViewById(R.id.edit_txt_dialog);
+        dialog.show();
+    }
+    private void insertRate() {
+
+        comment_txt = comment_.getText().toString();
+        rating = ratingBar.getRating();
+
+        Retrofit retrofit = RetrofitClient.getInstant();
+        API api = retrofit.create(API.class);
+        Call<ResponseBody> responseBodyCall = api.insertComment(myid, id, comment_txt, String.valueOf(rating));
+        responseBodyCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                try {
+                    assert response.body() != null;
+                    String string = response.body().string();
+                    if (string.equals("True")) {
+
+                            CommentsListActivity commentsListActivity = new CommentsListActivity();
+                            commentsListActivity.setComment(comment_txt);
+                            commentsListActivity.setRate(String.valueOf(rating));
+                            commentsListActivity.setName(name1);
+                            commentsListActivity.setImages(image);
+                            commentsListActivity.setIdCenter(Integer.valueOf(id));
+
+
+                            commentsListActivityArrayList.add(commentsListActivity);
+                            adapter.notifyDataSetChanged();
+
+                            dialog.dismiss();
+
+                    }
+
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (Throwable throwable) {
+                    throwable.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(CenterDetailsActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
     }
 }

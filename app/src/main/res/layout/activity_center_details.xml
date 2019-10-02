@@ -244,13 +244,23 @@
             android:textStyle="bold"
             android:id="@+id/add_comment_center_btn"/>
 
-        <android.support.v7.widget.RecyclerView
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/frame_rcv_comment"
             android:layout_below="@id/add_comment_center_btn"
-            android:id="@+id/rcv_center_comments_list">
+            android:background="@color/gray">
 
-        </android.support.v7.widget.RecyclerView>
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
+                android:layout_gravity="center"
+                android:id="@+id/rcv_center_comments_list">
+
+            </android.support.v7.widget.RecyclerView>
+
+        </FrameLayout>
+
     </RelativeLayout>
 
 </ScrollView>

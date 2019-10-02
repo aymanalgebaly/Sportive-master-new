@@ -42,7 +42,7 @@ public class TrainersAdapter extends RecyclerView.Adapter<TrainersAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolderTrainers viewHolderTrainers, int i) {
+    public void onBindViewHolder(@NonNull ViewHolderTrainers viewHolderTrainers, final int i) {
 
         final TrainersListModel trainersListModel = trainersListModels.get(i);
         viewHolderTrainers.des.setText(trainersListModel.getDes());
@@ -58,6 +58,7 @@ public class TrainersAdapter extends RecyclerView.Adapter<TrainersAdapter.ViewHo
 
                 intent.putExtra("desc",trainersListModel.getDes());
                 intent.putExtra("id",trainersListModel.getId());
+                intent.putExtra("type",trainersListModel.getType());
                 intent.putExtra("name",trainersListModel.getName());
                 intent.putExtra("imgone",trainersListModel.getImg1());
                 intent.putExtra("imgtwo",trainersListModel.getImg2());

@@ -27,6 +27,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.compubase.sportive.R;
 import com.compubase.sportive.adapter.VP_HomeUser;
 import com.compubase.sportive.helper.TinyDB;
@@ -48,6 +49,7 @@ public class HomeActivity extends AppCompatActivity
     private View mView;
     private DrawerLayout drawer;
     private String type;
+    private String image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +61,7 @@ public class HomeActivity extends AppCompatActivity
         name = preferences.getString("name", "");
         email = preferences.getString("email", "");
         type = preferences.getString("type", "");
+        image = preferences.getString("image", "");
 
 //        if (type.equals("trainer")){
 //            drawer.setVisibility(View.GONE);
@@ -88,6 +91,14 @@ public class HomeActivity extends AppCompatActivity
 
         drawer = findViewById(R.id.drawer_layout_user);
         NavigationView navigationView = findViewById(R.id.nav_view_user);
+        View header = navigationView.getHeaderView(0);
+        TextView name_txt = header.findViewById(R.id.name_profile_system_user);
+        ImageView imageView = header.findViewById(R.id.imageView_user);
+        TextView email_txt = header.findViewById(R.id.mail_profile_system_user);
+
+        name_txt.setText(name);
+        email_txt.setText(email);
+        Glide.with(this).load(image).placeholder(R.drawable.bg_sportive).into(imageView);
         mView = navigationView.getHeaderView(0);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 HomeActivity.this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);

@@ -1,6 +1,7 @@
 package com.compubase.sportive.ui.activity;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,6 +14,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -33,6 +35,9 @@ import com.compubase.sportive.ui.fragment.CustomDialogFragment;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.greenrobot.eventbus.EventBus;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -40,10 +45,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class TrainerProfileActivity extends AppCompatActivity {
 
@@ -90,6 +97,15 @@ public class TrainerProfileActivity extends AppCompatActivity {
     private CommentsListActivity commentsListActivitie;
     private ArrayList<CommentsListActivity>commentsListActivityArrayList = new ArrayList<>();
     private CommentAdapter adapter;
+    private String type1;
+    private Dialog dialog;
+    private EditText comment_;
+    private Button submitBtn;
+    private MaterialRatingBar ratingBar;
+    private String comment_txt;
+    private float rating;
+    private String name;
+    private String image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,9 +116,9 @@ public class TrainerProfileActivity extends AppCompatActivity {
         preferences = getSharedPreferences("user", MODE_PRIVATE);
         id = preferences.getString("id", "");
         String email = preferences.getString("email", "");
-        String name = preferences.getString("name", "");
+        name = preferences.getString("name", "");
         String des = preferences.getString("des", "");
-        String image = preferences.getString("image", "");
+        image = preferences.getString("image", "");
         String imgone = preferences.getString("imgone", "");
         String imagetwo = preferences.getString("imagetwo", "");
         String imagethree = preferences.getString("imagethree", "");
@@ -117,7 +133,7 @@ public class TrainerProfileActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         if (intent != null){
-            id1 = intent.getIntExtra("id", id_profile);
+            id1 = intent.getIntExtra("id",id_profile);
              name1 = intent.getStringExtra("name");
              imagess = intent.getStringExtra("images");
              img1 = intent.getStringExtra("imgone");
@@ -125,11 +141,13 @@ public class TrainerProfileActivity extends AppCompatActivity {
              img3 = intent.getStringExtra("imgthree");
              img4 = intent.getStringExtra("imgfour");
              des1 = intent.getStringExtra("desc");
+             type1 = intent.getStringExtra("type");
 
         }
 
         tinyDB = new TinyDB(this);
         tinyDB.putInt("id",id1);
+//        tinyDB.putString("type_trainer",type1);
 
         Glide.with(this).load(imagess).placeholder(R.drawable.user_defualt_img).into(centerImg);
         Glide.with(this).load(img1).placeholder(R.drawable.back_img).into(imgOneDetails);
@@ -148,7 +166,9 @@ public class TrainerProfileActivity extends AppCompatActivity {
     private void setupRecycler() {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setReverseLayout(false);
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
+//        rcvCenterHome.setNestedScrollingEnabled(true);
         rcvCenterHome.setLayoutManager(linearLayoutManager);
 
     }
@@ -179,6 +199,7 @@ public class TrainerProfileActivity extends AppCompatActivity {
                             commentsListActivitie.setRate(commentsListActivities.get(i).getRate());
                             commentsListActivitie.setComment(commentsListActivities.get(i).getComment());
                             commentsListActivitie.setName(commentsListActivities.get(i).getName());
+                            commentsListActivitie.setIdCenter(commentsListActivities.get(i).getIdCenter());
 
                             commentsListActivityArrayList.add(commentsListActivitie);
 
@@ -207,11 +228,69 @@ public class TrainerProfileActivity extends AppCompatActivity {
     @OnClick(R.id.add_comment_btn)
     public void onViewClicked() {
 
-        final FragmentManager fm = getSupportFragmentManager();
-        dialogFragment = new CustomDialogFragment();
+//        final FragmentManager fm = getSupportFragmentManager();
+//        dialogFragment = new CustomDialogFragment();
+//
+//        dialogFragment.show(fm,"ttttt");
 
-        dialogFragment.show(fm,"ttttt");
+        dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_fragment);
+        TextView titleTV = (TextView)dialog.findViewById(R.id.txt_titte);
+        submitBtn = (Button)dialog.findViewById(R.id.btn_confirm);
+        submitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                insertRate();
+            }
+        });
+        ratingBar = (MaterialRatingBar) dialog.findViewById(R.id.ratbar);
+        comment_ = (EditText)dialog.findViewById(R.id.edit_txt_dialog);
+        dialog.show();
+    }
+    private void insertRate() {
 
+        comment_txt = comment_.getText().toString();
+        rating = ratingBar.getRating();
+
+        Retrofit retrofit = RetrofitClient.getInstant();
+        API api = retrofit.create(API.class);
+        Call<ResponseBody> responseBodyCall = api.insertComment(id, String.valueOf(id1), comment_txt, String.valueOf(rating));
+        responseBodyCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    assert response.body() != null;
+                    String string = response.body().string();
+
+                    if (string.equals("True")){
+
+                            CommentsListActivity commentsListActivity = new CommentsListActivity();
+                            commentsListActivity.setComment(comment_txt);
+                            commentsListActivity.setRate(String.valueOf(rating));
+                            commentsListActivity.setName(name);
+                            commentsListActivity.setImages(image);
+                            commentsListActivity.setIdCenter(id1);
+
+
+                            commentsListActivityArrayList.add(commentsListActivity);
+                            adapter.notifyDataSetChanged();
+
+                            dialog.dismiss();
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (Throwable throwable) {
+                    throwable.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(TrainerProfileActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
