@@ -68,6 +68,7 @@
     <string name="write_comment">Write Comment</string>
     <string name="confirm">Confirm</string>
     <string name="rating">rating</string>
+    <string name="submit">submit</string>
 
     <string-array name="type">
         <item name="Update" />
@@ -75,5 +76,6 @@
         <item name="Rating" />
         <item name="Comment" />
     </string-array>
+    <string name="title_activity_trainer_home">TrainerHomeActivity</string>
 
 </resources>

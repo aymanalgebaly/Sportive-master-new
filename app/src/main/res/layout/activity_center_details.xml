@@ -238,7 +238,7 @@
             android:layout_height="35dp"
             android:layout_margin="10dp"
             android:layout_below="@id/frame_rcv"
-            android:background="@drawable/button_design_curv_yellow"
+            android:background="@drawable/button_design_curv"
             android:text="@string/add_comment_and_rate"
             android:textColor="@color/white"
             android:textStyle="bold"

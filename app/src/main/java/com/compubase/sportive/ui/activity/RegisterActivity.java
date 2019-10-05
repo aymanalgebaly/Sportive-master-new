@@ -16,6 +16,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -87,6 +88,8 @@ public class RegisterActivity extends AppCompatActivity {
     LinearLayout linCenter;
     @BindView(R.id.trainer_btn)
     RadioButton trainerBtn;
+    @BindView(R.id.progress_bar_register)
+    ProgressBar progressBarRegister;
 
     private String userName, userMail, userphone, userpass, userLocation;
     int PLACE_PICKER_REQUEST = 1;
@@ -108,11 +111,14 @@ public class RegisterActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-
+        progressBarRegister.setVisibility(View.GONE);
 
     }
 
     private void ValidateCenter() {
+
+        progressBarRegister.setVisibility(View.GONE);
+
         userName = fullName.getText().toString();
         userMail = email.getText().toString();
         userphone = phoneNum.getText().toString();
@@ -167,6 +173,9 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void Validate() {
+
+        progressBarRegister.setVisibility(View.GONE);
+
 
         userName = fullName.getText().toString();
         userMail = email.getText().toString();
@@ -253,7 +262,7 @@ public class RegisterActivity extends AppCompatActivity {
                 try {
                     assert response.body() != null;
                     String string = response.body().string();
-                    if (string.equals("True")){
+                    if (string.equals("True")) {
 
                         enterCode();
                     }
@@ -278,7 +287,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     String string = response.body().string();
-                    if (string.equals("True")){
+                    if (string.equals("True")) {
 
                         startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                     }
@@ -309,6 +318,8 @@ public class RegisterActivity extends AppCompatActivity {
                 placePacker();
                 break;
             case R.id.BTN_signUp_registar:
+
+                progressBarRegister.setVisibility(View.VISIBLE);
 
                 if (centerBtn.isChecked()) {
                     ValidateCenter();

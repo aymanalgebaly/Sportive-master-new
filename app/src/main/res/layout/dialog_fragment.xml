@@ -19,6 +19,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/txt_titte"
+        android:layout_marginEnd="30dp"
+        android:layout_marginStart="30dp"
         android:layout_centerHorizontal="true"
         android:id="@+id/ratbar"
         android:numStars="5"/>
@@ -38,12 +40,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/edit_txt_dialog"
-        android:layout_alignParentEnd="true"
-        android:text="@string/confirm"
+        android:text="@string/submit"
         android:layout_marginBottom="20dp"
-        android:layout_marginEnd="40dp"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:id="@+id/btn_confirm"
         android:textColor="@color/white"
-        android:background="@color/yellow"/>
+        android:background="@drawable/button_design_curv_yellow"/>
 </RelativeLayout>

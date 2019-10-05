@@ -36,7 +36,11 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="m">
-        <activity android:name=".ui.activity.TrainerProfileActivity"></activity>
+        <activity
+            android:name=".ui.activity.TrainerHomeActivity"
+            android:label="@string/title_activity_trainer_home"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".ui.activity.TrainerProfileActivity" />
         <activity android:name=".ui.activity.CentersTrainersActivity" />
         <activity android:name=".ui.activity.TrainerActivity" />
         <activity android:name=".ui.activity.EditProfileCenterActivity" />

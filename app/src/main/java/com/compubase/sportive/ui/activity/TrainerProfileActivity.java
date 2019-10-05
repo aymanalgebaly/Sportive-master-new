@@ -106,6 +106,7 @@ public class TrainerProfileActivity extends AppCompatActivity {
     private float rating;
     private String name;
     private String image;
+    private String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,7 +116,7 @@ public class TrainerProfileActivity extends AppCompatActivity {
 
         preferences = getSharedPreferences("user", MODE_PRIVATE);
         id = preferences.getString("id", "");
-        String email = preferences.getString("email", "");
+        email = preferences.getString("email", "");
         name = preferences.getString("name", "");
         String des = preferences.getString("des", "");
         image = preferences.getString("image", "");
@@ -150,13 +151,15 @@ public class TrainerProfileActivity extends AppCompatActivity {
 //        tinyDB.putString("type_trainer",type1);
 
         Glide.with(this).load(imagess).placeholder(R.drawable.user_defualt_img).into(centerImg);
-        Glide.with(this).load(img1).placeholder(R.drawable.back_img).into(imgOneDetails);
-        Glide.with(this).load(img2).placeholder(R.drawable.back_img).into(imgTwoDetails);
-        Glide.with(this).load(img3).placeholder(R.drawable.back_img).into(imgThreeDetails);
-        Glide.with(this).load(img4).placeholder(R.drawable.back_img).into(imgFourDetails);
+        Glide.with(this).load(img1).placeholder(R.mipmap.upload_bg).into(imgOneDetails);
+        Glide.with(this).load(img2).placeholder(R.mipmap.upload_bg).into(imgTwoDetails);
+        Glide.with(this).load(img3).placeholder(R.mipmap.upload_bg).into(imgThreeDetails);
+        Glide.with(this).load(img4).placeholder(R.mipmap.upload_bg).into(imgFourDetails);
 
         txtValueDesDetails.setText(des1);
         nameCenter.setText(name1);
+        mailCenter.setText(email);
+
 
         setupRecycler();
         fetchData();
@@ -301,12 +304,14 @@ public class TrainerProfileActivity extends AppCompatActivity {
         fetchData();
 
         Glide.with(this).load(imagess).placeholder(R.drawable.user_defualt_img).into(centerImg);
-        Glide.with(this).load(img1).placeholder(R.drawable.back_img).into(imgOneDetails);
-        Glide.with(this).load(img2).placeholder(R.drawable.back_img).into(imgTwoDetails);
-        Glide.with(this).load(img3).placeholder(R.drawable.back_img).into(imgThreeDetails);
-        Glide.with(this).load(img4).placeholder(R.drawable.back_img).into(imgFourDetails);
+        Glide.with(this).load(img1).placeholder(R.mipmap.upload_bg).into(imgOneDetails);
+        Glide.with(this).load(img2).placeholder(R.mipmap.upload_bg).into(imgTwoDetails);
+        Glide.with(this).load(img3).placeholder(R.mipmap.upload_bg).into(imgThreeDetails);
+        Glide.with(this).load(img4).placeholder(R.mipmap.upload_bg).into(imgFourDetails);
 
         txtValueDesDetails.setText(des1);
         nameCenter.setText(name1);
+        mailCenter.setText(email);
+
     }
 }

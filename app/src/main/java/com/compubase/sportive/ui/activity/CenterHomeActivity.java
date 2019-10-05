@@ -30,6 +30,8 @@ import com.compubase.sportive.R;
 import com.compubase.sportive.adapter.VP_HomeCenter;
 import com.compubase.sportive.adapter.VP_HomeUser;
 
+import java.util.Objects;
+
 public class CenterHomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -52,6 +54,7 @@ public class CenterHomeActivity extends AppCompatActivity
         email = preferences.getString("email", "");
         image = preferences.getString("image", "");
 
+
         viewPager = findViewById(R.id.viewPager_center);
         tabLayout = findViewById(R.id.tabss_center);
         tabLayout.setupWithViewPager(viewPager);
@@ -71,33 +74,25 @@ public class CenterHomeActivity extends AppCompatActivity
 
         Toolbar toolbar = findViewById(R.id.toolbar_center);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         View header = navigationView.getHeaderView(0);
-        TextView name_txt = header.findViewById(R.id.name_profile_system_user);
-        ImageView imageView = header.findViewById(R.id.imageView_user);
-        TextView email_txt = header.findViewById(R.id.mail_profile_system_user);
+        TextView name_txt = header.findViewById(R.id.center_name_system);
+        ImageView imageView = header.findViewById(R.id.imageView_center);
+        TextView email_txt = header.findViewById(R.id.center_mail_system);
 
         name_txt.setText(name);
         email_txt.setText(email);
         Glide.with(this).load(image).placeholder(R.drawable.bg_sportive).into(imageView);
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
-//        imageView = findViewById(R.id.imageView_center);
-//        user_name = findViewById(R.id.center_name_system);
-//        user_mail = findViewById(R.id.center_mail_system);
-//
-//        Toast.makeText(this, email, Toast.LENGTH_SHORT).show();
-//
-//        user_name.setText(name);
-//        user_mail.setText(email);
     }
 
     @Override
@@ -123,8 +118,17 @@ public class CenterHomeActivity extends AppCompatActivity
         } else if (id == R.id.center_logout) {
 
 //            alartExit();
+            SharedPreferences.Editor editor = getSharedPreferences("user", MODE_PRIVATE).edit();
+
+            preferences = getSharedPreferences("user", MODE_PRIVATE);
+
+            editor.putBoolean("login", false);
+
+            editor.apply();
             startActivity(new Intent(CenterHomeActivity.this,LoginActivity.class));
             finish();
+//            finishAffinity();
+
 
         } else if (id == R.id.center_contact_us) {
 

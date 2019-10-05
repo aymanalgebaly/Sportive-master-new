@@ -50,6 +50,13 @@
                 android:background="@drawable/sign_up_design"
                 tools:ignore="RtlHardcoded">
 
+                <ProgressBar
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/progress_bar_register"/>
+
                 <EditText
                     android:id="@+id/full_name"
                     android:layout_width="match_parent"
@@ -230,6 +237,7 @@
                         android:layout_marginLeft="3dp"
                         android:drawablePadding="15dp"
                         android:ems="10"
+                        android:focusable="false"
                         android:inputType="phone"
                         android:layout_marginBottom="10dp"
                         android:drawableStart="@drawable/ic_place_black_24dp"

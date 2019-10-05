@@ -201,10 +201,10 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
 
         Glide.with(this).load(imagess).placeholder(R.drawable.center_defult_img).into(centerImg);
 
-        Glide.with(this).load(img1).placeholder(R.drawable.back_img).into(imgOneDetails);
-        Glide.with(this).load(img2).placeholder(R.drawable.back_img).into(imgTwoDetails);
-        Glide.with(this).load(img3).placeholder(R.drawable.back_img).into(imgThreeDetails);
-        Glide.with(this).load(img4).placeholder(R.drawable.back_img).into(imgFourDetails);
+        Glide.with(this).load(img1).placeholder(R.mipmap.upload_bg).into(imgOneDetails);
+        Glide.with(this).load(img2).placeholder(R.mipmap.upload_bg).into(imgTwoDetails);
+        Glide.with(this).load(img3).placeholder(R.mipmap.upload_bg).into(imgThreeDetails);
+        Glide.with(this).load(img4).placeholder(R.mipmap.upload_bg).into(imgFourDetails);
 
 
         SharedPreferences shared = getSharedPreferences("user", MODE_PRIVATE);

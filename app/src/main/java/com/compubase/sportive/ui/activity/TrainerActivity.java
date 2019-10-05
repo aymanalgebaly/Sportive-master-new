@@ -193,10 +193,10 @@ public class TrainerActivity extends AppCompatActivity {
         descTrainerProfile.setText(des);
         historyTrainerProfile.setText(history);
 
-        Glide.with(this).load(imgone).placeholder(R.drawable.back_img).into(img1);
-        Glide.with(this).load(imgtwo).placeholder(R.drawable.back_img).into(img2);
-        Glide.with(this).load(imgthree).placeholder(R.drawable.back_img).into(img3);
-        Glide.with(this).load(imgfour).placeholder(R.drawable.back_img).into(img4);
+        Glide.with(this).load(imgone).placeholder(R.mipmap.image_bg).into(img1);
+        Glide.with(this).load(imgtwo).placeholder(R.mipmap.image_bg).into(img2);
+        Glide.with(this).load(imgthree).placeholder(R.mipmap.image_bg).into(img3);
+        Glide.with(this).load(imgfour).placeholder(R.mipmap.image_bg).into(img4);
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE }, 0);

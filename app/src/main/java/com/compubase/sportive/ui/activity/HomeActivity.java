@@ -87,7 +87,7 @@ public class HomeActivity extends AppCompatActivity
 
         Toolbar toolbar = findViewById(R.id.toolbar_user);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
         drawer = findViewById(R.id.drawer_layout_user);
         NavigationView navigationView = findViewById(R.id.nav_view_user);
@@ -99,6 +99,7 @@ public class HomeActivity extends AppCompatActivity
         name_txt.setText(name);
         email_txt.setText(email);
         Glide.with(this).load(image).placeholder(R.drawable.bg_sportive).into(imageView);
+
         mView = navigationView.getHeaderView(0);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 HomeActivity.this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -139,6 +140,13 @@ public class HomeActivity extends AppCompatActivity
 
         } else if (id == R.id.logout) {
 
+            SharedPreferences.Editor editor = getSharedPreferences("user", MODE_PRIVATE).edit();
+
+            preferences = getSharedPreferences("user", MODE_PRIVATE);
+
+            editor.putBoolean("login", false);
+
+            editor.apply();
             startActivity(new Intent(HomeActivity.this,LoginActivity.class));
             finish();
 //            alartExit();
