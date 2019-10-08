@@ -230,13 +230,14 @@
                 <EditText
                     android:id="@+id/history_trainer_profile"
                     android:layout_below="@id/view10"
-                    android:hint="@string/history"
+                    android:hint="@string/my_game"
                     android:drawablePadding="15dp"
                     android:textSize="12sp"
+                    android:layout_marginTop="5dp"
                     android:layout_marginLeft="3dp"
                     android:background="@drawable/edit_text"
                     android:layout_width="match_parent"
-                    android:layout_height="90dp"
+                    android:layout_height="30dp"
                     android:layout_marginStart="3dp" />
 
                 <View

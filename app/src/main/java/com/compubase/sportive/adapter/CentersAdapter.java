@@ -127,6 +127,7 @@ public class CentersAdapter extends RecyclerView.Adapter<CentersAdapter.ViewHold
                 intent.putExtra("imagetwo",center.getImg2());
                 intent.putExtra("imagethree",center.getImg3());
                 intent.putExtra("imagefour",center.getImg4());
+                intent.putExtra("linked",center.getLinkedIn());
                 context.startActivity(intent);
             }
         });

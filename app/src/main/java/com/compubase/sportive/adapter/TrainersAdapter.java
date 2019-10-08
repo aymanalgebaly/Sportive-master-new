@@ -48,7 +48,9 @@ public class TrainersAdapter extends RecyclerView.Adapter<TrainersAdapter.ViewHo
         viewHolderTrainers.des.setText(trainersListModel.getDes());
         viewHolderTrainers.name.setText(trainersListModel.getName());
 
-        Glide.with(context).load(trainersListModel.getImages()).placeholder(R.drawable.center_defult_img).into(viewHolderTrainers.img);
+
+        Glide.with(context).load(trainersListModel.getImages()).placeholder(R.drawable.center_defult_img)
+                .into(viewHolderTrainers.img);
 
         viewHolderTrainers.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,7 +67,9 @@ public class TrainersAdapter extends RecyclerView.Adapter<TrainersAdapter.ViewHo
                 intent.putExtra("imgthree",trainersListModel.getImg3());
                 intent.putExtra("imgfour",trainersListModel.getImg4());
                 intent.putExtra("images",trainersListModel.getImages());
-
+                intent.putExtra("linked",trainersListModel.getLinkedIn());
+                intent.putExtra("email",trainersListModel.getEmail());
+                intent.putExtra("history",trainersListModel.getHistory());
 
                 context.startActivity(intent);
             }

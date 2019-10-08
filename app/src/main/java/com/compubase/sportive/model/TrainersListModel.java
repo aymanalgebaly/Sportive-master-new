@@ -57,6 +57,17 @@ public class TrainersListModel {
     @SerializedName("img_4")
     @Expose
     private String img4;
+    @SerializedName("linked_in")
+    @Expose
+    private String linkedIn;
+
+    public String getLinkedIn() {
+        return linkedIn;
+    }
+
+    public void setLinkedIn(String linkedIn) {
+        this.linkedIn = linkedIn;
+    }
 
     public Integer getId() {
         return id;

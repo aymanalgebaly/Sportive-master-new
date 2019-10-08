@@ -67,6 +67,7 @@ public class LoginActivity extends AppCompatActivity {
     private String des;
     private String imgone, imgtwo, imgthree, imgfour;
     private String history;
+    private String linkedIn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,8 +104,6 @@ public class LoginActivity extends AppCompatActivity {
 
     public void userLogin() {
 
-        progressBar.setVisibility(View.GONE);
-
         email = mailLogin.getText().toString();
         password = editText.getText().toString();
 
@@ -125,6 +124,9 @@ public class LoginActivity extends AppCompatActivity {
                         List<LoginModel> loginActivityResponses = Arrays.asList(gson.fromJson(response.body().string(), LoginModel[].class));
                         if (response.isSuccessful()) {
 
+                            progressBar.setVisibility(View.GONE);
+
+
                             id = loginActivityResponses.get(0).getId();
 
                             name = loginActivityResponses.get(0).getName();
@@ -140,6 +142,9 @@ public class LoginActivity extends AppCompatActivity {
                             imgthree = loginActivityResponses.get(0).getImg3();
                             imgfour = loginActivityResponses.get(0).getImg4();
                             history = loginActivityResponses.get(0).getHistory();
+                            linkedIn = loginActivityResponses.get(0).getLinkedIn();
+
+//                            Toast.makeText(LoginActivity.this, linkedIn, Toast.LENGTH_SHORT).show();
 
                             if (loginActivityResponses.get(0).getType().equals("center")) {
                                 startActivity(new Intent(LoginActivity.this, CenterHomeActivity.class));
@@ -191,6 +196,7 @@ public class LoginActivity extends AppCompatActivity {
         editor.putString("imgthree", imgthree);
         editor.putString("imgfour", imgfour);
         editor.putString("history", history);
+        editor.putString("linked",linkedIn);
 
         editor.apply();
     }

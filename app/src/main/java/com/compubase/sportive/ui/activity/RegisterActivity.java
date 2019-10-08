@@ -90,6 +90,10 @@ public class RegisterActivity extends AppCompatActivity {
     RadioButton trainerBtn;
     @BindView(R.id.progress_bar_register)
     ProgressBar progressBarRegister;
+    @BindView(R.id.linked_url)
+    EditText linkedUrl;
+    @BindView(R.id.lin_linked)
+    LinearLayout linLinked;
 
     private String userName, userMail, userphone, userpass, userLocation;
     int PLACE_PICKER_REQUEST = 1;
@@ -103,6 +107,7 @@ public class RegisterActivity extends AppCompatActivity {
     private double longitude_center;
     private String s_description, s_history;
     private String m_Text = "";
+    private String linked;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,19 +116,17 @@ public class RegisterActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        progressBarRegister.setVisibility(View.GONE);
 
     }
 
     private void ValidateCenter() {
-
-        progressBarRegister.setVisibility(View.GONE);
 
         userName = fullName.getText().toString();
         userMail = email.getText().toString();
         userphone = phoneNum.getText().toString();
         userpass = password.getText().toString();
         userLocation = location.getText().toString();
+        linked = linkedUrl.getText().toString();
 
         if (TextUtils.isEmpty(userName)) {
             fullName.setError("Name is required");
@@ -135,17 +138,23 @@ public class RegisterActivity extends AppCompatActivity {
             password.setError("Password is required");
         } else if (TextUtils.isEmpty(userLocation)) {
             location.setError("Location is required");
-        } else {
+        }
+        else if (TextUtils.isEmpty(linked)){
+            linkedUrl.setError("LinkedIn URL is required");
+
+        }else {
             Retrofit retrofit = RetrofitClient.getInstant();
             API api = retrofit.create(API.class);
             Call<ResponseBody> responseBodyCall = api.UserRegister(userName, userMail, userpass, userphone, radio, longitude_center
                     , latitude_center, "image", "famous", "", "",
-                    "img_1", "img_2", "img_3", "img_4");
+                    "img_1", "img_2", "img_3", "img_4",linked);
             responseBodyCall.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
                     if (response.isSuccessful()) {
+                        progressBarRegister.setVisibility(View.GONE);
+
                         try {
                             assert response.body() != null;
                             String string = response.body().string();
@@ -153,7 +162,72 @@ public class RegisterActivity extends AppCompatActivity {
                             Toast.makeText(RegisterActivity.this, string, Toast.LENGTH_SHORT).show();
 
                             if (string.equals("True")) {
-                                onBackPressed();
+
+                                sendMail();
+                                openDialog();
+//                                onBackPressed();
+                                //startActivity(new Intent(RegisterActivity.this, CenterHomeActivity.class));
+                            } else {
+//                                Toast.makeText(RegisterActivity.this, string, Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    Toast.makeText(RegisterActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
+    private void ValidateTrainer() {
+
+
+        userName = fullName.getText().toString();
+        userMail = email.getText().toString();
+        userphone = phoneNum.getText().toString();
+        userpass = password.getText().toString();
+        linked = linkedUrl.getText().toString();
+
+        if (TextUtils.isEmpty(userName)) {
+            fullName.setError("Name is required");
+        } else if (TextUtils.isEmpty(userMail)) {
+            email.setError("Email is required");
+        } else if (TextUtils.isEmpty(userphone)) {
+            phoneNum.setError("PhoneNumber is required");
+        } else if (TextUtils.isEmpty(userpass)) {
+            password.setError("Password is required");
+        } else if (TextUtils.isEmpty(linked)){
+            linkedUrl.setError("LinkedIn URL is required");
+
+        }else {
+            Retrofit retrofit = RetrofitClient.getInstant();
+            API api = retrofit.create(API.class);
+            Call<ResponseBody> responseBodyCall = api.UserRegister(userName, userMail, userpass, userphone, radio, 0.000
+                    , 00.000, "image", "famous", "", "",
+                    "img_1", "img_2", "img_3", "img_4",linked);
+            responseBodyCall.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                    if (response.isSuccessful()) {
+                        progressBarRegister.setVisibility(View.GONE);
+
+                        try {
+                            assert response.body() != null;
+                            String string = response.body().string();
+
+                            Toast.makeText(RegisterActivity.this, string, Toast.LENGTH_SHORT).show();
+
+                            if (string.equals("True")) {
+
+                                sendMail();
+                                openDialog();
+//                                onBackPressed();
                                 //startActivity(new Intent(RegisterActivity.this, CenterHomeActivity.class));
                             } else {
 //                                Toast.makeText(RegisterActivity.this, string, Toast.LENGTH_SHORT).show();
@@ -174,9 +248,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void Validate() {
 
-        progressBarRegister.setVisibility(View.GONE);
-
-
         userName = fullName.getText().toString();
         userMail = email.getText().toString();
         userphone = phoneNum.getText().toString();
@@ -194,12 +265,15 @@ public class RegisterActivity extends AppCompatActivity {
             Retrofit retrofit = RetrofitClient.getInstant();
             API api = retrofit.create(API.class);
             Call<ResponseBody> responseBodyCall = api.UserRegister(userName, userMail, userpass, userphone, radio, 0.000
-                    , 0.000, "image", "famous", "", "", "img1", "img2", "img3", "img4");
+                    , 0.000, "image", "famous", "", "", "img1", "img2",
+                    "img3", "img4","linkedIn");
             responseBodyCall.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
                     if (response.isSuccessful()) {
+                        progressBarRegister.setVisibility(View.GONE);
+
                         try {
                             assert response.body() != null;
                             String string = response.body().string();
@@ -309,10 +383,12 @@ public class RegisterActivity extends AppCompatActivity {
             case R.id.center_btn:
                 radio = "center";
                 linCenter.setVisibility(View.VISIBLE);
+                linLinked.setVisibility(View.VISIBLE);
                 break;
             case R.id.user_btn:
                 radio = "user";
                 linCenter.setVisibility(View.GONE);
+                linLinked.setVisibility(View.GONE);
                 break;
             case R.id.location:
                 placePacker();
@@ -326,7 +402,7 @@ public class RegisterActivity extends AppCompatActivity {
                 } else if (userBtn.isChecked()) {
                     Validate();
                 } else if (trainerBtn.isChecked()) {
-                    Validate();
+                    ValidateTrainer();
                 }
 
                 break;
@@ -335,6 +411,11 @@ public class RegisterActivity extends AppCompatActivity {
                 break;
             case R.id.trainer_btn:
                 radio = "trainer";
+                linLinked.setVisibility(View.VISIBLE);
+                linCenter.setVisibility(View.GONE);
+
+                break;
+
         }
     }
 

@@ -101,12 +101,30 @@
         android:layout_marginStart="5dp"
         android:layout_below="@id/txt_des_details"/>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt_value_des_details"
+            android:id="@+id/txt_linked"
+            android:text="@string/linkedin_url"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginStart="5dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_value_linked_details"
+            android:layout_marginStart="5dp"
+            android:layout_below="@id/txt_linked"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:id="@+id/lin_img_one"
         android:weightSum="2"
-        android:layout_below="@id/txt_value_des_details"
+        android:layout_below="@id/txt_value_linked_details"
         android:layout_marginStart="25dp"
         android:layout_marginEnd="25dp"
         android:layout_marginTop="10dp"

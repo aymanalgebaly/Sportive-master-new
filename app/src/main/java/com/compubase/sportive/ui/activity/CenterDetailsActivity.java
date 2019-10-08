@@ -3,13 +3,14 @@ package com.compubase.sportive.ui.activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -35,7 +36,6 @@ import com.compubase.sportive.helper.RetrofitClient;
 import com.compubase.sportive.helper.TinyDB;
 import com.compubase.sportive.model.CommentsListActivity;
 import com.compubase.sportive.model.GameModel;
-import com.compubase.sportive.ui.fragment.CustomDialogFragment;
 import com.compubase.sportive.ui.fragment.CustomDialogFragmentCenter;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -47,7 +47,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import org.greenrobot.eventbus.EventBus;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -131,6 +130,12 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
     Button addCommentBtn;
     @BindView(R.id.rcv_center_comments_list)
     RecyclerView rcvCenterCommentsList;
+    @BindView(R.id.txt_linked)
+    TextView txtLinked;
+    @BindView(R.id.txt_value_linked_details)
+    TextView txtValueLinkedDetails;
+    @BindView(R.id.frame_rcv_comment)
+    FrameLayout frameRcvComment;
     //    @BindView(R.id.map_center)
 //    android.widget.fragment mapCenter;
     private GameAdapter adapter;
@@ -160,6 +165,7 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
     private float rating;
     private String name1;
     private String type1;
+    private String linked;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -170,7 +176,6 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_center);
         assert mapFragment != null;
         mapFragment.getMapAsync(this);
-
 
 
         tinyDB = new TinyDB(this);
@@ -190,6 +195,7 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
         img3 = getIntent().getExtras().getString("imagethree");
         img4 = getIntent().getExtras().getString("imagefour");
         type = getIntent().getExtras().getString("type");
+        linked = getIntent().getExtras().getString("linked");
 
 //        tinyDB.putString("type_center",type);
 
@@ -198,13 +204,27 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
         nameCenter.setText(name);
         phoneCenter.setText(phone);
         mailCenter.setText(mail);
+        txtValueLinkedDetails.setText(linked);
+        txtValueLinkedDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(linked));
+                final PackageManager packageManager = getPackageManager();
+                final List<ResolveInfo> list = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+                if (list.isEmpty()) {
+                    intent = new Intent(Intent.ACTION_VIEW, Uri.parse(linked));
+                }
+                startActivity(intent);
+            }
+        });
+
 
         Glide.with(this).load(imagess).placeholder(R.drawable.center_defult_img).into(centerImg);
 
-        Glide.with(this).load(img1).placeholder(R.mipmap.upload_bg).into(imgOneDetails);
-        Glide.with(this).load(img2).placeholder(R.mipmap.upload_bg).into(imgTwoDetails);
-        Glide.with(this).load(img3).placeholder(R.mipmap.upload_bg).into(imgThreeDetails);
-        Glide.with(this).load(img4).placeholder(R.mipmap.upload_bg).into(imgFourDetails);
+        Glide.with(this).load(img1).placeholder(R.drawable.back_img).into(imgOneDetails);
+        Glide.with(this).load(img2).placeholder(R.drawable.back_img).into(imgTwoDetails);
+        Glide.with(this).load(img3).placeholder(R.drawable.back_img).into(imgThreeDetails);
+        Glide.with(this).load(img4).placeholder(R.drawable.back_img).into(imgFourDetails);
 
 
         SharedPreferences shared = getSharedPreferences("user", MODE_PRIVATE);
@@ -212,9 +232,10 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
         image = shared.getString("image", "");
         name1 = shared.getString("name", "");
         type1 = shared.getString("type", "");
+//        linked = shared.getString("linked", "");
 
         assert type1 != null;
-        if (type1.equals("trainer") || type1.equals("center")){
+        if (type1.equals("trainer") || type1.equals("center")) {
             addCommentBtn.setVisibility(View.INVISIBLE);
         }
 
@@ -425,8 +446,8 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
         dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_fragment);
-        TextView titleTV = (TextView)dialog.findViewById(R.id.txt_titte);
-        submitBtn = (Button)dialog.findViewById(R.id.btn_confirm);
+        TextView titleTV = (TextView) dialog.findViewById(R.id.txt_titte);
+        submitBtn = (Button) dialog.findViewById(R.id.btn_confirm);
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -434,9 +455,10 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
             }
         });
         ratingBar = (MaterialRatingBar) dialog.findViewById(R.id.ratbar);
-        comment_ = (EditText)dialog.findViewById(R.id.edit_txt_dialog);
+        comment_ = (EditText) dialog.findViewById(R.id.edit_txt_dialog);
         dialog.show();
     }
+
     private void insertRate() {
 
         comment_txt = comment_.getText().toString();
@@ -453,18 +475,18 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
                     String string = response.body().string();
                     if (string.equals("True")) {
 
-                            CommentsListActivity commentsListActivity = new CommentsListActivity();
-                            commentsListActivity.setComment(comment_txt);
-                            commentsListActivity.setRate(String.valueOf(rating));
-                            commentsListActivity.setName(name1);
-                            commentsListActivity.setImages(image);
-                            commentsListActivity.setIdCenter(Integer.valueOf(id));
+                        CommentsListActivity commentsListActivity = new CommentsListActivity();
+                        commentsListActivity.setComment(comment_txt);
+                        commentsListActivity.setRate(String.valueOf(rating));
+                        commentsListActivity.setName(name1);
+                        commentsListActivity.setImages(image);
+                        commentsListActivity.setIdCenter(Integer.valueOf(id));
 
 
-                            commentsListActivityArrayList.add(commentsListActivity);
-                            adapter.notifyDataSetChanged();
+                        commentsListActivityArrayList.add(commentsListActivity);
+                        adapter.notifyDataSetChanged();
 
-                            dialog.dismiss();
+                        dialog.dismiss();
 
                     }
 

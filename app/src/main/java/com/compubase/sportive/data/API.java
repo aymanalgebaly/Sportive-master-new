@@ -27,7 +27,8 @@ public interface API {
             @Field("img_1") String img_1,
             @Field("img_2") String img_2,
             @Field("img_3") String img_3,
-            @Field("img_4") String img_4
+            @Field("img_4") String img_4,
+            @Field("linked_in") String linked_in
     );
 
     @FormUrlEncoded
