@@ -119,6 +119,9 @@ public class TrainersFragment extends Fragment {
                             trainersListModel.setImg2(trainersListModels.get(j).getImg2());
                             trainersListModel.setImg3(trainersListModels.get(j).getImg3());
                             trainersListModel.setImg4(trainersListModels.get(j).getImg4());
+                            trainersListModel.setHistory(trainersListModels.get(j).getHistory());
+                            trainersListModel.setEmail(trainersListModels.get(j).getEmail());
+                            trainersListModel.setLinkedIn(trainersListModels.get(j).getLinkedIn());
 //                            usersJoinsResponse.setType(userActivityActivityResponses.get(j).getType());
 
                             trainersListModelsList.add(trainersListModel);

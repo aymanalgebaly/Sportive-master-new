@@ -3,6 +3,9 @@ package com.compubase.sportive.ui.activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -153,6 +156,18 @@ public class TrainerProfileActivity extends AppCompatActivity {
         nameCenter.setText(name1);
         mailCenter.setText(email);
         txtValueLinkedDetails.setText(linked);
+        txtValueLinkedDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(linked));
+                final PackageManager packageManager = getPackageManager();
+                final List<ResolveInfo> list = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+                if (list.isEmpty()) {
+                    intent = new Intent(Intent.ACTION_VIEW, Uri.parse(linked));
+                }
+                startActivity(intent);
+            }
+        });
         phoneCenter.setText(history);
 
         Toast.makeText(this, linked, Toast.LENGTH_SHORT).show();

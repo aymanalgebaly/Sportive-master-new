@@ -194,6 +194,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                             center.setImg3(centerList.get(j).getImg3());
                             center.setImg4(centerList.get(j).getImg4());
                             center.setEmail(centerList.get(j).getEmail());
+                            center.setLinkedIn(centerList.get(j).getLinkedIn());
 
 
                             String lang = centerList.get(j).getLang();
