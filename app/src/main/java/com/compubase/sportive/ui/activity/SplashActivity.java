@@ -30,6 +30,7 @@ public class SplashActivity extends AppCompatActivity {
         login_user = preferences.getBoolean("login", true);
         type = preferences.getString("type", "");
 
+        //good
 
         new Handler().postDelayed(new Runnable(){
             @Override
