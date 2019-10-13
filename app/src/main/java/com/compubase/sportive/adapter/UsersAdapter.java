@@ -55,7 +55,6 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHlder> {
             Glide.with(context).load(usersJoinsResponse1.getImages()).placeholder(R.drawable.user_defualt_img).into(viewHlder.img);
 
            final int idUser = usersJoinsResponse1.getIdUser();
-           final String s_id_user = String.valueOf(idUser);
 
 
         viewHlder.itemView.setOnClickListener(new View.OnClickListener() {

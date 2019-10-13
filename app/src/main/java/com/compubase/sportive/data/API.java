@@ -95,7 +95,7 @@ public interface API {
     @POST("insert_activites")
     Call<ResponseBody>InsertActiv(
             @Field("id_send") String id_send,
-            @Field("id_recived") Integer id_recived,
+            @Field("id_recived") String id_recived,
             @Field("message") String message,
             @Field("type") String type
     );

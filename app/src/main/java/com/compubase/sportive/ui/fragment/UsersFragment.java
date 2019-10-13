@@ -136,6 +136,7 @@ public class UsersFragment extends Fragment {
 
                             usersJoinsResponse.setName(usersJoinsResponses.get(j).getName());
                             usersJoinsResponse.setImages(usersJoinsResponses.get(j).getImages());
+                            usersJoinsResponse.setIdUser(usersJoinsResponses.get(j).getIdUser());
 //                            usersJoinsResponse.setDes(usersJoinsResponses.get(j).getDes());
 //                            usersJoinsResponse.setType(userActivityActivityResponses.get(j).getType());
 

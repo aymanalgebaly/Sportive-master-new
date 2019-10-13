@@ -111,6 +111,9 @@ public class ActivitiesCenterFragment extends Fragment {
                             userActivityResponse.setImages(activityListResponses.get(j).getImages());
                             userActivityResponse.setMessage(activityListResponses.get(j).getMessage());
                             userActivityResponse.setType(activityListResponses.get(j).getType());
+                            userActivityResponse.setIdSend(activityListResponses.get(j).getIdSend());
+                            userActivityResponse.setIdReceive(activityListResponses.get(j).getIdReceive());
+                            userActivityResponse.setId1(activityListResponses.get(j).getId1());
 
                             userActivityActivityResponseArrayList.add(userActivityResponse);
                         }

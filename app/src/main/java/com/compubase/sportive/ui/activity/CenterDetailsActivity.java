@@ -82,7 +82,7 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
     Button btnJoin;
     @BindView(R.id.lin_txt)
     LinearLayout linTxt;
-    @BindView(R.id.rcv_center_home)
+    @BindView(R.id.rcv_center_home_details)
     RecyclerView rcvCenterHome;
     @BindView(R.id.frame_rcv)
     FrameLayout frameRcv;
@@ -197,7 +197,6 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
         type = getIntent().getExtras().getString("type");
         linked = getIntent().getExtras().getString("linked");
 
-//        tinyDB.putString("type_center",type);
 
         txtValueDesDetails.setText(des);
         txtValueHisDetails.setText(history);
@@ -239,12 +238,6 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
             addCommentBtn.setVisibility(View.INVISIBLE);
         }
 
-//        LinearLayoutManager llm = new LinearLayoutManager(this);
-//        llm.setReverseLayout(true);
-//        rcvCenterHome.setLayoutManager(llm);
-
-        JSON_DATA_WEB_CALL();
-
         btnJoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -256,6 +249,8 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
 
             }
         });
+
+        JSON_DATA_WEB_CALL();
 
         setupRecycler();
         fetchData();
@@ -373,11 +368,14 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
         requestQueue = Volley.newRequestQueue(this);
 
         requestQueue.add(stringRequest);
+
     }
 
 
     public void JSON_PARSE_DATA_AFTER_WEBCALL2(String Jobj) {
 
+        //to clear the array first
+        gamesList.clear();
 
         try {
 
@@ -399,9 +397,7 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
 
             adapter = new GameAdapter(gamesList);
             rcvCenterHome.setAdapter(adapter);
-
             adapter.notifyDataSetChanged();
-
 
         } catch (JSONException e) {
             e.printStackTrace();

@@ -31,8 +31,6 @@ public class SplashActivity extends AppCompatActivity {
         login_user = preferences.getBoolean("login", true);
         type = preferences.getString("type", "");
 
-        Toast.makeText(this, type, Toast.LENGTH_SHORT).show();
-
         //good
 
         new Handler().postDelayed(new Runnable(){

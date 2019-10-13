@@ -80,8 +80,6 @@ public class AddGameActivity extends AppCompatActivity {
 
         url = "http://sportive.technowow.net/sportive.asmx/insert_game?id_center="+id+"&name_game="+game+"&coach="+trainer;
 
-        Toast.makeText(this, id+game+trainer, Toast.LENGTH_SHORT).show();
-
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new com.android.volley.Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

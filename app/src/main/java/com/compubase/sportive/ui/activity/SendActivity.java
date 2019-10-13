@@ -98,7 +98,7 @@ public class SendActivity extends AppCompatActivity {
 
         Retrofit retrofit = RetrofitClient.getInstant();
         API api = retrofit.create(API.class);
-        Call<ResponseBody> responseBodyCall = api.InsertActiv(myid, id_recieved, msg.getText().toString(), spinner.getSelectedItem().toString().trim());
+        Call<ResponseBody> responseBodyCall = api.InsertActiv(myid, s_id, msg.getText().toString(), spinner.getSelectedItem().toString().trim());
         responseBodyCall.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
