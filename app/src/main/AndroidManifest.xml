@@ -39,14 +39,22 @@
         <activity
             android:name=".ui.activity.TrainerHomeActivity"
             android:label="@string/title_activity_trainer_home"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".ui.activity.TrainerProfileActivity" />
-        <activity android:name=".ui.activity.CentersTrainersActivity" />
-        <activity android:name=".ui.activity.TrainerActivity" />
-        <activity android:name=".ui.activity.EditProfileCenterActivity" />
-        <activity android:name=".ui.activity.CentersActivity" />
-        <activity android:name=".ui.activity.UserJoinActivity" />
-        <activity android:name=".ui.activity.AddGameActivity" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".ui.activity.TrainerProfileActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.CentersTrainersActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.TrainerActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.EditProfileCenterActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.CentersActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.UserJoinActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.AddGameActivity"
+            android:screenOrientation="portrait"/>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -61,32 +69,42 @@
 
         <activity
             android:name=".ui.fragment.MapsNewActivity"
-            android:label="@string/title_activity_maps_new" />
-        <activity android:name=".ui.activity.UserProfileActivity" />
+            android:label="@string/title_activity_maps_new"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.UserProfileActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.activity.HomeActivity"
             android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.activity.CenterHomeActivity"
             android:label="@string/title_activity_center_home"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.activity.RegisterActivity" />
-        <activity android:name=".ui.activity.LoginActivity" />
-        <activity android:name=".ui.activity.SplashActivity">
+        <activity android:name=".ui.activity.RegisterActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.LoginActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.SplashActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".MapsActivity"
-            android:label="tt" />
+            android:label="tt"
+            android:screenOrientation="portrait"/>
         <activity
             android:name="com.schibstedspain.leku.LocationPickerActivity"
             android:label="@string/leku_title_activity_location_picker"
+            android:screenOrientation="portrait"
             android:parentActivityName=".MainActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan">
@@ -101,9 +119,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".ui.activity.CenterDetailsActivity" />
-        <activity android:name=".ui.activity.SendActivity" />
-        <activity android:name=".ui.activity.UserJoinActivity" />
+        <activity android:name=".ui.activity.CenterDetailsActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.SendActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.UserJoinActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="DuplicateActivity" />
     </application>
 
 </manifest>

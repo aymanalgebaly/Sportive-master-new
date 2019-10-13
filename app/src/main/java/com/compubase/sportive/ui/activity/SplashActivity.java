@@ -9,6 +9,7 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.compubase.sportive.R;
 
@@ -30,6 +31,8 @@ public class SplashActivity extends AppCompatActivity {
         login_user = preferences.getBoolean("login", true);
         type = preferences.getString("type", "");
 
+        Toast.makeText(this, type, Toast.LENGTH_SHORT).show();
+
         //good
 
         new Handler().postDelayed(new Runnable(){
@@ -47,6 +50,10 @@ public class SplashActivity extends AppCompatActivity {
                         SplashActivity.this.finish();
                     }else if (type.equals("trainer")){
                         Intent mainIntent = new Intent(SplashActivity.this,TrainerHomeActivity.class);
+                        SplashActivity.this.startActivity(mainIntent);
+                        SplashActivity.this.finish();
+                    }else {
+                        Intent mainIntent = new Intent(SplashActivity.this,LoginActivity.class);
                         SplashActivity.this.startActivity(mainIntent);
                         SplashActivity.this.finish();
                     }
