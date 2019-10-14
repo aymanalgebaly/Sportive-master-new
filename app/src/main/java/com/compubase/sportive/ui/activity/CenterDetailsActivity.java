@@ -252,8 +252,20 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
 
         JSON_DATA_WEB_CALL();
 
+        setupRecyclerGame();
         setupRecycler();
         fetchData();
+    }
+
+    private void setupRecyclerGame() {
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
+        rcvCenterHome.setNestedScrollingEnabled(true);
+//        rcvCenterCommentsList.setNestedScrollingEnabled(true);
+        rcvCenterHome.setLayoutManager(linearLayoutManager);
+
     }
 
     private void setupRecycler() {
