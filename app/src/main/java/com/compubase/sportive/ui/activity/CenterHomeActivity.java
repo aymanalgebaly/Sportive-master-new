@@ -82,6 +82,20 @@ public class CenterHomeActivity extends AppCompatActivity
         TextView name_txt = header.findViewById(R.id.center_name_system);
         ImageView imageView = header.findViewById(R.id.imageView_center);
         TextView email_txt = header.findViewById(R.id.center_mail_system);
+        ImageView imageView1 = header.findViewById(R.id.img_share);
+        imageView1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "https://play.google.com/store/apps/details?id=com.compubase.sportive");
+                sendIntent.setType("text/plain");
+
+                Intent shareIntent = Intent.createChooser(sendIntent, null);
+                startActivity(shareIntent);
+
+            }
+        });
 
         name_txt.setText(name);
         email_txt.setText(email);

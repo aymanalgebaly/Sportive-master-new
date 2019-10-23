@@ -79,5 +79,10 @@
     <string name="title_activity_trainer_home">TrainerHomeActivity</string>
     <string name="linkedin_url">Linkedin URL</string>
     <string name="my_game">My game</string>
+    <string name="services">Services</string>
+    <string name="facebook">Facebook</string>
+    <string name="website">Website</string>
+    <string name="facebook_url">Facebook URL</string>
+    <string name="website_url">WebSite URL</string>
 
 </resources>

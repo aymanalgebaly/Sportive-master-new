@@ -152,11 +152,88 @@
                     tools:ignore="RtlHardcoded" />
 
                 <View
-                    android:id="@+id/view4"
+                    android:id="@+id/view33"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/gray"
                     android:layout_below="@id/phone_num">
+
+                </View>
+
+                <EditText
+                    android:id="@+id/facebook"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_below="@id/view33"
+                    android:background="@drawable/edit_text"
+                    android:drawableLeft="@drawable/ic_insert_link_black_24dp"
+                    android:hint="@string/facebook"
+                    android:textSize="12sp"
+                    android:layout_marginLeft="3dp"
+                    android:drawablePadding="15dp"
+                    android:ems="10"
+                    android:drawableStart="@drawable/ic_insert_link_black_24dp"
+                    android:layout_marginStart="3dp"
+                    tools:ignore="RtlHardcoded" />
+
+                <View
+                    android:id="@+id/view32"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray"
+                    android:layout_below="@id/facebook">
+
+                </View>
+
+                <EditText
+                    android:id="@+id/website"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_below="@id/view32"
+                    android:background="@drawable/edit_text"
+                    android:drawableLeft="@drawable/ic_insert_link_black_24dp"
+                    android:hint="@string/website"
+                    android:textSize="12sp"
+                    android:layout_marginLeft="3dp"
+                    android:drawablePadding="15dp"
+                    android:ems="10"
+                    android:drawableStart="@drawable/ic_insert_link_black_24dp"
+                    android:layout_marginStart="3dp"
+                    tools:ignore="RtlHardcoded" />
+
+                <View
+                    android:id="@+id/view313"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray"
+                    android:layout_below="@id/website">
+
+                </View>
+
+                <EditText
+                    android:id="@+id/services"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_below="@id/view313"
+                    android:background="@drawable/edit_text"
+                    android:drawableLeft="@drawable/ic_insert_link_black_24dp"
+                    android:hint="@string/services"
+                    android:textSize="12sp"
+                    android:layout_marginLeft="3dp"
+                    android:drawablePadding="15dp"
+                    android:ems="10"
+                    android:drawableStart="@drawable/ic_insert_link_black_24dp"
+                    android:layout_marginStart="3dp"
+                    tools:ignore="RtlHardcoded" />
+
+
+
+                <View
+                    android:id="@+id/view4"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray"
+                    android:layout_below="@id/services">
 
                 </View>
 

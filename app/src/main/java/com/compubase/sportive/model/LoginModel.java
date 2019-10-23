@@ -57,9 +57,46 @@ public class LoginModel {
     @SerializedName("img_4")
     @Expose
     private String img4;
+
+    public String getFb() {
+        return fb;
+    }
+
+    public void setFb(String fb) {
+        this.fb = fb;
+    }
+
+    public String getServices() {
+        return services;
+    }
+
+    public void setServices(String services) {
+        this.services = services;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
+    }
+
     @SerializedName("linked_in")
     @Expose
     private String linkedIn;
+
+    @SerializedName("fb")
+    @Expose
+    private String fb;
+
+    @SerializedName("services")
+    @Expose
+    private String services;
+
+    @SerializedName("website")
+    @Expose
+    private String website;
 
     public Integer getId() {
         return id;

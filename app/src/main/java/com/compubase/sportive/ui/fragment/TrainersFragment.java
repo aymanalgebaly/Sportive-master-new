@@ -122,6 +122,9 @@ public class TrainersFragment extends Fragment {
                             trainersListModel.setHistory(trainersListModels.get(j).getHistory());
                             trainersListModel.setEmail(trainersListModels.get(j).getEmail());
                             trainersListModel.setLinkedIn(trainersListModels.get(j).getLinkedIn());
+                            trainersListModel.setFb(trainersListModels.get(j).getFb());
+                            trainersListModel.setWebsite(trainersListModels.get(j).getWebsite());
+                            trainersListModel.setServices(trainersListModels.get(j).getServices());
 //                            usersJoinsResponse.setType(userActivityActivityResponses.get(j).getType());
 
                             trainersListModelsList.add(trainersListModel);

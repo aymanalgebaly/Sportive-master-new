@@ -94,6 +94,18 @@ public class RegisterActivity extends AppCompatActivity {
     EditText linkedUrl;
     @BindView(R.id.lin_linked)
     LinearLayout linLinked;
+    @BindView(R.id.view33)
+    View view33;
+    @BindView(R.id.facebook)
+    EditText facebook;
+    @BindView(R.id.view32)
+    View view32;
+    @BindView(R.id.website)
+    EditText website;
+    @BindView(R.id.view313)
+    View view313;
+    @BindView(R.id.services)
+    EditText services;
 
     private String userName, userMail, userphone, userpass, userLocation;
     int PLACE_PICKER_REQUEST = 1;
@@ -108,6 +120,7 @@ public class RegisterActivity extends AppCompatActivity {
     private String s_description, s_history;
     private String m_Text = "";
     private String linked;
+    private String s_facebook,s_website,s_services;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,6 +140,9 @@ public class RegisterActivity extends AppCompatActivity {
         userpass = password.getText().toString();
         userLocation = location.getText().toString();
         linked = linkedUrl.getText().toString();
+        s_facebook = facebook.getText().toString();
+        s_website = website.getText().toString();
+        s_services = services.getText().toString();
 
         if (TextUtils.isEmpty(userName)) {
             fullName.setError("Name is required");
@@ -138,16 +154,23 @@ public class RegisterActivity extends AppCompatActivity {
             password.setError("Password is required");
         } else if (TextUtils.isEmpty(userLocation)) {
             location.setError("Location is required");
-        }
-        else if (TextUtils.isEmpty(linked)){
+        } else if (TextUtils.isEmpty(linked)) {
             linkedUrl.setError("LinkedIn URL is required");
+        }
+        else if (TextUtils.isEmpty(s_facebook)){
+            facebook.setError("Facebook link is required");
+        }
+        else if (TextUtils.isEmpty(s_website)){
+            website.setError("Website link is required");
+        }else if (TextUtils.isEmpty(s_services)){
+            services.setError("Services is required");
 
         }else {
             Retrofit retrofit = RetrofitClient.getInstant();
             API api = retrofit.create(API.class);
             Call<ResponseBody> responseBodyCall = api.UserRegister(userName, userMail, userpass, userphone, radio, longitude_center
                     , latitude_center, "image", "famous", "", "",
-                    "img_1", "img_2", "img_3", "img_4",linked);
+                    "img_1", "img_2", "img_3", "img_4", linked, s_facebook, s_services, s_website);
             responseBodyCall.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -192,6 +215,9 @@ public class RegisterActivity extends AppCompatActivity {
         userphone = phoneNum.getText().toString();
         userpass = password.getText().toString();
         linked = linkedUrl.getText().toString();
+        s_facebook = facebook.getText().toString();
+        s_website = website.getText().toString();
+        s_services = services.getText().toString();
 
         if (TextUtils.isEmpty(userName)) {
             fullName.setError("Name is required");
@@ -201,15 +227,23 @@ public class RegisterActivity extends AppCompatActivity {
             phoneNum.setError("PhoneNumber is required");
         } else if (TextUtils.isEmpty(userpass)) {
             password.setError("Password is required");
-        } else if (TextUtils.isEmpty(linked)){
+        } else if (TextUtils.isEmpty(linked)) {
             linkedUrl.setError("LinkedIn URL is required");
 
-        }else {
+        }else if (TextUtils.isEmpty(s_facebook)){
+            facebook.setError("Facebook link is required");
+        }
+        else if (TextUtils.isEmpty(s_website)){
+            website.setError("Website link is required");
+        }else if (TextUtils.isEmpty(s_services)){
+            services.setError("Services is required");
+
+        } else {
             Retrofit retrofit = RetrofitClient.getInstant();
             API api = retrofit.create(API.class);
             Call<ResponseBody> responseBodyCall = api.UserRegister(userName, userMail, userpass, userphone, radio, 0.000
                     , 00.000, "image", "famous", "", "",
-                    "img_1", "img_2", "img_3", "img_4",linked);
+                    "img_1", "img_2", "img_3", "img_4", linked, s_facebook, s_services, s_website);
             responseBodyCall.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -252,6 +286,9 @@ public class RegisterActivity extends AppCompatActivity {
         userMail = email.getText().toString();
         userphone = phoneNum.getText().toString();
         userpass = password.getText().toString();
+        s_facebook = facebook.getText().toString();
+        s_website = website.getText().toString();
+        s_services = services.getText().toString();
 
         if (TextUtils.isEmpty(userName)) {
             fullName.setError("User name is required");
@@ -261,12 +298,20 @@ public class RegisterActivity extends AppCompatActivity {
             phoneNum.setError("Phone number is required");
         } else if (TextUtils.isEmpty(userpass)) {
             password.setError("Password is required");
-        } else {
+        } else if (TextUtils.isEmpty(s_facebook)){
+            facebook.setError("Facebook link is required");
+        }
+        else if (TextUtils.isEmpty(s_website)){
+            website.setError("Website link is required");
+        }else if (TextUtils.isEmpty(s_services)){
+            services.setError("Services is required");
+
+        }else {
             Retrofit retrofit = RetrofitClient.getInstant();
             API api = retrofit.create(API.class);
             Call<ResponseBody> responseBodyCall = api.UserRegister(userName, userMail, userpass, userphone, radio, 0.000
                     , 0.000, "image", "famous", "", "", "img1", "img2",
-                    "img3", "img4","linkedIn");
+                    "img3", "img4", "linkedIn", s_facebook, s_services, s_website);
             responseBodyCall.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

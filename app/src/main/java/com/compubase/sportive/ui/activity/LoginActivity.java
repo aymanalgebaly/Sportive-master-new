@@ -20,6 +20,8 @@ import com.compubase.sportive.helper.GPSTracker;
 import com.compubase.sportive.helper.RetrofitClient;
 import com.compubase.sportive.helper.TinyDB;
 import com.compubase.sportive.model.LoginModel;
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -64,10 +66,14 @@ public class LoginActivity extends AppCompatActivity {
     String name, lat, lang, phone, image;
     private double latitude, longitude;
     private String type;
-    private String des;
+    private String des,fb,website,services;
     private String imgone, imgtwo, imgthree, imgfour;
     private String history;
     private String linkedIn;
+
+    private FacebookSdk facebookSdk;
+
+    private AppEventsLogger appEventsLogger;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,6 +149,9 @@ public class LoginActivity extends AppCompatActivity {
                             imgfour = loginActivityResponses.get(0).getImg4();
                             history = loginActivityResponses.get(0).getHistory();
                             linkedIn = loginActivityResponses.get(0).getLinkedIn();
+                            fb = loginActivityResponses.get(0).getFb();
+                            services = loginActivityResponses.get(0).getServices();
+                            website = loginActivityResponses.get(0).getWebsite();
 
 //                            Toast.makeText(LoginActivity.this, linkedIn, Toast.LENGTH_SHORT).show();
 
@@ -197,6 +206,9 @@ public class LoginActivity extends AppCompatActivity {
         editor.putString("imgfour", imgfour);
         editor.putString("history", history);
         editor.putString("linked",linkedIn);
+        editor.putString("fb",fb);
+        editor.putString("web",website);
+        editor.putString("services",services);
 
         editor.apply();
     }

@@ -84,6 +84,18 @@ public class TrainerProfileActivity extends AppCompatActivity {
     TextView txtLinked;
     @BindView(R.id.txt_value_linked_details)
     TextView txtValueLinkedDetails;
+    @BindView(R.id.txt_face)
+    TextView txtFace;
+    @BindView(R.id.txt_value_face_details)
+    TextView txtValueFaceDetails;
+    @BindView(R.id.txt_web)
+    TextView txtWeb;
+    @BindView(R.id.txt_value_web_details)
+    TextView txtValueWebDetails;
+    @BindView(R.id.txt_ser)
+    TextView txtSer;
+    @BindView(R.id.txt_value_ser_details)
+    TextView txtValueSerDetails;
     private String m_Text;
     private SharedPreferences preferences;
     private int id_profile;
@@ -106,7 +118,7 @@ public class TrainerProfileActivity extends AppCompatActivity {
     private String image;
     private String email;
     private String linked;
-    private String history;
+    private String history,fb,web,ser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,11 +141,15 @@ public class TrainerProfileActivity extends AppCompatActivity {
             linked = intent.getStringExtra("linked");
             email = intent.getStringExtra("email");
             history = intent.getStringExtra("history");
+            fb = intent.getStringExtra("fb");
+            web = intent.getStringExtra("web");
+            ser = intent.getStringExtra("ser");
 
         }
 
         preferences = getSharedPreferences("user", MODE_PRIVATE);
         String type = preferences.getString("type", "");
+        id = preferences.getString("id", "");
 
 
         assert type != null;
@@ -159,18 +175,44 @@ public class TrainerProfileActivity extends AppCompatActivity {
         txtValueLinkedDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(linked));
+                Intent intent2 = new Intent(Intent.ACTION_VIEW, Uri.parse(linked));
+                final PackageManager packageManager = getPackageManager();
+                final List<ResolveInfo> list = packageManager.queryIntentActivities(intent2, PackageManager.MATCH_DEFAULT_ONLY);
+                if (list.isEmpty()) {
+                    intent2 = new Intent(Intent.ACTION_VIEW, Uri.parse(linked));
+                }
+                startActivity(intent2);
+            }
+        });
+        phoneCenter.setText(history);
+        txtValueFaceDetails.setText(fb);
+
+        txtValueFaceDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(fb));
                 final PackageManager packageManager = getPackageManager();
                 final List<ResolveInfo> list = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
                 if (list.isEmpty()) {
-                    intent = new Intent(Intent.ACTION_VIEW, Uri.parse(linked));
+                    intent = new Intent(Intent.ACTION_VIEW, Uri.parse(fb));
                 }
                 startActivity(intent);
             }
         });
-        phoneCenter.setText(history);
-
-        Toast.makeText(this, linked, Toast.LENGTH_SHORT).show();
+        txtValueWebDetails.setText(web);
+        txtValueWebDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(Intent.ACTION_VIEW, Uri.parse(web));
+                final PackageManager packageManager = getPackageManager();
+                final List<ResolveInfo> list = packageManager.queryIntentActivities(intent1, PackageManager.MATCH_DEFAULT_ONLY);
+                if (list.isEmpty()) {
+                    intent1 = new Intent(Intent.ACTION_VIEW, Uri.parse(web));
+                }
+                startActivity(intent1);
+            }
+        });
+        txtValueSerDetails.setText(ser);
 
         setupRecycler();
         fetchData();
@@ -182,7 +224,6 @@ public class TrainerProfileActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
-//        rcvCenterHome.setNestedScrollingEnabled(true);
         rcvCenterHome.setLayoutManager(linearLayoutManager);
 
     }
@@ -321,5 +362,8 @@ public class TrainerProfileActivity extends AppCompatActivity {
         mailCenter.setText(email);
         phoneCenter.setText(history);
         txtValueLinkedDetails.setText(linked);
+        txtValueWebDetails.setText(web);
+        txtValueFaceDetails.setText(fb);
+        txtValueSerDetails.setText(ser);
     }
 }

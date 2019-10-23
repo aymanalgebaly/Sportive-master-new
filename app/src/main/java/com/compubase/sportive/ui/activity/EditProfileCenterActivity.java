@@ -80,7 +80,7 @@ public class EditProfileCenterActivity extends AppCompatActivity {
     EditText phoneNumCenterProfile;
     @BindView(R.id.view4)
     View view4;
-//    @BindView(R.id.view5)
+    //    @BindView(R.id.view5)
 //    View view5;
     @BindView(R.id.btn_edit_center_profile)
     Button btnEditCenterProfile;
@@ -111,16 +111,16 @@ public class EditProfileCenterActivity extends AppCompatActivity {
 
     private int GALLERY_REQUEST_CODE = 1;
 
-    private SharedPreferences preferences ;
+    private SharedPreferences preferences;
     private Bitmap bitmap;
-    private String name,email,pass,phone,id;
-    private String userName,userMail,userphone,userpass;
+    private String name, email, pass, phone, id;
+    private String userName, userMail, userphone, userpass;
 
     ImageView img1;
     ImageView img2;
     ImageView img3;
     ImageView img4;
-    
+
     TinyDB tinyDB;
 
     StorageReference storageReference;
@@ -137,14 +137,13 @@ public class EditProfileCenterActivity extends AppCompatActivity {
     private int GALLERY_REQUEST_CODE_THREE = 3;
     private int GALLERY_REQUEST_CODE_FOUR = 4;
     private int GALLERY_REQUEST_CODE_FIVE = 5;
-    private String imgone,imgtwo,imgthree,imgfour;
+    private String imgone, imgtwo, imgthree, imgfour;
     private String history;
     private String description;
     private String hist;
-    private String lat,s_Long;
+    private String lat, s_Long;
 
-    String pic1,pic2,pic3,pic4,pic5;
-
+    String pic1, pic2, pic3, pic4, pic5;
 
 
     @Override
@@ -202,7 +201,7 @@ public class EditProfileCenterActivity extends AppCompatActivity {
         storageReference = storage.getReference();
 
         preferences = getSharedPreferences("user", Context.MODE_PRIVATE);
-        name =preferences.getString("name","");
+        name = preferences.getString("name", "");
         email = preferences.getString("email", "");
         pass = preferences.getString("pass", "");
         phone = preferences.getString("phone", "");
@@ -217,7 +216,7 @@ public class EditProfileCenterActivity extends AppCompatActivity {
         lat = preferences.getString("lat", "");
         s_Long = preferences.getString("long", "");
 
-        imageURL = preferences.getString("image","image");
+        imageURL = preferences.getString("image", "image");
 
         Glide.with(this).load(imageURL).placeholder(R.drawable.center_defult_img).into(imgCenterEditProfile);
 
@@ -235,7 +234,7 @@ public class EditProfileCenterActivity extends AppCompatActivity {
         Glide.with(this).load(imgfour).placeholder(R.drawable.back_img).into(img4);
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE }, 0);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
         }
     }
 
@@ -252,7 +251,7 @@ public class EditProfileCenterActivity extends AppCompatActivity {
                 updateProfile();
                 break;
             case R.id.add_btn_center_profile:
-                startActivity(new Intent(EditProfileCenterActivity.this,AddGameActivity.class));
+                startActivity(new Intent(EditProfileCenterActivity.this, AddGameActivity.class));
                 break;
         }
     }
@@ -268,12 +267,12 @@ public class EditProfileCenterActivity extends AppCompatActivity {
         responseBodyCall.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     try {
                         assert response.body() != null;
                         String string = response.body().string();
 
-                        if (string.equals("True")){
+                        if (string.equals("True")) {
 
                             SharedPreferences.Editor editor = getSharedPreferences("user", MODE_PRIVATE).edit();
 
@@ -281,8 +280,8 @@ public class EditProfileCenterActivity extends AppCompatActivity {
 
                             editor.putBoolean("login", true);
 
-                            editor.putString("des",des);
-                            editor.putString("history",history);
+                            editor.putString("des", des);
+                            editor.putString("history", history);
 
                             editor.apply();
 
@@ -292,7 +291,7 @@ public class EditProfileCenterActivity extends AppCompatActivity {
 //                            Toast.makeText(EditProfileCenterActivity.this, des, Toast.LENGTH_SHORT).show();
 
 
-                            startActivity(new Intent(EditProfileCenterActivity.this,CenterHomeActivity.class));
+                            startActivity(new Intent(EditProfileCenterActivity.this, CenterHomeActivity.class));
 
                         }
                     } catch (IOException e) {
@@ -319,7 +318,7 @@ public class EditProfileCenterActivity extends AppCompatActivity {
         Retrofit retrofit = RetrofitClient.getInstant();
         API api = retrofit.create(API.class);
         Call<ResponseBody> responseBodyCall = api.UpdateData(name, email, pass, phone, Double.valueOf(s_Long),
-                lat, imageURL, "famous",des,id);
+                lat, imageURL, "famous", des, id);
         responseBodyCall.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -339,10 +338,10 @@ public class EditProfileCenterActivity extends AppCompatActivity {
 
                             editor.putBoolean("login", true);
 
-                            editor.putString("name",name);
-                            editor.putString("email",email);
-                            editor.putString("phone",phone);
-                            editor.putString("pass",pass);
+                            editor.putString("name", name);
+                            editor.putString("email", email);
+                            editor.putString("phone", phone);
+                            editor.putString("pass", pass);
 //                            editor.putString("des",des);
 
                             editor.apply();
@@ -354,10 +353,10 @@ public class EditProfileCenterActivity extends AppCompatActivity {
 //                            descCenterProfile.setText(des);
                             Toast.makeText(EditProfileCenterActivity.this, "Updated", Toast.LENGTH_SHORT).show();
 
-                            if (type.equals("center")){
-                                startActivity(new Intent(EditProfileCenterActivity.this,CenterHomeActivity.class));
-                            }else {
-                                startActivity(new Intent(EditProfileCenterActivity.this,HomeActivity.class));
+                            if (type.equals("center")) {
+                                startActivity(new Intent(EditProfileCenterActivity.this, CenterHomeActivity.class));
+                            } else {
+                                startActivity(new Intent(EditProfileCenterActivity.this, HomeActivity.class));
                             }
                         }
                     } catch (IOException e) {
@@ -388,15 +387,13 @@ public class EditProfileCenterActivity extends AppCompatActivity {
     }
 
 
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
 //        Toast.makeText(this, String.valueOf(requestCode), Toast.LENGTH_SHORT).show();
 
-        if(requestCode == GALLERY_REQUEST_CODE && resultCode == RESULT_OK && data != null && data.getData() != null)
-        {
+        if (requestCode == GALLERY_REQUEST_CODE && resultCode == RESULT_OK && data != null && data.getData() != null) {
             filePath = data.getData();
 
             Bitmap bitmap;
@@ -407,16 +404,14 @@ public class EditProfileCenterActivity extends AppCompatActivity {
 
                 imgCenterEditProfile.setImageBitmap(bitmap);
 
-                uploadImage(filePath,GALLERY_REQUEST_CODE);
-
+                uploadImage(filePath, GALLERY_REQUEST_CODE);
 
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-        }else if(requestCode == GALLERY_REQUEST_CODE_TWO && resultCode == RESULT_OK && data != null && data.getData() != null)
-        {
+        } else if (requestCode == GALLERY_REQUEST_CODE_TWO && resultCode == RESULT_OK && data != null && data.getData() != null) {
             filePath = data.getData();
 
             Bitmap bitmap;
@@ -427,16 +422,14 @@ public class EditProfileCenterActivity extends AppCompatActivity {
 
                 img1.setImageBitmap(bitmap);
 
-                uploadImage(filePath,GALLERY_REQUEST_CODE_TWO);
-
+                uploadImage(filePath, GALLERY_REQUEST_CODE_TWO);
 
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-        }else if(requestCode == GALLERY_REQUEST_CODE_THREE && resultCode == RESULT_OK && data != null && data.getData() != null)
-        {
+        } else if (requestCode == GALLERY_REQUEST_CODE_THREE && resultCode == RESULT_OK && data != null && data.getData() != null) {
             filePath = data.getData();
 
             Bitmap bitmap;
@@ -447,16 +440,14 @@ public class EditProfileCenterActivity extends AppCompatActivity {
 
                 img2.setImageBitmap(bitmap);
 
-                uploadImage(filePath,GALLERY_REQUEST_CODE_THREE);
-
+                uploadImage(filePath, GALLERY_REQUEST_CODE_THREE);
 
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-        }else if(requestCode == GALLERY_REQUEST_CODE_FOUR && resultCode == RESULT_OK && data != null && data.getData() != null)
-        {
+        } else if (requestCode == GALLERY_REQUEST_CODE_FOUR && resultCode == RESULT_OK && data != null && data.getData() != null) {
             filePath = data.getData();
 
             Bitmap bitmap;
@@ -467,16 +458,14 @@ public class EditProfileCenterActivity extends AppCompatActivity {
 
                 img3.setImageBitmap(bitmap);
 
-                uploadImage(filePath,GALLERY_REQUEST_CODE_FOUR);
-
+                uploadImage(filePath, GALLERY_REQUEST_CODE_FOUR);
 
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-        }else if(requestCode == GALLERY_REQUEST_CODE_FIVE && resultCode == RESULT_OK && data != null && data.getData() != null)
-        {
+        } else if (requestCode == GALLERY_REQUEST_CODE_FIVE && resultCode == RESULT_OK && data != null && data.getData() != null) {
             filePath = data.getData();
 
             Bitmap bitmap;
@@ -487,8 +476,7 @@ public class EditProfileCenterActivity extends AppCompatActivity {
 
                 img4.setImageBitmap(bitmap);
 
-                uploadImage(filePath,GALLERY_REQUEST_CODE_FIVE);
-
+                uploadImage(filePath, GALLERY_REQUEST_CODE_FIVE);
 
 
             } catch (IOException e) {
@@ -500,15 +488,14 @@ public class EditProfileCenterActivity extends AppCompatActivity {
 
     private void uploadImage(Uri customfilepath, final int requestCode) {
 
-        if(customfilepath != null)
-        {
+        if (customfilepath != null) {
             final ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
             progressDialog.setCancelable(false);
             progressDialog.setCanceledOnTouchOutside(false);
 
-            final StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString());
+            final StorageReference ref = storageReference.child("images/" + UUID.randomUUID().toString());
             ref.putFile(customfilepath)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -523,17 +510,17 @@ public class EditProfileCenterActivity extends AppCompatActivity {
 
                                     Toast.makeText(EditProfileCenterActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
 
-                                   if (requestCode == GALLERY_REQUEST_CODE){
-                                       imageURL = uri.toString();
-                                   }else if (requestCode == GALLERY_REQUEST_CODE_TWO){
-                                       imgone = uri.toString();
-                                   }else if (requestCode == GALLERY_REQUEST_CODE_THREE){
-                                       imgtwo = uri.toString();
-                                   }else if (requestCode == GALLERY_REQUEST_CODE_FOUR){
-                                       imgthree = uri.toString();
-                                   }else if (requestCode == GALLERY_REQUEST_CODE_FIVE){
-                                       imgfour = uri.toString();
-                                   }
+                                    if (requestCode == GALLERY_REQUEST_CODE) {
+                                        imageURL = uri.toString();
+                                    } else if (requestCode == GALLERY_REQUEST_CODE_TWO) {
+                                        imgone = uri.toString();
+                                    } else if (requestCode == GALLERY_REQUEST_CODE_THREE) {
+                                        imgtwo = uri.toString();
+                                    } else if (requestCode == GALLERY_REQUEST_CODE_FOUR) {
+                                        imgthree = uri.toString();
+                                    } else if (requestCode == GALLERY_REQUEST_CODE_FIVE) {
+                                        imgfour = uri.toString();
+                                    }
 
                                     SharedPreferences.Editor editor = getSharedPreferences("user", MODE_PRIVATE).edit();
 
@@ -542,14 +529,14 @@ public class EditProfileCenterActivity extends AppCompatActivity {
                                     editor.putBoolean("login", true);
 
                                     editor.putString("image", imageURL);
-                                    editor.putString("name",name);
-                                    editor.putString("email",email);
-                                    editor.putString("phone",phone);
-                                    editor.putString("pass",pass);
-                                    editor.putString("imgone",imgone);
-                                    editor.putString("imgtwo",imgtwo);
-                                    editor.putString("imgthree",imgthree);
-                                    editor.putString("imgfour",imgfour);
+                                    editor.putString("name", name);
+                                    editor.putString("email", email);
+                                    editor.putString("phone", phone);
+                                    editor.putString("pass", pass);
+                                    editor.putString("imgone", imgone);
+                                    editor.putString("imgtwo", imgtwo);
+                                    editor.putString("imgthree", imgthree);
+                                    editor.putString("imgfour", imgfour);
 
                                     editor.apply();
 
@@ -575,9 +562,9 @@ public class EditProfileCenterActivity extends AppCompatActivity {
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
+                            double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot
                                     .getTotalByteCount());
-                            progressDialog.setMessage("Uploaded "+(int)progress+"%");
+                            progressDialog.setMessage("Uploaded " + (int) progress + "%");
                         }
                     });
         }

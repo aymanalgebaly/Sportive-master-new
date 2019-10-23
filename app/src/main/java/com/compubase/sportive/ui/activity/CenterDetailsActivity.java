@@ -136,6 +136,18 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
     TextView txtValueLinkedDetails;
     @BindView(R.id.frame_rcv_comment)
     FrameLayout frameRcvComment;
+    @BindView(R.id.txt_face)
+    TextView txtFace;
+    @BindView(R.id.txt_value_face_details)
+    TextView txtValueFaceDetails;
+    @BindView(R.id.txt_web)
+    TextView txtWeb;
+    @BindView(R.id.txt_value_web_details)
+    TextView txtValueWebDetails;
+    @BindView(R.id.txt_ser)
+    TextView txtSer;
+    @BindView(R.id.txt_value_ser_details)
+    TextView txtValueSerDetails;
     //    @BindView(R.id.map_center)
 //    android.widget.fragment mapCenter;
     private GameAdapter adapter;
@@ -166,6 +178,7 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
     private String name1;
     private String type1;
     private String linked;
+    private String fb, web, ser;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -196,6 +209,9 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
         img4 = getIntent().getExtras().getString("imagefour");
         type = getIntent().getExtras().getString("type");
         linked = getIntent().getExtras().getString("linked");
+        fb = getIntent().getStringExtra("fb");
+        web = getIntent().getStringExtra("web");
+        ser = getIntent().getStringExtra("ser");
 
 
         txtValueDesDetails.setText(des);
@@ -203,17 +219,45 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
         nameCenter.setText(name);
         phoneCenter.setText(phone);
         mailCenter.setText(mail);
+        txtValueSerDetails.setText(ser);
+        txtValueWebDetails.setText(web);
+        txtValueWebDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(web));
+                final PackageManager packageManager = getPackageManager();
+                final List<ResolveInfo> list = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+                if (list.isEmpty()) {
+                    intent = new Intent(Intent.ACTION_VIEW, Uri.parse(web));
+                }
+                startActivity(intent);
+
+            }
+        });
+        txtValueFaceDetails.setText(fb);
+        txtValueFaceDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(Intent.ACTION_VIEW, Uri.parse(fb));
+                final PackageManager packageManager = getPackageManager();
+                final List<ResolveInfo> list = packageManager.queryIntentActivities(intent1, PackageManager.MATCH_DEFAULT_ONLY);
+                if (list.isEmpty()) {
+                    intent1 = new Intent(Intent.ACTION_VIEW, Uri.parse(fb));
+                }
+                startActivity(intent1);
+            }
+        });
         txtValueLinkedDetails.setText(linked);
         txtValueLinkedDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(linked));
+                Intent intent2 = new Intent(Intent.ACTION_VIEW, Uri.parse(linked));
                 final PackageManager packageManager = getPackageManager();
-                final List<ResolveInfo> list = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+                final List<ResolveInfo> list = packageManager.queryIntentActivities(intent2, PackageManager.MATCH_DEFAULT_ONLY);
                 if (list.isEmpty()) {
-                    intent = new Intent(Intent.ACTION_VIEW, Uri.parse(linked));
+                    intent2 = new Intent(Intent.ACTION_VIEW, Uri.parse(linked));
                 }
-                startActivity(intent);
+                startActivity(intent2);
             }
         });
 

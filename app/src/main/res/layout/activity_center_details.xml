@@ -120,12 +120,69 @@
             android:textColor="@color/blue"
             android:layout_below="@id/txt_linked"/>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_face"
+            android:text="@string/facebook_url"
+            android:textColor="@color/black"
+            android:layout_below="@+id/txt_value_linked_details"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginStart="5dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/blue"
+            android:layout_below="@+id/txt_face"
+            android:id="@+id/txt_value_face_details"
+            android:layout_marginStart="5dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_web"
+            android:text="@string/website_url"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_below="@id/txt_value_face_details"
+            android:layout_marginStart="5dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/blue"
+            android:layout_below="@+id/txt_web"
+            android:id="@+id/txt_value_web_details"
+            android:layout_marginStart="5dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_ser"
+            android:text="@string/services"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:layout_below="@+id/txt_value_web_details"
+            android:textStyle="bold"
+            android:layout_marginStart="5dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/blue"
+             android:layout_below="@id/txt_ser"
+            android:id="@+id/txt_value_ser_details"
+            android:layout_marginStart="5dp"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:id="@+id/lin_img_one"
         android:weightSum="2"
-        android:layout_below="@id/txt_value_linked_details"
+        android:layout_below="@id/txt_value_ser_details"
         android:layout_marginStart="25dp"
         android:layout_marginEnd="25dp"
         android:layout_marginTop="10dp"

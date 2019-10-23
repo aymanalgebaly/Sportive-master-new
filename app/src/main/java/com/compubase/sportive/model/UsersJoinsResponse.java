@@ -5,6 +5,8 @@ package com.compubase.sportive.model;//
 
 import org.json.*;
 import java.util.*;
+
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 
@@ -44,6 +46,41 @@ public class UsersJoinsResponse {
 	private String phone;
 	@SerializedName("type")
 	private String type;
+	@SerializedName("fb")
+	@Expose
+	private String fb;
+
+	@SerializedName("services")
+	@Expose
+	private String services;
+
+	@SerializedName("website")
+	@Expose
+	private String website;
+
+	public String getFb() {
+		return fb;
+	}
+
+	public void setFb(String fb) {
+		this.fb = fb;
+	}
+
+	public String getServices() {
+		return services;
+	}
+
+	public void setServices(String services) {
+		this.services = services;
+	}
+
+	public String getWebsite() {
+		return website;
+	}
+
+	public void setWebsite(String website) {
+		this.website = website;
+	}
 
 	public void setDatee(String datee) {
 		this.datee = datee;
