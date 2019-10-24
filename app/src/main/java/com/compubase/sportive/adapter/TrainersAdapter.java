@@ -77,6 +77,7 @@ public class TrainersAdapter extends RecyclerView.Adapter<TrainersAdapter.ViewHo
 
 
                 context.startActivity(intent);
+
             }
         });
     }

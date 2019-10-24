@@ -1,6 +1,7 @@
 package com.compubase.sportive.ui.activity;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -120,6 +121,9 @@ public class TrainerProfileActivity extends AppCompatActivity {
     private String linked;
     private String history,fb,web,ser;
 
+    public String FACEBOOK_URL = fb;
+    public  String FACEBOOK_PAGE_ID = fb;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -146,7 +150,7 @@ public class TrainerProfileActivity extends AppCompatActivity {
             ser = intent.getStringExtra("ser");
 
         }
-
+        
         preferences = getSharedPreferences("user", MODE_PRIVATE);
         String type = preferences.getString("type", "");
         id = preferences.getString("id", "");
@@ -226,6 +230,20 @@ public class TrainerProfileActivity extends AppCompatActivity {
         linearLayoutManager.setStackFromEnd(true);
         rcvCenterHome.setLayoutManager(linearLayoutManager);
 
+    }
+
+    public String getFacebookPageURL(Context context) {
+        PackageManager packageManager = context.getPackageManager();
+        try {
+            int versionCode = packageManager.getPackageInfo("com.facebook.katana", 0).versionCode;
+            if (versionCode >= 3002850) { //newer versions of fb app
+                return "fb://facewebmodal/f?href=" + FACEBOOK_URL;
+            } else { //older versions of fb app
+                return "fb://page/" + FACEBOOK_PAGE_ID;
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            return FACEBOOK_URL; //normal web url
+        }
     }
 
     private void fetchData() {

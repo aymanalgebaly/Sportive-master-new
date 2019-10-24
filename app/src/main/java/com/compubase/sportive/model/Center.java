@@ -60,9 +60,9 @@ public class Center {
     @SerializedName("linked_in")
     @Expose
     private String linkedIn;
-    @SerializedName("fb")
+    @SerializedName("facebook")
     @Expose
-    private String fb;
+    private String facebook;
 
     @SerializedName("services")
     @Expose
@@ -73,11 +73,11 @@ public class Center {
     private String website;
 
     public String getFb() {
-        return fb;
+        return facebook;
     }
 
-    public void setFb(String fb) {
-        this.fb = fb;
+    public void setFb(String facebook) {
+        this.facebook = facebook;
     }
 
     public String getServices() {

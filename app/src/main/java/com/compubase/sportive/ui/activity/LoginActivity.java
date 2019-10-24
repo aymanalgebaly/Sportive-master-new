@@ -153,7 +153,7 @@ public class LoginActivity extends AppCompatActivity {
                             services = loginActivityResponses.get(0).getServices();
                             website = loginActivityResponses.get(0).getWebsite();
 
-//                            Toast.makeText(LoginActivity.this, linkedIn, Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(LoginActivity.this, fb, Toast.LENGTH_SHORT).show();
 
                             if (loginActivityResponses.get(0).getType().equals("center")) {
                                 startActivity(new Intent(LoginActivity.this, CenterHomeActivity.class));
