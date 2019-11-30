@@ -155,12 +155,16 @@ public class LoginActivity extends AppCompatActivity {
 
 //                            Toast.makeText(LoginActivity.this, fb, Toast.LENGTH_SHORT).show();
 
-                            if (loginActivityResponses.get(0).getType().equals("center")) {
-                                startActivity(new Intent(LoginActivity.this, CenterHomeActivity.class));
-                            } else if (loginActivityResponses.get(0).getType().equals("user")) {
-                                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-                            } else {
-                                startActivity(new Intent(LoginActivity.this, TrainerHomeActivity.class));
+                            switch (loginActivityResponses.get(0).getType()) {
+                                case "center":
+                                    startActivity(new Intent(LoginActivity.this, CenterHomeActivity.class));
+                                    break;
+                                case "user":
+                                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                                    break;
+                                default:
+                                    startActivity(new Intent(LoginActivity.this, TrainerHomeActivity.class));
+                                    break;
                             }
 
                             sharedLogin();

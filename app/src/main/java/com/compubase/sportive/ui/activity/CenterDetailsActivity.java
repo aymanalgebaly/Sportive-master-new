@@ -87,12 +87,12 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
     @BindView(R.id.frame_rcv)
     FrameLayout frameRcv;
 
-
     RequestQueue requestQueue;
 
     TinyDB tinyDB;
 
     GoogleMap mgoogleMap;
+
     SupportMapFragment mapFragment;
 
     String id;
@@ -192,7 +192,8 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
 
 
         tinyDB = new TinyDB(this);
-        id1 = tinyDB.getInt("id");
+        id1 = tinyDB.getInt("id_center");
+
 
         lang = Objects.requireNonNull(getIntent().getExtras()).getString("long");
         lat = getIntent().getExtras().getString("lat");
@@ -212,7 +213,6 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
         fb = getIntent().getStringExtra("fb");
         web = getIntent().getStringExtra("web");
         ser = getIntent().getStringExtra("ser");
-
 
         txtValueDesDetails.setText(des);
         txtValueHisDetails.setText(history);
@@ -407,7 +407,7 @@ public class CenterDetailsActivity extends FragmentActivity implements OnMapRead
             @Override
             public void onResponse(String response) {
 
-                // showMessage(response);
+                //showMessage(response);
 
                 JSON_PARSE_DATA_AFTER_WEBCALL2(response);
 

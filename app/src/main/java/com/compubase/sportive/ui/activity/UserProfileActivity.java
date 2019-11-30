@@ -196,7 +196,10 @@ public class UserProfileActivity extends AppCompatActivity {
                 Toast.makeText(UserProfileActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
+
     }
+
 
     private void pickFromGallery() {
         Intent intent = new Intent();

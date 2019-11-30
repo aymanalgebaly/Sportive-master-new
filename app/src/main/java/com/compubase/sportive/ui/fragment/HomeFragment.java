@@ -98,6 +98,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
+        setupRecycler();
+        fetchData();
 
         mapFragment = (SupportMapFragment) getChildFragmentManager()
                 .findFragmentById(R.id.map);
@@ -123,8 +125,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
             }
         });
 
-        setupRecycler();
-        fetchData();
 
         return view;
 

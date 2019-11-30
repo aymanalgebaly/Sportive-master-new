@@ -1,8 +1,6 @@
 package com.compubase.sportive.ui.fragment;
 
-import android.app.FragmentManager;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,18 +17,12 @@ import com.compubase.sportive.R;
 import com.compubase.sportive.data.API;
 import com.compubase.sportive.helper.RetrofitClient;
 import com.compubase.sportive.helper.TinyDB;
-import com.compubase.sportive.ui.activity.CenterDetailsActivity;
-import com.compubase.sportive.ui.activity.TrainerProfileActivity;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 import java.util.Objects;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
 import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -87,7 +79,7 @@ public class CustomDialogFragment extends DialogFragment {
 
 
         tinyDB = new TinyDB(getActivity());
-        int id_user = tinyDB.getInt("id");
+        String id_user = tinyDB.getString("id");
         s_id_center = String.valueOf(id_user);
         type_center = tinyDB.getString("type_center");
         type_trainer = tinyDB.getString("type_trainer");
